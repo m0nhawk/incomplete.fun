@@ -1,0 +1,25 @@
+{
+  "cli_version": "0.5.6",
+  "checkpoint_id": "a3a8b34bb448",
+  "strategy": "manual-commit",
+  "branch": "master",
+  "checkpoints_count": 2,
+  "files_touched": [
+    "site/app/symmetry/symmetry-canvas.tsx"
+  ],
+  "sessions": [
+    {
+      "metadata": "/a3/a8b34bb448/0/metadata.json",
+      "transcript": "/a3/a8b34bb448/0/full.jsonl",
+      "content_hash": "/a3/a8b34bb448/0/content_hash.txt",
+      "prompt": "/a3/a8b34bb448/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 14,
+    "cache_creation_tokens": 4423,
+    "cache_read_tokens": 435438,
+    "output_tokens": 3731,
+    "api_call_count": 8
+  }
+}
