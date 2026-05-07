@@ -1,0 +1,13 @@
+For new app, I want a canvas the can draw symmetric images (screen divided by N parts customizable) and user input is putting lines
+
+---
+
+Changing the number doesn't change the number of segments.
+
+---
+
+It's not right, when I have n = 3 and draw a line, there are 6 lines total.
+
+---
+
+How to make sure that if I change the value of n, on reload it will be picked up.
