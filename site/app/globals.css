@@ -1,1 +1,75 @@
 @import "tailwindcss";
+
+:root {
+  --mono: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
+
+  --bg: #fafafa;
+  --fg: #1a1a1a;
+  --accent: #0055cc;
+  --muted: #666;
+  --border: #e0e0e0;
+
+  --pad: 2rem;
+  --max-width: 64ch;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0f0f0f;
+    --fg: #e0e0e0;
+    --accent: #4d9fff;
+    --muted: #888;
+    --border: #2a2a2a;
+  }
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--mono);
+  font-size: 0.9rem;
+  line-height: 1.65;
+  background: var(--bg);
+  color: var(--fg);
+  margin: 0;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+h1, h2, h3 {
+  font-size: 1rem;
+  font-weight: bold;
+  margin: 0 0 1rem;
+}
+
+p, ul, ol {
+  margin: 0 0 0.75rem;
+}
+
+ul, ol {
+  padding-left: 1.5rem;
+}
+
+code {
+  background: var(--border);
+  padding: 0.1em 0.35em;
+  border-radius: 2px;
+}
+
+strong {
+  font-weight: bold;
+}
+
+.page {
+  padding: var(--pad);
+  max-width: var(--max-width);
+}

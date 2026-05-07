@@ -1,3 +1,5 @@
+import { PageLayout } from '../../components/page-layout';
+
 function fib(n: number): bigint {
   if (n <= 0) return 0n;
   if (n === 1) return 1n;
@@ -14,13 +16,13 @@ export default async function Page({ params }: PageProps<'/fib/[n]'>) {
   const invalid = isNaN(n) || n < 0;
 
   return (
-    <main style={{ fontFamily: 'monospace', padding: '2rem' }}>
+    <PageLayout>
       <h1>Fibonacci Calculator</h1>
       {invalid ? (
         <p>Invalid input: <code>{raw}</code>. Please provide a non-negative integer.</p>
       ) : (
         <p>fib({n}) = <strong>{fib(n).toString()}</strong></p>
       )}
-    </main>
+    </PageLayout>
   );
 }
