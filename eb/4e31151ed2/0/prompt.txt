@@ -1,0 +1,1 @@
+Implement a minimalistic, monospace design that's customizable and reusable across pages
