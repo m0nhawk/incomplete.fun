@@ -3,3 +3,7 @@ Using bun, bootstrap a Next.js 15 project with TypeScript, Tailwind v4, and App 
 ---
 
 Using bun, bootstrap an empty Next.js 16 project with TypeScript, Tailwind v4, and App Router in a separate folder called site.
+
+---
+
+Make a commit for this changes.
