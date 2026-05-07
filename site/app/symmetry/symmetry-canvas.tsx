@@ -29,10 +29,16 @@ export function SymmetryCanvas() {
     if (!canvas) return;
     const parent = canvas.parentElement;
     if (!parent) return;
-    const imageData = canvas.getContext('2d')?.getImageData(0, 0, canvas.width, canvas.height);
-    canvas.width = parent.clientWidth;
-    canvas.height = parent.clientHeight;
-    if (imageData) canvas.getContext('2d')?.putImageData(imageData, 0, 0);
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+    const dpr = window.devicePixelRatio || 1;
+    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    canvas.width = parent.clientWidth * dpr;
+    canvas.height = parent.clientHeight * dpr;
+    canvas.style.width = `${parent.clientWidth}px`;
+    canvas.style.height = `${parent.clientHeight}px`;
+    ctx.scale(dpr, dpr);
+    ctx.putImageData(imageData, 0, 0);
   }, []);
 
   useEffect(() => {
@@ -45,8 +51,8 @@ export function SymmetryCanvas() {
   const drawStroke = useCallback((ctx: CanvasRenderingContext2D, points: Point[]) => {
     if (points.length < 2) return;
     const canvas = ctx.canvas;
-    const cx = canvas.width / 2;
-    const cy = canvas.height / 2;
+    const cx = canvas.clientWidth / 2;
+    const cy = canvas.clientHeight / 2;
     const angle = (Math.PI * 2) / segments;
 
     ctx.strokeStyle = color;
