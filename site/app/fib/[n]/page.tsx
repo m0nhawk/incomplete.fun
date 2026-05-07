@@ -1,0 +1,26 @@
+function fib(n: number): bigint {
+  if (n <= 0) return 0n;
+  if (n === 1) return 1n;
+  let a = 0n, b = 1n;
+  for (let i = 2; i <= n; i++) {
+    [a, b] = [b, a + b];
+  }
+  return b;
+}
+
+export default async function Page({ params }: PageProps<'/fib/[n]'>) {
+  const { n: raw } = await params;
+  const n = parseInt(raw, 10);
+  const invalid = isNaN(n) || n < 0;
+
+  return (
+    <main style={{ fontFamily: 'monospace', padding: '2rem' }}>
+      <h1>Fibonacci Calculator</h1>
+      {invalid ? (
+        <p>Invalid input: <code>{raw}</code>. Please provide a non-negative integer.</p>
+      ) : (
+        <p>fib({n}) = <strong>{fib(n).toString()}</strong></p>
+      )}
+    </main>
+  );
+}
