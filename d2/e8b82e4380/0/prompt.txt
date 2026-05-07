@@ -1,0 +1,5 @@
+make the lines smoothed
+
+---
+
+It's still a little bit weird (not smooth).

@@ -1,0 +1,74 @@
+{
+  "cli_version": "0.5.6",
+  "checkpoint_id": "d2e8b82e4380",
+  "session_id": "75b18be8-e67d-47e8-a455-59d962498119",
+  "strategy": "manual-commit",
+  "created_at": "2026-05-07T23:03:21.30141054Z",
+  "branch": "master",
+  "checkpoints_count": 2,
+  "files_touched": [
+    "site/app/symmetry/symmetry-canvas.tsx"
+  ],
+  "agent": "Claude Code",
+  "model": "",
+  "turn_id": "c234eb3c87cc",
+  "checkpoint_transcript_start": 127,
+  "transcript_lines_at_start": 127,
+  "token_usage": {
+    "input_tokens": 19,
+    "cache_creation_tokens": 16106,
+    "cache_read_tokens": 554604,
+    "output_tokens": 8919,
+    "api_call_count": 13
+  },
+  "session_metrics": {
+    "turn_count": 7
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-05-07T23:03:21.294037953Z",
+    "agent_lines": 60,
+    "agent_removed": 108,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 60,
+    "total_lines_changed": 168,
+    "agent_percentage": 100,
+    "metric_version": 2
+  },
+  "prompt_attributions": [
+    {
+      "checkpoint_number": 1,
+      "user_lines_added": 15,
+      "user_lines_removed": 0,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0,
+      "user_added_per_file": {
+        ".claude/settings.local.json": 7,
+        "site/.claude/settings.local.json": 8
+      }
+    },
+    {
+      "checkpoint_number": 2,
+      "user_lines_added": 15,
+      "user_lines_removed": 0,
+      "agent_lines_added": 30,
+      "agent_lines_removed": 18,
+      "user_added_per_file": {
+        ".claude/settings.local.json": 7,
+        "site/.claude/settings.local.json": 8
+      }
+    },
+    {
+      "checkpoint_number": 3,
+      "user_lines_added": 15,
+      "user_lines_removed": 0,
+      "agent_lines_added": 60,
+      "agent_lines_removed": 108,
+      "user_added_per_file": {
+        ".claude/settings.local.json": 7,
+        "site/.claude/settings.local.json": 8
+      }
+    }
+  ]
+}
