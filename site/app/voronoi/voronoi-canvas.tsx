@@ -21,6 +21,7 @@ const METRIC_DESC: Record<Metric, string> = {
 };
 
 interface Site {
+  id: string;
   x: number; y: number;
   metric: Metric;
   r: number; g: number; b: number;
@@ -44,23 +45,35 @@ function hslToRgb(h: number, s: number, l: number): [number, number, number] {
   return [Math.round(f(0) * 255), Math.round(f(8) * 255), Math.round(f(4) * 255)];
 }
 
+let nextId = 0;
+
 export function VoronoiCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const sitesRef = useRef<Site[]>([]);
+  const selectedIdRef = useRef<string | null>(null);
+
   const [sites, setSitesState] = useState<Site[]>([]);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
   const [currentMetric, setCurrentMetric] = useState<Metric>('euclidean');
   const siteCount = useRef(0);
-  const [computing, setComputing] = useState(false);
 
-  const setSites = useCallback((updater: Site[] | ((prev: Site[]) => Site[])) => {
-    setSitesState(prev => {
-      const next = typeof updater === 'function' ? updater(prev) : updater;
-      sitesRef.current = next;
-      return next;
-    });
+  const dragRef = useRef<{
+    id: string;
+    startMouseX: number; startMouseY: number;
+    origX: number; origY: number;
+    moved: boolean;
+  } | null>(null);
+  const mouseDownOnSite = useRef(false);
+
+  // Commit new sites to both ref and state
+  const commitSites = useCallback((newSites: Site[]) => {
+    sitesRef.current = newSites;
+    setSitesState(newSites);
   }, []);
 
-  const render = useCallback(() => {
+  // fast=true: compute at half resolution for smooth dragging
+  const render = useCallback((fast = false) => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
@@ -70,26 +83,32 @@ export function VoronoiCanvas() {
     const cssH = canvas.clientHeight;
     const dpr = window.devicePixelRatio || 1;
     const currentSites = sitesRef.current;
+    const selId = selectedIdRef.current;
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-
     if (currentSites.length === 0) return;
 
-    const owners = new Int32Array(cssW * cssH);
-    const imageData = new ImageData(cssW, cssH);
+    const scale = fast ? 2 : 1;
+    const cW = Math.ceil(cssW / scale);
+    const cH = Math.ceil(cssH / scale);
+
+    const owners = new Int32Array(cW * cH);
+    const imageData = new ImageData(cW, cH);
     const data = imageData.data;
 
-    for (let py = 0; py < cssH; py++) {
-      for (let px = 0; px < cssW; px++) {
+    for (let py = 0; py < cH; py++) {
+      for (let px = 0; px < cW; px++) {
         let minDist = Infinity;
         let owner = 0;
+        const wx = px * scale;
+        const wy = py * scale;
         for (let i = 0; i < currentSites.length; i++) {
           const s = currentSites[i];
-          const d = metricDist(s.metric, Math.abs(px - s.x), Math.abs(py - s.y));
+          const d = metricDist(s.metric, Math.abs(wx - s.x), Math.abs(wy - s.y));
           if (d < minDist) { minDist = d; owner = i; }
         }
-        owners[py * cssW + px] = owner;
-        const idx = (py * cssW + px) * 4;
+        owners[py * cW + px] = owner;
+        const idx = (py * cW + px) * 4;
         data[idx]     = currentSites[owner].r;
         data[idx + 1] = currentSites[owner].g;
         data[idx + 2] = currentSites[owner].b;
@@ -98,33 +117,49 @@ export function VoronoiCanvas() {
     }
 
     // darken cell borders
-    for (let py = 1; py < cssH - 1; py++) {
-      for (let px = 1; px < cssW - 1; px++) {
-        const o = owners[py * cssW + px];
+    for (let py = 1; py < cH - 1; py++) {
+      for (let px = 1; px < cW - 1; px++) {
+        const o = owners[py * cW + px];
         if (
-          owners[(py - 1) * cssW + px] !== o ||
-          owners[(py + 1) * cssW + px] !== o ||
-          owners[py * cssW + (px - 1)] !== o ||
-          owners[py * cssW + (px + 1)] !== o
+          owners[(py - 1) * cW + px] !== o ||
+          owners[(py + 1) * cW + px] !== o ||
+          owners[py * cW + (px - 1)] !== o ||
+          owners[py * cW + (px + 1)] !== o
         ) {
-          const idx = (py * cssW + px) * 4;
-          data[idx]     = data[idx]     * 0.25;
-          data[idx + 1] = data[idx + 1] * 0.25;
-          data[idx + 2] = data[idx + 2] * 0.25;
+          const idx = (py * cW + px) * 4;
+          data[idx]     *= 0.25;
+          data[idx + 1] *= 0.25;
+          data[idx + 2] *= 0.25;
         }
       }
     }
 
-    // scale up to physical canvas via offscreen
-    const offscreen = new OffscreenCanvas(cssW, cssH);
+    const offscreen = new OffscreenCanvas(cW, cH);
     offscreen.getContext('2d')!.putImageData(imageData, 0, 0);
-    ctx.imageSmoothingEnabled = false;
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = fast ? 'low' : 'high';
     ctx.drawImage(offscreen, 0, 0, canvas.width, canvas.height);
 
     // draw site markers
     ctx.save();
     ctx.scale(dpr, dpr);
+
     for (const site of currentSites) {
+      const isSelected = site.id === selId;
+
+      if (isSelected) {
+        ctx.beginPath();
+        ctx.arc(site.x, site.y, 11, 0, Math.PI * 2);
+        ctx.strokeStyle = '#fff';
+        ctx.lineWidth = 2.5;
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.arc(site.x, site.y, 11, 0, Math.PI * 2);
+        ctx.strokeStyle = 'rgba(0,0,0,0.4)';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+      }
+
       ctx.beginPath();
       ctx.arc(site.x, site.y, 6, 0, Math.PI * 2);
       ctx.fillStyle = 'rgba(0,0,0,0.45)';
@@ -135,11 +170,11 @@ export function VoronoiCanvas() {
       ctx.fillStyle = '#fff';
       ctx.fill();
 
-      ctx.font = 'bold 11px ' + getComputedStyle(document.body).getPropertyValue('--mono');
-      const label = METRIC_LABEL[site.metric];
+      ctx.font = 'bold 11px ui-monospace, monospace';
       ctx.fillStyle = 'rgba(0,0,0,0.7)';
-      ctx.fillText(label, site.x + 9, site.y + 4);
+      ctx.fillText(METRIC_LABEL[site.metric], site.x + 9, site.y + 4);
     }
+
     ctx.restore();
   }, []);
 
@@ -167,42 +202,135 @@ export function VoronoiCanvas() {
     sitesRef.current = sites;
     if (sites.length === 0) {
       const canvas = canvasRef.current;
-      const ctx = canvas?.getContext('2d');
-      if (canvas && ctx) ctx.clearRect(0, 0, canvas.width, canvas.height);
+      canvas?.getContext('2d')?.clearRect(0, 0, canvas.width, canvas.height);
       return;
     }
-    setComputing(true);
-    // defer to allow React to flush the computing indicator
-    setTimeout(() => {
-      render();
-      setComputing(false);
-    }, 0);
+    render(false);
   }, [sites, render]);
 
-  const onClick = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+  const getPos = (e: React.MouseEvent): { x: number; y: number } => {
+    const rect = canvasRef.current!.getBoundingClientRect();
+    return { x: e.clientX - rect.left, y: e.clientY - rect.top };
+  };
+
+  const findNear = (x: number, y: number, r = 14): Site | null => {
+    let best: Site | null = null;
+    let bestD = r;
+    for (const s of sitesRef.current) {
+      const d = Math.hypot(s.x - x, s.y - y);
+      if (d < bestD) { bestD = d; best = s; }
+    }
+    return best;
+  };
+
+  const onMouseDown = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    if (e.button !== 0) return;
     if ((e.target as HTMLElement).tagName !== 'CANVAS') return;
+
+    const { x, y } = getPos(e);
+    const near = findNear(x, y);
+
+    if (near) {
+      selectedIdRef.current = near.id;
+      setSelectedId(near.id);
+      dragRef.current = { id: near.id, startMouseX: x, startMouseY: y, origX: near.x, origY: near.y, moved: false };
+      mouseDownOnSite.current = true;
+      render(false);
+    } else {
+      selectedIdRef.current = null;
+      setSelectedId(null);
+      mouseDownOnSite.current = false;
+      dragRef.current = null;
+    }
+  }, [render]);
+
+  const onMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    const container = containerRef.current;
+
+    // update cursor based on proximity to a site (when not dragging)
+    if (!dragRef.current) {
+      const canvas = canvasRef.current;
+      if (canvas && (e.target as HTMLElement).tagName === 'CANVAS') {
+        const { x, y } = getPos(e);
+        container!.style.cursor = findNear(x, y) ? 'grab' : 'crosshair';
+      }
+      return;
+    }
+
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const rect = canvas.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
+    const drag = dragRef.current;
+    const { x, y } = getPos(e);
+    const dx = x - drag.startMouseX;
+    const dy = y - drag.startMouseY;
 
-    const hue = (siteCount.current * 137.508) % 360;
-    const [r, g, b] = hslToRgb(hue, 60, 68);
-    siteCount.current++;
+    if (!drag.moved && (Math.abs(dx) > 3 || Math.abs(dy) > 3)) {
+      drag.moved = true;
+      container!.style.cursor = 'grabbing';
+    }
+    if (!drag.moved) return;
 
-    setSites(prev => [...prev, { x, y, metric: currentMetric, r, g, b }]);
-  }, [currentMetric, setSites]);
+    const nx = Math.max(0, Math.min(canvas.clientWidth, drag.origX + dx));
+    const ny = Math.max(0, Math.min(canvas.clientHeight, drag.origY + dy));
+    sitesRef.current = sitesRef.current.map(s => s.id === drag.id ? { ...s, x: nx, y: ny } : s);
+    render(true);
+  }, [render]);
+
+  const onMouseUp = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    if (e.button !== 0) return;
+    containerRef.current!.style.cursor = 'crosshair';
+
+    if (dragRef.current) {
+      if (dragRef.current.moved) {
+        // commit the dragged position and re-render at full res
+        setSitesState([...sitesRef.current]);
+      }
+      dragRef.current = null;
+      return;
+    }
+
+    if (!mouseDownOnSite.current && (e.target as HTMLElement).tagName === 'CANVAS') {
+      const canvas = canvasRef.current;
+      if (!canvas) return;
+      const { x, y } = getPos(e);
+      const hue = (siteCount.current * 137.508) % 360;
+      const [r, g, b] = hslToRgb(hue, 60, 68);
+      const id = String(nextId++);
+      siteCount.current++;
+      const newSite: Site = { id, x, y, metric: currentMetric, r, g, b };
+      const newSites = [...sitesRef.current, newSite];
+      selectedIdRef.current = id;
+      setSelectedId(id);
+      commitSites(newSites);
+    }
+  }, [currentMetric, commitSites]);
 
   const onContextMenu = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const rect = canvas.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    setSites(prev => prev.filter(s => Math.hypot(s.x - x, s.y - y) > 12));
-  }, [setSites]);
+    if ((e.target as HTMLElement).tagName !== 'CANVAS') return;
+    const { x, y } = getPos(e);
+    const near = findNear(x, y);
+    if (!near) return;
+    if (selectedIdRef.current === near.id) {
+      selectedIdRef.current = null;
+      setSelectedId(null);
+    }
+    commitSites(sitesRef.current.filter(s => s.id !== near.id));
+  }, [commitSites]);
+
+  const applyMetric = useCallback((m: Metric) => {
+    setCurrentMetric(m);
+    if (selectedIdRef.current) {
+      commitSites(sitesRef.current.map(s =>
+        s.id === selectedIdRef.current ? { ...s, metric: m } : s
+      ));
+    }
+  }, [commitSites]);
+
+  // Which metric to highlight in the toolbar
+  const activeMetric = selectedId
+    ? (sites.find(s => s.id === selectedId)?.metric ?? currentMetric)
+    : currentMetric;
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100dvh', background: 'var(--bg)' }}>
@@ -218,12 +346,12 @@ export function VoronoiCanvas() {
         {METRICS.map(m => (
           <button
             key={m}
-            onClick={() => setCurrentMetric(m)}
+            onClick={() => applyMetric(m)}
             title={METRIC_DESC[m]}
             style={{
-              background: currentMetric === m ? 'var(--accent)' : 'none',
-              border: `1px solid ${currentMetric === m ? 'var(--accent)' : 'var(--border)'}`,
-              color: currentMetric === m ? '#fff' : 'var(--fg)',
+              background: activeMetric === m ? 'var(--accent)' : 'none',
+              border: `1px solid ${activeMetric === m ? 'var(--accent)' : 'var(--border)'}`,
+              color: activeMetric === m ? '#fff' : 'var(--fg)',
               fontFamily: 'var(--mono)', fontSize: '0.8rem',
               padding: '0.15rem 0.55rem', cursor: 'pointer', borderRadius: '2px',
             }}
@@ -232,15 +360,16 @@ export function VoronoiCanvas() {
           </button>
         ))}
 
-        {computing && (
-          <span style={{ color: 'var(--muted)', fontSize: '0.75rem' }}>computing…</span>
-        )}
-
         <span style={{ color: 'var(--muted)', fontSize: '0.75rem', marginLeft: 'auto' }}>
-          right-click removes
+          {selectedId ? 'drag · change metric · right-click removes' : 'click to place · right-click removes'}
         </span>
         <button
-          onClick={() => { setSites([]); siteCount.current = 0; }}
+          onClick={() => {
+            selectedIdRef.current = null;
+            setSelectedId(null);
+            siteCount.current = 0;
+            commitSites([]);
+          }}
           style={{
             background: 'none', border: '1px solid var(--border)', color: 'var(--muted)',
             fontFamily: 'var(--mono)', fontSize: '0.85rem', padding: '0.1rem 0.6rem', cursor: 'pointer',
@@ -251,11 +380,14 @@ export function VoronoiCanvas() {
       </div>
 
       <div
-        style={{ flex: 1, overflow: 'hidden', position: 'relative' }}
-        onClick={onClick}
+        ref={containerRef}
+        style={{ flex: 1, overflow: 'hidden', position: 'relative', cursor: 'crosshair' }}
+        onMouseDown={onMouseDown}
+        onMouseMove={onMouseMove}
+        onMouseUp={onMouseUp}
         onContextMenu={onContextMenu}
       >
-        <canvas ref={canvasRef} style={{ display: 'block', cursor: 'crosshair' }} />
+        <canvas ref={canvasRef} style={{ display: 'block' }} />
         {sites.length === 0 && (
           <div style={{
             position: 'absolute', inset: 0,
