@@ -1,0 +1,5 @@
+Let's work on app/voronoi/. In there, the line between areas are not fixed width, fix it.
+
+---
+
+Good job, but it still looks off: it looks jagged and not smooth.
