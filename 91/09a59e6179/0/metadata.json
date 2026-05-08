@@ -1,0 +1,74 @@
+{
+  "cli_version": "0.5.6",
+  "checkpoint_id": "9109a59e6179",
+  "session_id": "d5f6bcd8-e8ef-4fc6-b915-cf3b1a7a8d8b",
+  "strategy": "manual-commit",
+  "created_at": "2026-05-08T01:38:57.636385915Z",
+  "branch": "master",
+  "checkpoints_count": 2,
+  "files_touched": [
+    "site/app/voronoi/voronoi-canvas.tsx"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-sonnet-4-6",
+  "turn_id": "e8f52d50d982",
+  "checkpoint_transcript_start": 87,
+  "transcript_lines_at_start": 87,
+  "token_usage": {
+    "input_tokens": 15,
+    "cache_creation_tokens": 35333,
+    "cache_read_tokens": 599227,
+    "output_tokens": 26559,
+    "api_call_count": 10
+  },
+  "session_metrics": {
+    "turn_count": 5
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-05-08T01:38:57.626661516Z",
+    "agent_lines": 202,
+    "agent_removed": 70,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 202,
+    "total_lines_changed": 272,
+    "agent_percentage": 100,
+    "metric_version": 2
+  },
+  "prompt_attributions": [
+    {
+      "checkpoint_number": 1,
+      "user_lines_added": 16,
+      "user_lines_removed": 0,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0,
+      "user_added_per_file": {
+        ".claude/settings.local.json": 8,
+        "site/.claude/settings.local.json": 8
+      }
+    },
+    {
+      "checkpoint_number": 2,
+      "user_lines_added": 16,
+      "user_lines_removed": 0,
+      "agent_lines_added": 200,
+      "agent_lines_removed": 69,
+      "user_added_per_file": {
+        ".claude/settings.local.json": 8,
+        "site/.claude/settings.local.json": 8
+      }
+    },
+    {
+      "checkpoint_number": 3,
+      "user_lines_added": 16,
+      "user_lines_removed": 0,
+      "agent_lines_added": 202,
+      "agent_lines_removed": 70,
+      "user_added_per_file": {
+        ".claude/settings.local.json": 8,
+        "site/.claude/settings.local.json": 8
+      }
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+Nice, great job. Now I want to be able to edit all the points put on a canvas and move them and be able to change the metric.
+
+---
+
+Why it's pixelated? Make it nicer.
