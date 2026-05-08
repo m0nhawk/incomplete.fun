@@ -92,9 +92,14 @@ void main() {
     else if (d < d2) { d2 = d; }
   }
 
-  // Smooth border: gap is ~2× pixel distance from boundary for L2 sites at
-  // typical spacing; threshold of 2.5 gives a ~1–2px anti-aliased edge.
-  float border = smoothstep(0.0, 2.5, d2 - d1);
+  // Convert gap from metric units to pixel distance by dividing by the gradient
+  // magnitude. dFdx/dFdy give adjacent-fragment differences for free on the GPU.
+  // Without this, borders widen where the gap opens slowly (oblique boundaries
+  // between different metrics) and narrow where it opens fast.
+  float gap = d2 - d1;
+  float grad = length(vec2(dFdx(gap), dFdy(gap)));
+  float borderDist = gap / max(grad, 1e-6);
+  float border = smoothstep(0.0, 1.5, borderDist);
   fragColor = vec4(u_colors[owner] * mix(0.22, 1.0, border), 1.0);
 }
 `;
