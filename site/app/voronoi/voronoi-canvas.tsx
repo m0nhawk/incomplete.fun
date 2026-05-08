@@ -22,6 +22,13 @@ const METRIC_FORMULA: Record<Metric, string> = {
   minkowski3:  '(dx³ + dy³)^(1/3)',
   minkowski05: '(sqrt(dx) + sqrt(dy))²',
 };
+const METRIC_GENERIC_CALC: Record<Metric, string> = {
+  euclidean:   'sqrt(x² + y²)',
+  manhattan:   'x + y',
+  chebyshev:   'max(x, y)',
+  minkowski3:  '(x³ + y³)^(1/3)',
+  minkowski05: '(sqrt(x) + sqrt(y))²',
+};
 const METRIC_INDEX: Record<Metric, number> = {
   euclidean: 0, manhattan: 1, chebyshev: 2, minkowski3: 3, minkowski05: 4,
 };
@@ -183,6 +190,7 @@ export function VoronoiCanvas() {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [currentMetric, setCurrentMetric] = useState<Metric>('euclidean');
   const [mousePos, setMousePos] = useState<{ x: number; y: number } | null>(null);
+  const [mouseOverCanvas, setMouseOverCanvas] = useState(false);
   const siteCount = useRef(0);
 
   const dragRef = useRef<{
@@ -387,6 +395,7 @@ export function VoronoiCanvas() {
     const container = containerRef.current!;
     const { x, y } = getPos(e);
     setMousePos({ x, y });
+    setMouseOverCanvas(true);
     if (!dragRef.current) {
       container.style.cursor = findNear(x, y) ? 'grab' : 'crosshair';
       return;
@@ -454,6 +463,7 @@ export function VoronoiCanvas() {
       }))
     : null;
   const hoverMin = hover ? Math.min(...hover.map(h => h.d)) : Infinity;
+  const showMouseCoordinates = mouseOverCanvas && mousePos;
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100dvh', background: 'var(--bg)' }}>
@@ -499,13 +509,16 @@ export function VoronoiCanvas() {
         overflowX: 'hidden', overflowY: 'auto',
         fontVariantNumeric: 'tabular-nums',
       }}>
-        {hover && (
+        {hover ? (
           <>
-            <span style={{ color: 'var(--muted)', whiteSpace: 'nowrap', paddingTop: '0.35rem' }}>
-              ({Math.round(mousePos!.x)}, {Math.round(mousePos!.y)})
-            </span>
+            {showMouseCoordinates && (
+              <span style={{ color: 'var(--muted)', whiteSpace: 'nowrap', paddingTop: '0.35rem' }}>
+                ({Math.round(mousePos!.x)}, {Math.round(mousePos!.y)})
+              </span>
+            )}
             <div style={{
               display: 'grid',
+              gridColumn: showMouseCoordinates ? undefined : '1 / -1',
               gridTemplateColumns: 'repeat(auto-fill, minmax(18rem, 1fr))',
               gap: '0.25rem 0.75rem',
               minWidth: 0,
@@ -540,6 +553,31 @@ export function VoronoiCanvas() {
               })}
             </div>
           </>
+        ) : (
+          <>
+            <div style={{
+              display: 'grid',
+              gridColumn: '1 / -1',
+              gridTemplateColumns: 'repeat(auto-fill, minmax(18rem, 1fr))',
+              gap: '0.25rem 0.75rem',
+              minWidth: 0,
+              padding: '0.25rem 0',
+            }}>
+              {METRICS.map(m => (
+                <span key={m} title={`${METRIC_DESC[m]}: ${METRIC_GENERIC_CALC[m]}`} style={{
+                  display: 'inline-flex', alignItems: 'center', gap: '0.25rem',
+                  minWidth: 0,
+                  color: 'var(--muted)',
+                  whiteSpace: 'nowrap',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                }}>
+                  <span style={{ color: 'var(--muted)', fontSize: '0.72rem', flexShrink: 0 }}>{METRIC_LABEL[m]}</span>
+                  <span style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>{METRIC_GENERIC_CALC[m]}</span>
+                </span>
+              ))}
+            </div>
+          </>
         )}
       </div>
 
@@ -549,7 +587,7 @@ export function VoronoiCanvas() {
         onMouseDown={onMouseDown}
         onMouseMove={onMouseMove}
         onMouseUp={onMouseUp}
-        onMouseLeave={() => setMousePos(null)}
+        onMouseLeave={() => setMouseOverCanvas(false)}
         onContextMenu={onContextMenu}
       >
         {/* WebGL canvas: Voronoi cells at full physical resolution */}
