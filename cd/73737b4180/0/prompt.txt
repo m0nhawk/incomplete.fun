@@ -1,0 +1,5 @@
+/commit
+
+---
+
+For the next page I want the following: canvas page where the user can place points and the it calculates Voronoi diagram, BUT each point has it's own distance - Euclidean, Mahnattan, and others; and that would be a base for Voronoi diagram
