@@ -1,0 +1,5 @@
+How to make bun --cwd=site dev run on devenv up?
+
+---
+
+And will it run this in background?
