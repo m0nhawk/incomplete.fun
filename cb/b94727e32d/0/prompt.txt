@@ -1,0 +1,1 @@
+It's still looks pixelated, especially when I drag the point.
