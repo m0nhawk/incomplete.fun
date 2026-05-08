@@ -1,0 +1,1 @@
+Move the coordinates into a separate line and make sure it looks nice when there are a lot of coordinates.
