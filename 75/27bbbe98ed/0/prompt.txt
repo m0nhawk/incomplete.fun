@@ -1,0 +1,13 @@
+Commit changes.
+
+---
+
+Now, let's keep the second top bar when the cursor is not over the canvas and just show all metrics with generic x and y.
+
+---
+
+No, show the exact same calculations, but without coordinates.
+
+---
+
+No, show the exact same content when mouse is over the canvas, but without exact coordinates (for when mouse is not over the canvas).
