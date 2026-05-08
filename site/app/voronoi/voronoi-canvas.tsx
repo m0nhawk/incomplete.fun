@@ -470,7 +470,7 @@ export function VoronoiCanvas() {
         padding: '0.6rem 1rem', borderBottom: '1px solid var(--border)',
         fontSize: '0.85rem', fontFamily: 'var(--mono)',
       }}>
-        <a href="/" style={{ color: 'var(--muted)', textDecoration: 'none' }}>←</a>
+        <a href="/" style={{ color: 'var(--muted)', textDecoration: 'none', fontSize: '1.1rem' }}>←</a>
         <span style={{ fontWeight: 'bold' }}>voronoi</span>
         <span style={{ color: 'var(--border)' }}>|</span>
 

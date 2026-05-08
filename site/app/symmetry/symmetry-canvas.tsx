@@ -131,7 +131,7 @@ export function SymmetryCanvas() {
         padding: '0.6rem 1rem', borderBottom: '1px solid var(--border)',
         flexWrap: 'wrap', fontSize: '0.85rem', fontFamily: 'var(--mono)',
       }}>
-        <a href="/" style={{ color: 'var(--muted)', textDecoration: 'none', marginRight: '0.5rem' }}>←</a>
+        <a href="/" style={{ color: 'var(--muted)', textDecoration: 'none', marginRight: '0.5rem', fontSize: '1.1rem' }}>←</a>
         <span style={{ fontWeight: 'bold' }}>symmetry</span>
 
         <label style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: 'var(--fg)' }}>

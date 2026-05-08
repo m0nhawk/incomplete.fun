@@ -13,7 +13,7 @@ export function PageLayout({ children, title, back = false, accent }: PageLayout
         padding: '0.6rem 1rem', borderBottom: '1px solid var(--border)',
         fontSize: '0.85rem', fontFamily: 'var(--mono)',
       }}>
-        {back && <a href="/" style={{ color: 'var(--muted)', textDecoration: 'none' }}>←</a>}
+        {back && <a href="/" style={{ color: 'var(--muted)', textDecoration: 'none', fontSize: '1.1rem' }}>←</a>}
         {title && <span style={{ fontWeight: 'bold' }}>{title}</span>}
       </div>
       <main
