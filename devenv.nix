@@ -13,7 +13,7 @@
   languages.javascript.bun.enable = true;
 
   # https://devenv.sh/processes/
-  # processes.dev.exec = "${lib.getExe pkgs.watchexec} -n -- ls -la";
+  processes.dev.exec = "bun --cwd=site dev";
 
   # https://devenv.sh/services/
   # services.postgres.enable = true;
