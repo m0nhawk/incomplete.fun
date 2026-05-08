@@ -405,7 +405,7 @@ export function VoronoiCanvas() {
       {/* ── main toolbar row ── */}
       <div style={{
         display: 'flex', alignItems: 'center', gap: '0.75rem',
-        padding: '0.6rem 1rem', borderBottom: hover ? 'none' : '1px solid var(--border)',
+        padding: '0.6rem 1rem', borderBottom: '1px solid var(--border)',
         fontSize: '0.85rem', fontFamily: 'var(--mono)',
       }}>
         <a href="/" style={{ color: 'var(--muted)', textDecoration: 'none' }}>←</a>
@@ -433,41 +433,44 @@ export function VoronoiCanvas() {
         }}>clear</button>
       </div>
 
-      {/* ── hover annotation row ── */}
-      {hover && (
-        <div style={{
-          display: 'flex', alignItems: 'baseline', flexWrap: 'wrap',
-          gap: '0.3rem 0.75rem',
-          padding: '0.35rem 1rem', borderBottom: '1px solid var(--border)',
-          fontSize: '0.78rem', fontFamily: 'var(--mono)',
-        }}>
-          <span style={{ color: 'var(--muted)', whiteSpace: 'nowrap' }}>
-            ({Math.round(mousePos!.x)}, {Math.round(mousePos!.y)})
-          </span>
-          <span style={{ color: 'var(--border)' }}>·</span>
-          {hover.map(({ s, d }) => {
-            const winner = d === hoverMin;
-            return (
-              <span key={s.id} style={{
-                display: 'inline-flex', alignItems: 'center', gap: '0.25rem',
-                color: winner ? 'var(--fg)' : 'var(--muted)',
-                fontWeight: winner ? 'bold' : 'normal',
-                whiteSpace: 'nowrap',
-              }}>
-                <span style={{
-                  display: 'inline-block', width: '7px', height: '7px',
-                  borderRadius: '50%', flexShrink: 0,
-                  background: `rgb(${s.r},${s.g},${s.b})`,
-                  boxShadow: winner ? '0 0 0 1.5px var(--fg)' : 'none',
-                }} />
-                <span style={{ color: 'var(--muted)', fontSize: '0.72rem' }}>{METRIC_LABEL[s.metric]}</span>
-                {Math.round(d)}
-                {winner && <span style={{ color: 'var(--accent)' }}>◀</span>}
-              </span>
-            );
-          })}
-        </div>
-      )}
+      {/* ── hover annotation row (always visible for stable layout) ── */}
+      <div style={{
+        display: 'flex', alignItems: 'baseline', flexWrap: 'wrap',
+        gap: '0.3rem 0.75rem',
+        padding: '0.35rem 1rem', borderBottom: '1px solid var(--border)',
+        fontSize: '0.78rem', fontFamily: 'var(--mono)',
+        minHeight: '1.9rem',
+      }}>
+        {hover && (
+          <>
+            <span style={{ color: 'var(--muted)', whiteSpace: 'nowrap' }}>
+              ({Math.round(mousePos!.x)}, {Math.round(mousePos!.y)})
+            </span>
+            <span style={{ color: 'var(--border)' }}>·</span>
+            {hover.map(({ s, d }) => {
+              const winner = d === hoverMin;
+              return (
+                <span key={s.id} style={{
+                  display: 'inline-flex', alignItems: 'center', gap: '0.25rem',
+                  color: winner ? 'var(--fg)' : 'var(--muted)',
+                  fontWeight: winner ? 'bold' : 'normal',
+                  whiteSpace: 'nowrap',
+                }}>
+                  <span style={{
+                    display: 'inline-block', width: '7px', height: '7px',
+                    borderRadius: '50%', flexShrink: 0,
+                    background: `rgb(${s.r},${s.g},${s.b})`,
+                    boxShadow: winner ? '0 0 0 1.5px var(--fg)' : 'none',
+                  }} />
+                  <span style={{ color: 'var(--muted)', fontSize: '0.72rem' }}>{METRIC_LABEL[s.metric]}</span>
+                  {Math.round(d)}
+                  {winner && <span style={{ color: 'var(--accent)' }}>◀</span>}
+                </span>
+              );
+            })}
+          </>
+        )}
+      </div>
 
       <div
         ref={containerRef}
