@@ -15,6 +15,13 @@ const METRIC_DESC: Record<Metric, string> = {
   minkowski3:  'minkowski p=3 (rounded square)',
   minkowski05: 'minkowski p=½ (star)',
 };
+const METRIC_FORMULA: Record<Metric, string> = {
+  euclidean:   'sqrt(dx² + dy²)',
+  manhattan:   'dx + dy',
+  chebyshev:   'max(dx, dy)',
+  minkowski3:  '(dx³ + dy³)^(1/3)',
+  minkowski05: '(sqrt(dx) + sqrt(dy))²',
+};
 const METRIC_INDEX: Record<Metric, number> = {
   euclidean: 0, manhattan: 1, chebyshev: 2, minkowski3: 3, minkowski05: 4,
 };
@@ -33,6 +40,24 @@ function metricDistJS(m: Metric, ax: number, ay: number): number {
     case 'chebyshev':   return Math.max(ax, ay);
     case 'minkowski3':  return Math.cbrt(ax * ax * ax + ay * ay * ay);
     case 'minkowski05': { const s = Math.sqrt(ax) + Math.sqrt(ay); return s * s; }
+  }
+}
+
+function fmt(n: number): string {
+  return Math.abs(n - Math.round(n)) < 0.05 ? String(Math.round(n)) : n.toFixed(1);
+}
+
+function metricCalculation(m: Metric, dx: number, dy: number): string {
+  const d = metricDistJS(m, dx, dy);
+  const x = fmt(dx);
+  const y = fmt(dy);
+  const v = fmt(d);
+  switch (m) {
+    case 'euclidean':   return `sqrt(${x}² + ${y}²) = ${v}`;
+    case 'manhattan':   return `${x} + ${y} = ${v}`;
+    case 'chebyshev':   return `max(${x}, ${y}) = ${v}`;
+    case 'minkowski3':  return `(${x}³ + ${y}³)^(1/3) = ${v}`;
+    case 'minkowski05': return `(sqrt(${x}) + sqrt(${y}))² = ${v}`;
   }
 }
 
@@ -465,39 +490,55 @@ export function VoronoiCanvas() {
 
       {/* ── hover annotation row (always visible for stable layout) ── */}
       <div style={{
-        display: 'flex', alignItems: 'center', flexWrap: 'nowrap',
-        gap: '0.3rem 0.75rem',
+        display: 'grid',
+        gridTemplateColumns: '6.5rem minmax(0, 1fr)',
+        columnGap: '0.75rem',
         padding: '0 1rem', borderBottom: '1px solid var(--border)',
-        fontSize: '0.78rem', fontFamily: 'var(--mono)', lineHeight: 1,
-        height: '1.9rem', overflow: 'hidden',
+        fontSize: '0.78rem', fontFamily: 'var(--mono)', lineHeight: 1.25,
+        minHeight: '1.9rem', maxHeight: '6.5rem',
+        overflowX: 'hidden', overflowY: 'auto',
+        fontVariantNumeric: 'tabular-nums',
       }}>
         {hover && (
           <>
-            <span style={{ color: 'var(--muted)', whiteSpace: 'nowrap' }}>
+            <span style={{ color: 'var(--muted)', whiteSpace: 'nowrap', paddingTop: '0.35rem' }}>
               ({Math.round(mousePos!.x)}, {Math.round(mousePos!.y)})
             </span>
-            <span style={{ color: 'var(--border)' }}>·</span>
-            {hover.map(({ s, d }) => {
-              const winner = d === hoverMin;
-              return (
-                <span key={s.id} style={{
-                  display: 'inline-flex', alignItems: 'center', gap: '0.25rem',
-                  color: winner ? 'var(--fg)' : 'var(--muted)',
-                  fontWeight: winner ? 'bold' : 'normal',
-                  whiteSpace: 'nowrap',
-                }}>
-                  <span style={{
-                    display: 'inline-block', width: '7px', height: '7px',
-                    borderRadius: '50%', flexShrink: 0,
-                    background: `rgb(${s.r},${s.g},${s.b})`,
-                    boxShadow: winner ? '0 0 0 1.5px var(--fg)' : 'none',
-                  }} />
-                  <span style={{ color: 'var(--muted)', fontSize: '0.72rem' }}>{METRIC_LABEL[s.metric]}</span>
-                  {Math.round(d)}
-                  {winner && <span style={{ color: 'var(--accent)' }}>◀</span>}
-                </span>
-              );
-            })}
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fill, minmax(18rem, 1fr))',
+              gap: '0.25rem 0.75rem',
+              minWidth: 0,
+              padding: '0.25rem 0',
+            }}>
+              {hover.map(({ s, d }) => {
+                const winner = d === hoverMin;
+                const dx = Math.abs(mousePos!.x - s.x);
+                const dy = Math.abs(mousePos!.y - s.y);
+                const calculation = metricCalculation(s.metric, dx, dy);
+                return (
+                  <span key={s.id} title={`dx=${fmt(dx)}, dy=${fmt(dy)}; ${METRIC_LABEL[s.metric]}: ${METRIC_FORMULA[s.metric]}`} style={{
+                    display: 'inline-flex', alignItems: 'center', gap: '0.25rem',
+                    minWidth: 0,
+                    color: winner ? 'var(--fg)' : 'var(--muted)',
+                    fontWeight: winner ? 'bold' : 'normal',
+                    whiteSpace: 'nowrap',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                  }}>
+                    <span style={{
+                      display: 'inline-block', width: '7px', height: '7px',
+                      borderRadius: '50%', flexShrink: 0,
+                      background: `rgb(${s.r},${s.g},${s.b})`,
+                      boxShadow: winner ? '0 0 0 1.5px var(--fg)' : 'none',
+                    }} />
+                    <span style={{ color: 'var(--muted)', fontSize: '0.72rem', flexShrink: 0 }}>{METRIC_LABEL[s.metric]}</span>
+                    <span style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>{calculation}</span>
+                    {winner && <span style={{ color: 'var(--accent)', flexShrink: 0 }}>◀</span>}
+                  </span>
+                );
+              })}
+            </div>
           </>
         )}
       </div>
