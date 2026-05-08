@@ -467,7 +467,7 @@ export function VoronoiCanvas() {
       {/* ── main toolbar row ── */}
       <div style={{
         display: 'flex', alignItems: 'center', gap: '0.75rem',
-        padding: '0.6rem 1rem', borderBottom: '1px solid var(--border)',
+        height: '2.75rem', padding: '0 1rem', borderBottom: '1px solid var(--border)',
         fontSize: '0.85rem', fontFamily: 'var(--mono)',
       }}>
         <a href="/" style={{ color: 'var(--muted)', textDecoration: 'none', fontSize: '1.1rem' }}>←</a>

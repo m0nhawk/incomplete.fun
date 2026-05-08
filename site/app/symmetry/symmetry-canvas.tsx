@@ -128,8 +128,8 @@ export function SymmetryCanvas() {
     <div style={{ display: 'flex', flexDirection: 'column', height: '100dvh', background: 'var(--bg)' }}>
       <div style={{
         display: 'flex', alignItems: 'center', gap: '1.5rem',
-        padding: '0.6rem 1rem', borderBottom: '1px solid var(--border)',
-        flexWrap: 'wrap', fontSize: '0.85rem', fontFamily: 'var(--mono)',
+        height: '2.75rem', padding: '0 1rem', borderBottom: '1px solid var(--border)',
+        fontSize: '0.85rem', fontFamily: 'var(--mono)',
       }}>
         <a href="/" style={{ color: 'var(--muted)', textDecoration: 'none', marginRight: '0.5rem', fontSize: '1.1rem' }}>←</a>
         <span style={{ fontWeight: 'bold' }}>symmetry</span>
