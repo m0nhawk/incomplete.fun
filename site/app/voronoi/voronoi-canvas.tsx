@@ -61,6 +61,7 @@ precision highp float;
 const int MAX = 64;
 
 uniform vec2  u_res;
+uniform float u_dpr;
 uniform int   u_n;
 uniform vec2  u_sites[MAX];
 uniform vec3  u_colors[MAX];
@@ -69,37 +70,64 @@ uniform int   u_metrics[MAX];
 out vec4 fragColor;
 
 float vdist(int m, float ax, float ay) {
-  if (m == 0) return sqrt(ax*ax + ay*ay);          // L2  euclidean
-  if (m == 1) return ax + ay;                       // L1  manhattan
-  if (m == 2) return max(ax, ay);                   // L∞  chebyshev
-  if (m == 3) return pow(ax*ax*ax + ay*ay*ay, 1.0/3.0); // L3
-  float s = sqrt(ax) + sqrt(ay); return s*s;        // L½  minkowski
+  if (m == 0) return sqrt(ax*ax + ay*ay);
+  if (m == 1) return ax + ay;
+  if (m == 2) return max(ax, ay);
+  if (m == 3) return pow(ax*ax*ax + ay*ay*ay, 1.0/3.0);
+  float s = sqrt(ax) + sqrt(ay); return s*s;
+}
+
+// Analytical gradient of the distance function w.r.t. (p - site).
+// Returns the 2D gradient vector in physical-pixel space.
+vec2 vdist_grad(int m, vec2 dp) {
+  float ax = abs(dp.x), ay = abs(dp.y);
+  float sx = sign(dp.x), sy = sign(dp.y);
+  if (m == 0) {                        // L2
+    float d = sqrt(ax*ax + ay*ay);
+    return d < 1e-7 ? vec2(0.0) : dp / d;
+  }
+  if (m == 1) return vec2(sx, sy);     // L1
+  if (m == 2) {                        // L∞
+    if (ax > ay) return vec2(sx, 0.0);
+    if (ay > ax) return vec2(0.0, sy);
+    return vec2(sx, sy) * 0.5;
+  }
+  if (m == 3) {                        // L3
+    float d3 = ax*ax*ax + ay*ay*ay;
+    float d  = pow(d3, 1.0/3.0);
+    return d < 1e-7 ? vec2(0.0) : vec2(sx*ax*ax, sy*ay*ay) / (d*d);
+  }
+  // L½
+  float sax = sqrt(max(ax, 1e-7)), say = sqrt(max(ay, 1e-7));
+  float sum = sqrt(ax) + sqrt(ay);
+  return vec2(ax < 1e-7 ? 0.0 : sx * sum / sax,
+              ay < 1e-7 ? 0.0 : sy * sum / say);
 }
 
 void main() {
   if (u_n == 0) { fragColor = vec4(0.0); return; }
 
-  // gl_FragCoord origin is bottom-left; sites are top-left CSS coords × dpr
   vec2 p = vec2(gl_FragCoord.x, u_res.y - gl_FragCoord.y);
 
   float d1 = 1e9, d2 = 1e9;
-  int owner = 0;
+  int owner = 0, owner2 = 0;
 
   for (int i = 0; i < MAX; i++) {
     if (i >= u_n) break;
     float d = vdist(u_metrics[i], abs(p.x - u_sites[i].x), abs(p.y - u_sites[i].y));
-    if (d < d1) { d2 = d1; d1 = d; owner = i; }
-    else if (d < d2) { d2 = d; }
+    if (d < d1) { d2 = d1; owner2 = owner; d1 = d; owner = i; }
+    else if (d < d2) { d2 = d; owner2 = i; }
   }
 
-  // Convert gap from metric units to pixel distance by dividing by the gradient
-  // magnitude. dFdx/dFdy give adjacent-fragment differences for free on the GPU.
-  // Without this, borders widen where the gap opens slowly (oblique boundaries
-  // between different metrics) and narrow where it opens fast.
+  // Analytical gradient of gap = d2 - d1 avoids the dFdx/dFdy triple-point
+  // artifact where adjacent fragments in a 2×2 quad use different site pairs,
+  // causing the screen-space derivative to be computed from incompatible values.
   float gap = d2 - d1;
-  float grad = length(vec2(dFdx(gap), dFdy(gap)));
-  float borderDist = gap / max(grad, 1e-6);
-  float border = smoothstep(0.0, 1.5, borderDist);
+  vec2 g1 = vdist_grad(u_metrics[owner],  p - u_sites[owner]);
+  vec2 g2 = vdist_grad(u_metrics[owner2], p - u_sites[owner2]);
+  float grad = max(length(g2 - g1), 1e-4);
+  float borderDist = gap / grad;
+  float border = smoothstep(0.0, 1.5 * u_dpr, borderDist);
   fragColor = vec4(u_colors[owner] * mix(0.22, 1.0, border), 1.0);
 }
 `;
@@ -171,6 +199,7 @@ export function VoronoiCanvas() {
 
     uRef.current = {
       res:     gl.getUniformLocation(prog, 'u_res'),
+      dpr:     gl.getUniformLocation(prog, 'u_dpr'),
       n:       gl.getUniformLocation(prog, 'u_n'),
       sites:   gl.getUniformLocation(prog, 'u_sites'),
       colors:  gl.getUniformLocation(prog, 'u_colors'),
@@ -191,6 +220,7 @@ export function VoronoiCanvas() {
 
     gl.viewport(0, 0, canvas.width, canvas.height);
     gl.uniform2f(u.res, canvas.width, canvas.height);
+    gl.uniform1f(u.dpr, dpr);
     gl.uniform1i(u.n, sites.length);
 
     if (sites.length > 0) {
