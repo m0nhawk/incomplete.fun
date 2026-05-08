@@ -1,0 +1,13 @@
+The height of second line changes when it's empty and when it has coordinates.
+
+---
+
+The height of second line changes when it's empty and when it has coordinates in voronoi visualization.
+
+---
+
+It still changes height when I move the cursor over the top bars (and the content is empty).
+
+---
+
+Make sure the text is centered from top and bottom of the ends of the bar.

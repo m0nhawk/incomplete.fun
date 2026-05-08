@@ -1,0 +1,83 @@
+{
+  "cli_version": "0.5.6",
+  "checkpoint_id": "eb09fcfeb43a",
+  "session_id": "fa35a707-16a6-463a-9018-474cd9730791",
+  "strategy": "manual-commit",
+  "created_at": "2026-05-08T02:28:38.879890866Z",
+  "branch": "master",
+  "checkpoints_count": 3,
+  "files_touched": [
+    "site/app/voronoi/voronoi-canvas.tsx"
+  ],
+  "agent": "Claude Code",
+  "model": "",
+  "turn_id": "45c7e5aab589",
+  "token_usage": {
+    "input_tokens": 24,
+    "cache_creation_tokens": 23456,
+    "cache_read_tokens": 370026,
+    "output_tokens": 7271,
+    "api_call_count": 14
+  },
+  "session_metrics": {
+    "turn_count": 3
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-05-08T02:28:38.875794366Z",
+    "agent_lines": 4,
+    "agent_removed": 4,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 4,
+    "total_lines_changed": 8,
+    "agent_percentage": 100,
+    "metric_version": 2
+  },
+  "prompt_attributions": [
+    {
+      "checkpoint_number": 1,
+      "user_lines_added": 16,
+      "user_lines_removed": 0,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0,
+      "user_added_per_file": {
+        ".claude/settings.local.json": 8,
+        "site/.claude/settings.local.json": 8
+      }
+    },
+    {
+      "checkpoint_number": 2,
+      "user_lines_added": 16,
+      "user_lines_removed": 0,
+      "agent_lines_added": 3,
+      "agent_lines_removed": 2,
+      "user_added_per_file": {
+        ".claude/settings.local.json": 8,
+        "site/.claude/settings.local.json": 8
+      }
+    },
+    {
+      "checkpoint_number": 3,
+      "user_lines_added": 16,
+      "user_lines_removed": 0,
+      "agent_lines_added": 3,
+      "agent_lines_removed": 3,
+      "user_added_per_file": {
+        ".claude/settings.local.json": 8,
+        "site/.claude/settings.local.json": 8
+      }
+    },
+    {
+      "checkpoint_number": 4,
+      "user_lines_added": 16,
+      "user_lines_removed": 0,
+      "agent_lines_added": 4,
+      "agent_lines_removed": 4,
+      "user_added_per_file": {
+        ".claude/settings.local.json": 8,
+        "site/.claude/settings.local.json": 8
+      }
+    }
+  ]
+}
