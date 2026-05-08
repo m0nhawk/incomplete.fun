@@ -1,0 +1,1 @@
+Make navigation more consistent on all the pages (having the similar minimalistic and monospace design).
