@@ -4,7 +4,7 @@ import { useRef, useState, useEffect, useCallback } from 'react';
 
 type Metric = 'euclidean' | 'manhattan' | 'chebyshev' | 'minkowski3' | 'minkowski05';
 
-const METRICS: Metric[] = ['euclidean', 'manhattan', 'chebyshev', 'minkowski3', 'minkowski05'];
+const METRICS: Metric[] = ['minkowski05', 'manhattan', 'euclidean', 'minkowski3', 'chebyshev'];
 const METRIC_LABEL: Record<Metric, string> = {
   euclidean: 'L2', manhattan: 'L1', chebyshev: 'L∞', minkowski3: 'L3', minkowski05: 'L½',
 };
