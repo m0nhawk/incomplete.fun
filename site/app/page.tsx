@@ -2,12 +2,11 @@ import { PageLayout } from './components/page-layout';
 
 export default function Home() {
   return (
-    <PageLayout>
-      <h1>Pages</h1>
+    <PageLayout title="incomplete.fun">
       <ul>
-        <li><a href="/fib/10">Fibonacci</a></li>
-        <li><a href="/symmetry">Symmetry canvas</a></li>
-        <li><a href="/voronoi">Voronoi (mixed metrics)</a></li>
+        <li><a href="/fib/10">fibonacci</a></li>
+        <li><a href="/symmetry">symmetry</a></li>
+        <li><a href="/voronoi">voronoi</a></li>
       </ul>
     </PageLayout>
   );

@@ -16,10 +16,9 @@ export default async function Page({ params }: PageProps<'/fib/[n]'>) {
   const invalid = isNaN(n) || n < 0;
 
   return (
-    <PageLayout>
-      <h1>Fibonacci Calculator</h1>
+    <PageLayout title="fibonacci" back>
       {invalid ? (
-        <p>Invalid input: <code>{raw}</code>. Please provide a non-negative integer.</p>
+        <p>invalid input: <code>{raw}</code></p>
       ) : (
         <p>fib({n}) = <strong>{fib(n).toString()}</strong></p>
       )}
