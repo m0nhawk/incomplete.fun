@@ -435,11 +435,11 @@ export function VoronoiCanvas() {
 
       {/* ── hover annotation row (always visible for stable layout) ── */}
       <div style={{
-        display: 'flex', alignItems: 'baseline', flexWrap: 'wrap',
+        display: 'flex', alignItems: 'center', flexWrap: 'nowrap',
         gap: '0.3rem 0.75rem',
-        padding: '0.35rem 1rem', borderBottom: '1px solid var(--border)',
-        fontSize: '0.78rem', fontFamily: 'var(--mono)',
-        minHeight: '1.9rem',
+        padding: '0 1rem', borderBottom: '1px solid var(--border)',
+        fontSize: '0.78rem', fontFamily: 'var(--mono)', lineHeight: 1,
+        height: '1.9rem', overflow: 'hidden',
       }}>
         {hover && (
           <>
