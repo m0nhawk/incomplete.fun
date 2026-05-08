@@ -1,0 +1,9 @@
+Do the following: in the top bar put an annotation about the metrics and calculation for the position where mouse is, so it's possible to understand why it looks like the picture.
+
+---
+
+But, you remove the the original content, put both in the top bar.
+
+---
+
+Put the coordinates beforet the instructions.

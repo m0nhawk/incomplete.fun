@@ -1,0 +1,25 @@
+{
+  "cli_version": "0.5.6",
+  "checkpoint_id": "182abb60c99d",
+  "strategy": "manual-commit",
+  "branch": "master",
+  "checkpoints_count": 3,
+  "files_touched": [
+    "site/app/voronoi/voronoi-canvas.tsx"
+  ],
+  "sessions": [
+    {
+      "metadata": "/18/2abb60c99d/0/metadata.json",
+      "transcript": "/18/2abb60c99d/0/full.jsonl",
+      "content_hash": "/18/2abb60c99d/0/content_hash.txt",
+      "prompt": "/18/2abb60c99d/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 34,
+    "cache_creation_tokens": 23706,
+    "cache_read_tokens": 3191710,
+    "output_tokens": 13588,
+    "api_call_count": 27
+  }
+}
