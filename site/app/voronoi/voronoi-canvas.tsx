@@ -26,6 +26,16 @@ interface Site {
   r: number; g: number; b: number;
 }
 
+function metricDistJS(m: Metric, ax: number, ay: number): number {
+  switch (m) {
+    case 'euclidean':   return Math.sqrt(ax * ax + ay * ay);
+    case 'manhattan':   return ax + ay;
+    case 'chebyshev':   return Math.max(ax, ay);
+    case 'minkowski3':  return Math.cbrt(ax * ax * ax + ay * ay * ay);
+    case 'minkowski05': { const s = Math.sqrt(ax) + Math.sqrt(ay); return s * s; }
+  }
+}
+
 function hslToRgb(h: number, s: number, l: number): [number, number, number] {
   s /= 100; l /= 100;
   const k = (n: number) => (n + h / 30) % 12;
@@ -114,6 +124,7 @@ export function VoronoiCanvas() {
   const [sites, setSitesState]   = useState<Site[]>([]);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [currentMetric, setCurrentMetric] = useState<Metric>('euclidean');
+  const [mousePos, setMousePos] = useState<{ x: number; y: number } | null>(null);
   const siteCount = useRef(0);
 
   const dragRef = useRef<{
@@ -314,13 +325,13 @@ export function VoronoiCanvas() {
 
   const onMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
     const container = containerRef.current!;
+    const { x, y } = getPos(e);
+    setMousePos({ x, y });
     if (!dragRef.current) {
-      const { x, y } = getPos(e);
       container.style.cursor = findNear(x, y) ? 'grab' : 'crosshair';
       return;
     }
     const drag = dragRef.current;
-    const { x, y } = getPos(e);
     const dx = x - drag.startMouseX, dy = y - drag.startMouseY;
     if (!drag.moved && (Math.abs(dx) > 3 || Math.abs(dy) > 3)) {
       drag.moved = true;
@@ -375,6 +386,15 @@ export function VoronoiCanvas() {
     ? (sites.find(s => s.id === selectedId)?.metric ?? currentMetric)
     : currentMetric;
 
+  // Per-site distances at the current mouse position, for the toolbar annotation.
+  const hover = mousePos && sites.length > 0
+    ? sites.map(s => ({
+        s,
+        d: metricDistJS(s.metric, Math.abs(mousePos.x - s.x), Math.abs(mousePos.y - s.y)),
+      }))
+    : null;
+  const hoverMin = hover ? Math.min(...hover.map(h => h.d)) : Infinity;
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100dvh', background: 'var(--bg)' }}>
       <div style={{
@@ -398,7 +418,34 @@ export function VoronoiCanvas() {
           </button>
         ))}
 
-        <span style={{ color: 'var(--muted)', fontSize: '0.75rem', marginLeft: 'auto' }}>
+        {hover && (
+          <>
+            <span style={{ color: 'var(--muted)', fontSize: '0.72rem', marginLeft: 'auto' }}>
+              ({Math.round(mousePos!.x)}, {Math.round(mousePos!.y)})
+            </span>
+            {hover.map(({ s, d }) => {
+              const winner = d === hoverMin;
+              return (
+                <span key={s.id} style={{
+                  display: 'inline-flex', alignItems: 'center', gap: '0.25rem',
+                  fontSize: '0.78rem',
+                  color: winner ? 'var(--fg)' : 'var(--muted)',
+                  fontWeight: winner ? 'bold' : 'normal',
+                }}>
+                  <span style={{
+                    display: 'inline-block', width: '7px', height: '7px', borderRadius: '50%', flexShrink: 0,
+                    background: `rgb(${s.r},${s.g},${s.b})`,
+                    boxShadow: winner ? '0 0 0 1.5px var(--fg)' : 'none',
+                  }} />
+                  <span style={{ color: 'var(--muted)', fontSize: '0.72rem' }}>{METRIC_LABEL[s.metric]}</span>
+                  {Math.round(d)}
+                  {winner && <span style={{ color: 'var(--accent)' }}>◀</span>}
+                </span>
+              );
+            })}
+          </>
+        )}
+        <span style={{ color: 'var(--muted)', fontSize: '0.75rem', marginLeft: hover ? '0' : 'auto' }}>
           {selectedId ? 'drag · change metric · right-click removes' : 'click to place · right-click removes'}
         </span>
         <button onClick={() => { selectedIdRef.current = null; setSelectedId(null); siteCount.current = 0; commitSites([]); }} style={{
@@ -413,6 +460,7 @@ export function VoronoiCanvas() {
         onMouseDown={onMouseDown}
         onMouseMove={onMouseMove}
         onMouseUp={onMouseUp}
+        onMouseLeave={() => setMousePos(null)}
         onContextMenu={onContextMenu}
       >
         {/* WebGL canvas: Voronoi cells at full physical resolution */}
