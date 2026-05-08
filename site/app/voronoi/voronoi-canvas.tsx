@@ -190,7 +190,6 @@ export function VoronoiCanvas() {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [currentMetric, setCurrentMetric] = useState<Metric>('euclidean');
   const [mousePos, setMousePos] = useState<{ x: number; y: number } | null>(null);
-  const [mouseOverCanvas, setMouseOverCanvas] = useState(false);
   const siteCount = useRef(0);
 
   const dragRef = useRef<{
@@ -395,7 +394,6 @@ export function VoronoiCanvas() {
     const container = containerRef.current!;
     const { x, y } = getPos(e);
     setMousePos({ x, y });
-    setMouseOverCanvas(true);
     if (!dragRef.current) {
       container.style.cursor = findNear(x, y) ? 'grab' : 'crosshair';
       return;
@@ -463,7 +461,6 @@ export function VoronoiCanvas() {
       }))
     : null;
   const hoverMin = hover ? Math.min(...hover.map(h => h.d)) : Infinity;
-  const showMouseCoordinates = mouseOverCanvas && mousePos;
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100dvh', background: 'var(--bg)' }}>
@@ -509,75 +506,49 @@ export function VoronoiCanvas() {
         overflowX: 'hidden', overflowY: 'auto',
         fontVariantNumeric: 'tabular-nums',
       }}>
-        {hover ? (
-          <>
-            {showMouseCoordinates && (
-              <span style={{ color: 'var(--muted)', whiteSpace: 'nowrap', paddingTop: '0.35rem' }}>
-                ({Math.round(mousePos!.x)}, {Math.round(mousePos!.y)})
-              </span>
-            )}
-            <div style={{
-              display: 'grid',
-              gridColumn: showMouseCoordinates ? undefined : '1 / -1',
-              gridTemplateColumns: 'repeat(auto-fill, minmax(18rem, 1fr))',
-              gap: '0.25rem 0.75rem',
-              minWidth: 0,
-              padding: '0.25rem 0',
-            }}>
-              {hover.map(({ s, d }) => {
-                const winner = d === hoverMin;
-                const dx = Math.abs(mousePos!.x - s.x);
-                const dy = Math.abs(mousePos!.y - s.y);
-                const calculation = metricCalculation(s.metric, dx, dy);
-                return (
-                  <span key={s.id} title={`dx=${fmt(dx)}, dy=${fmt(dy)}; ${METRIC_LABEL[s.metric]}: ${METRIC_FORMULA[s.metric]}`} style={{
-                    display: 'inline-flex', alignItems: 'center', gap: '0.25rem',
-                    minWidth: 0,
-                    color: winner ? 'var(--fg)' : 'var(--muted)',
-                    fontWeight: winner ? 'bold' : 'normal',
-                    whiteSpace: 'nowrap',
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis',
-                  }}>
-                    <span style={{
-                      display: 'inline-block', width: '7px', height: '7px',
-                      borderRadius: '50%', flexShrink: 0,
-                      background: `rgb(${s.r},${s.g},${s.b})`,
-                      boxShadow: winner ? '0 0 0 1.5px var(--fg)' : 'none',
-                    }} />
-                    <span style={{ color: 'var(--muted)', fontSize: '0.72rem', flexShrink: 0 }}>{METRIC_LABEL[s.metric]}</span>
-                    <span style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>{calculation}</span>
-                    {winner && <span style={{ color: 'var(--accent)', flexShrink: 0 }}>◀</span>}
-                  </span>
-                );
-              })}
-            </div>
-          </>
-        ) : (
-          <>
-            <div style={{
-              display: 'grid',
-              gridColumn: '1 / -1',
-              gridTemplateColumns: 'repeat(auto-fill, minmax(18rem, 1fr))',
-              gap: '0.25rem 0.75rem',
-              minWidth: 0,
-              padding: '0.25rem 0',
-            }}>
-              {METRICS.map(m => (
-                <span key={m} title={`${METRIC_DESC[m]}: ${METRIC_GENERIC_CALC[m]}`} style={{
+        {/* coordinate column — always reserves space; text only appears when hovering */}
+        <span style={{ color: 'var(--muted)', whiteSpace: 'nowrap', paddingTop: '0.35rem', visibility: hover ? 'visible' : 'hidden' }}>
+          {hover ? `(${Math.round(mousePos!.x)}, ${Math.round(mousePos!.y)})` : '(0, 0)'}
+        </span>
+        {sites.length > 0 && (
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fill, minmax(18rem, 1fr))',
+            gap: '0.25rem 0.75rem',
+            minWidth: 0,
+            padding: '0.25rem 0',
+          }}>
+            {(hover ?? sites.map(s => ({ s, d: null as number | null }))).map(({ s, d }) => {
+              const winner = d !== null && d === hoverMin;
+              const content = hover
+                ? metricCalculation(s.metric, Math.abs(mousePos!.x - s.x), Math.abs(mousePos!.y - s.y))
+                : METRIC_GENERIC_CALC[s.metric];
+              const titleStr = hover
+                ? `dx=${fmt(Math.abs(mousePos!.x - s.x))}, dy=${fmt(Math.abs(mousePos!.y - s.y))}; ${METRIC_LABEL[s.metric]}: ${METRIC_FORMULA[s.metric]}`
+                : `${METRIC_DESC[s.metric]}: ${METRIC_FORMULA[s.metric]}`;
+              return (
+                <span key={s.id} title={titleStr} style={{
                   display: 'inline-flex', alignItems: 'center', gap: '0.25rem',
                   minWidth: 0,
-                  color: 'var(--muted)',
+                  color: winner ? 'var(--fg)' : 'var(--muted)',
+                  fontWeight: winner ? 'bold' : 'normal',
                   whiteSpace: 'nowrap',
                   overflow: 'hidden',
                   textOverflow: 'ellipsis',
                 }}>
-                  <span style={{ color: 'var(--muted)', fontSize: '0.72rem', flexShrink: 0 }}>{METRIC_LABEL[m]}</span>
-                  <span style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>{METRIC_GENERIC_CALC[m]}</span>
+                  <span style={{
+                    display: 'inline-block', width: '7px', height: '7px',
+                    borderRadius: '50%', flexShrink: 0,
+                    background: `rgb(${s.r},${s.g},${s.b})`,
+                    boxShadow: winner ? '0 0 0 1.5px var(--fg)' : 'none',
+                  }} />
+                  <span style={{ color: 'var(--muted)', fontSize: '0.72rem', flexShrink: 0 }}>{METRIC_LABEL[s.metric]}</span>
+                  <span style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>{content}</span>
+                  {winner && <span style={{ color: 'var(--accent)', flexShrink: 0 }}>◀</span>}
                 </span>
-              ))}
-            </div>
-          </>
+              );
+            })}
+          </div>
         )}
       </div>
 
@@ -587,7 +558,7 @@ export function VoronoiCanvas() {
         onMouseDown={onMouseDown}
         onMouseMove={onMouseMove}
         onMouseUp={onMouseUp}
-        onMouseLeave={() => setMouseOverCanvas(false)}
+        onMouseLeave={() => setMousePos(null)}
         onContextMenu={onContextMenu}
       >
         {/* WebGL canvas: Voronoi cells at full physical resolution */}
