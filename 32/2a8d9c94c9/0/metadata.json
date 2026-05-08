@@ -1,0 +1,94 @@
+{
+  "cli_version": "0.5.6",
+  "checkpoint_id": "322a8d9c94c9",
+  "session_id": "019e057d-675e-76c1-8799-c13b0ecaed31",
+  "strategy": "manual-commit",
+  "created_at": "2026-05-08T03:11:43.305759739Z",
+  "branch": "master",
+  "checkpoints_count": 4,
+  "files_touched": [
+    "site/app/voronoi/voronoi-canvas.tsx"
+  ],
+  "agent": "Codex",
+  "model": "gpt-5.5",
+  "turn_id": "accd79a5c87d",
+  "token_usage": {
+    "input_tokens": 86878,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 674048,
+    "output_tokens": 6659,
+    "api_call_count": 26
+  },
+  "session_metrics": {
+    "turn_count": 4
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-05-08T03:11:43.298839154Z",
+    "agent_lines": 68,
+    "agent_removed": 27,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 68,
+    "total_lines_changed": 95,
+    "agent_percentage": 100,
+    "metric_version": 2
+  },
+  "prompt_attributions": [
+    {
+      "checkpoint_number": 1,
+      "user_lines_added": 16,
+      "user_lines_removed": 0,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0,
+      "user_added_per_file": {
+        ".claude/settings.local.json": 8,
+        "site/.claude/settings.local.json": 8
+      }
+    },
+    {
+      "checkpoint_number": 2,
+      "user_lines_added": 16,
+      "user_lines_removed": 0,
+      "agent_lines_added": 17,
+      "agent_lines_removed": 1,
+      "user_added_per_file": {
+        ".claude/settings.local.json": 8,
+        "site/.claude/settings.local.json": 8
+      }
+    },
+    {
+      "checkpoint_number": 3,
+      "user_lines_added": 16,
+      "user_lines_removed": 0,
+      "agent_lines_added": 37,
+      "agent_lines_removed": 2,
+      "user_added_per_file": {
+        ".claude/settings.local.json": 8,
+        "site/.claude/settings.local.json": 8
+      }
+    },
+    {
+      "checkpoint_number": 4,
+      "user_lines_added": 16,
+      "user_lines_removed": 0,
+      "agent_lines_added": 34,
+      "agent_lines_removed": 5,
+      "user_added_per_file": {
+        ".claude/settings.local.json": 8,
+        "site/.claude/settings.local.json": 8
+      }
+    },
+    {
+      "checkpoint_number": 5,
+      "user_lines_added": 16,
+      "user_lines_removed": 0,
+      "agent_lines_added": 68,
+      "agent_lines_removed": 27,
+      "user_added_per_file": {
+        ".claude/settings.local.json": 8,
+        "site/.claude/settings.local.json": 8
+      }
+    }
+  ]
+}
