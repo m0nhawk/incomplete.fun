@@ -1,0 +1,9 @@
+Work on app/voronoi: make the second top bar show the same content when curson is not over the canvas, but without the coordinates.
+
+---
+
+Make sure it's on the same position and remove the initial metrics in the second top bar.
+
+---
+
+Include the coordinates, you removed them.
