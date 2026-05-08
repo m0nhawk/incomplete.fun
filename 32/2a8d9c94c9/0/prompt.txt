@@ -1,13 +1,1 @@
-Let's work on app/voronoi/. There is a second top bar with coordinates of mouse and calculation of metrics for each point. Add explanation to the calculation of metrics.
-
----
-
-I want to show actual calculations for metrics.
-
----
-
-Let's remove "d = metric(dx, dy); min wins" and make sure that all the points is shown correctly if there are a lot of them (multi-lines? or suggest your way)
-
----
-
-Nice! Now, can you make it so it won't jump all over the place and will have some stable places for all points when changing coordinates?
+Commit changes.
