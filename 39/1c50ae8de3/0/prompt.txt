@@ -1,0 +1,1 @@
+Make sure that the header actually keep it's height between pages.
