@@ -1,0 +1,9 @@
+Why the line is not a line, but increases in width?
+
+---
+
+No, it isn't. When I put 3 dots and 2 of them really close, the line increases in width closer to the ends of the line.
+
+---
+
+/commit
