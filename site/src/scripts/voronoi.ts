@@ -1,3 +1,5 @@
+export {};
+
 type Metric = "euclidean" | "manhattan" | "chebyshev" | "minkowski3" | "minkowski05";
 
 interface Site {
