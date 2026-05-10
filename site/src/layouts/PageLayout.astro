@@ -1,0 +1,23 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+
+interface Props {
+  title?: string;
+  pageTitle?: string;
+  back?: boolean;
+}
+
+const { title = "incomplete.fun", pageTitle = title, back = false } = Astro.props;
+---
+
+<BaseLayout title={pageTitle}>
+  <div class="app-shell">
+    <div class="topbar">
+      {back && <a class="back-link" href="/" aria-label="Back to home">←</a>}
+      {title && <span><strong>{title}</strong></span>}
+    </div>
+    <main class="page">
+      <slot />
+    </main>
+  </div>
+</BaseLayout>

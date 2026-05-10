@@ -1,0 +1,73 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="symmetry - incomplete.fun">
+  <div class="canvas-app" id="symmetry-app">
+    <div class="topbar" style="gap: 1.5rem;">
+      <a class="back-link" href="/" aria-label="Back to home">←</a>
+      <span><strong>symmetry</strong></span>
+
+      <label class="control-label">
+        n=
+        <input id="symmetry-segments" type="number" min="1" max="36" value="6" />
+      </label>
+
+      <label class="control-label" style="cursor: pointer;">
+        <input id="symmetry-mirror" type="checkbox" />
+        mirror
+      </label>
+
+      <label class="control-label">
+        color
+        <input id="symmetry-color" type="color" value="#4d9fff" />
+      </label>
+
+      <label class="control-label">
+        width
+        <input id="symmetry-width" type="range" min="1" max="20" value="2" />
+        <span id="symmetry-width-value" style="color: var(--muted); min-width: 1.5rem;">2</span>
+      </label>
+
+      <button class="toolbar-button" id="symmetry-clear" type="button">clear</button>
+    </div>
+
+    <div class="canvas-stage">
+      <canvas id="symmetry-canvas" style="display: block; cursor: crosshair; touch-action: none;"></canvas>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  #symmetry-segments {
+    width: 3rem;
+    background: var(--bg);
+    color: var(--fg);
+    border: 1px solid var(--border);
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    padding: 0.1rem 0.3rem;
+  }
+
+  #symmetry-mirror,
+  #symmetry-width {
+    accent-color: var(--accent);
+  }
+
+  #symmetry-color {
+    width: 2rem;
+    height: 1.4rem;
+    border: 1px solid var(--border);
+    padding: 0;
+    background: none;
+    cursor: pointer;
+  }
+
+  #symmetry-width {
+    width: 5rem;
+  }
+</style>
+
+<script>
+  import "../scripts/symmetry.ts";
+</script>
