@@ -1,0 +1,52 @@
+{
+  "cli_version": "0.5.6",
+  "checkpoint_id": "460099264db8",
+  "strategy": "manual-commit",
+  "branch": "master",
+  "checkpoints_count": 2,
+  "files_touched": [
+    ".envrc",
+    "site/.gitignore",
+    "site/AGENTS.md",
+    "site/CLAUDE.md",
+    "site/README.md",
+    "site/app/components/page-layout.tsx",
+    "site/app/fib/[n]/page.tsx",
+    "site/app/globals.css",
+    "site/app/layout.tsx",
+    "site/app/page.tsx",
+    "site/app/symmetry/page.tsx",
+    "site/app/symmetry/symmetry-canvas.tsx",
+    "site/app/voronoi/page.tsx",
+    "site/app/voronoi/voronoi-canvas.tsx",
+    "site/bun.lock",
+    "site/next.config.ts",
+    "site/package.json",
+    "site/postcss.config.mjs",
+    "site/src/layouts/BaseLayout.astro",
+    "site/src/layouts/PageLayout.astro",
+    "site/src/pages/fib/[n].astro",
+    "site/src/pages/index.astro",
+    "site/src/pages/symmetry.astro",
+    "site/src/pages/voronoi.astro",
+    "site/src/scripts/symmetry.ts",
+    "site/src/scripts/voronoi.ts",
+    "site/src/styles/global.css",
+    "site/tsconfig.json"
+  ],
+  "sessions": [
+    {
+      "metadata": "/46/0099264db8/0/metadata.json",
+      "transcript": "/46/0099264db8/0/full.jsonl",
+      "content_hash": "/46/0099264db8/0/content_hash.txt",
+      "prompt": "/46/0099264db8/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 148462,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 2259968,
+    "output_tokens": 20435,
+    "api_call_count": 47
+  }
+}
