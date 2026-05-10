@@ -1,0 +1,1 @@
+Simplify and make it modular: scripts/symmetry.ts
