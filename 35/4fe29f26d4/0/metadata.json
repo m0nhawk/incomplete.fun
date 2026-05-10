@@ -1,0 +1,53 @@
+{
+  "cli_version": "0.5.6",
+  "checkpoint_id": "354fe29f26d4",
+  "session_id": "019e0f2f-de80-7a02-96a9-48039ef996dc",
+  "strategy": "manual-commit",
+  "created_at": "2026-05-10T00:28:52.946741427Z",
+  "branch": "master",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "site/src/scripts/symmetry.ts",
+    "site/src/scripts/voronoi.ts"
+  ],
+  "agent": "Codex",
+  "model": "gpt-5.5",
+  "turn_id": "a58cc8773fdd",
+  "checkpoint_transcript_start": 354,
+  "transcript_lines_at_start": 354,
+  "token_usage": {
+    "input_tokens": 9295,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 251520,
+    "output_tokens": 363,
+    "api_call_count": 4
+  },
+  "session_metrics": {
+    "turn_count": 7
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-05-10T00:28:52.928781653Z",
+    "agent_lines": 4,
+    "agent_removed": 0,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 4,
+    "total_lines_changed": 4,
+    "agent_percentage": 100,
+    "metric_version": 2
+  },
+  "prompt_attributions": [
+    {
+      "checkpoint_number": 1,
+      "user_lines_added": 16,
+      "user_lines_removed": 0,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0,
+      "user_added_per_file": {
+        ".claude/settings.local.json": 8,
+        "old_site/.claude/settings.local.json": 8
+      }
+    }
+  ]
+}

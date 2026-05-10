@@ -1,0 +1,5 @@
+No, commit everything.
+
+---
+
+I have this issue in symmetry.ts/voronoi.ts: Cannot redeclare block-scoped variable 'clearButton'.
