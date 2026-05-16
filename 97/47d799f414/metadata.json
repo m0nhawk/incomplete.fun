@@ -1,0 +1,18 @@
+{
+  "cli_version": "0.6.1",
+  "checkpoint_id": "9747d799f414",
+  "strategy": "manual-commit",
+  "branch": "master",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "devenv.lock"
+  ],
+  "sessions": [
+    {
+      "metadata": "/97/47d799f414/0/metadata.json",
+      "transcript": "/97/47d799f414/0/full.jsonl",
+      "content_hash": "/97/47d799f414/0/content_hash.txt",
+      "prompt": ""
+    }
+  ]
+}
