@@ -1,32 +1,19 @@
 ---
-import PageLayout from "../../layouts/PageLayout.astro";
+import PageLayout from '../../layouts/PageLayout.astro';
 
 export function getStaticPaths() {
-  return Array.from({ length: 101 }, (_, n) => ({
-    params: { n: String(n) },
-  }));
+  return Array.from({ length: 101 }, (_, n) => ({ params: { n: String(n) } }));
 }
 
 function fib(n: number): bigint {
-  if (n <= 0) return 0n;
-  if (n === 1) return 1n;
-  let a = 0n;
-  let b = 1n;
-  for (let i = 2; i <= n; i++) {
-    [a, b] = [b, a + b];
-  }
-  return b;
+  let a = 0n, b = 1n;
+  for (let i = 0; i < n; i++) [a, b] = [b, a + b];
+  return a;
 }
 
-const raw = Astro.params.n ?? "";
-const n = parseInt(raw, 10);
-const invalid = Number.isNaN(n) || n < 0;
+const n = parseInt(Astro.params.n, 10);
 ---
 
-<PageLayout title="fibonacci" pageTitle="fibonacci - incomplete.fun" back>
-  {invalid ? (
-    <p>invalid input: <code>{raw}</code></p>
-  ) : (
-    <p>fib({n}) = <strong>{fib(n).toString()}</strong></p>
-  )}
+<PageLayout name="fibonacci" back>
+  <p>fib({n}) = <strong>{fib(n).toString()}</strong></p>
 </PageLayout>
