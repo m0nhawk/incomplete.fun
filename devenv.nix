@@ -9,11 +9,11 @@
 
   # https://devenv.sh/languages/
   languages.javascript.enable = true;
-  # languages.javascript.nodejs.enable = false;
-  languages.javascript.bun.enable = true;
+  languages.javascript.nodejs.enable = true;
+  languages.javascript.pnpm.enable = true;
 
   # https://devenv.sh/processes/
-  processes.dev.exec = "bun --cwd=site dev";
+  processes.dev.exec = "pnpm --dir=site dev";
 
   # https://devenv.sh/services/
   # services.postgres.enable = true;
@@ -26,7 +26,8 @@
   # https://devenv.sh/basics/
   enterShell = ''
     hello         # Run scripts directly
-    bun --version # Use packages
+    node --version
+    pnpm --version
   '';
 
   # https://devenv.sh/tasks/
@@ -38,7 +39,8 @@
   # https://devenv.sh/tests/
   enterTest = ''
     echo "Running tests"
-    bun --version | grep --color=auto "${pkgs.bun.version}"
+    node --version | grep --color=auto "${pkgs.nodejs.version}"
+    pnpm --version | grep --color=auto "${pkgs.pnpm.version}"
   '';
 
   # https://devenv.sh/git-hooks/
