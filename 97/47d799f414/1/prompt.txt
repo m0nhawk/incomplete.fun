@@ -1,0 +1,9 @@
+astro-rewrite
+
+---
+
+astro-rewrite
+
+---
+
+Rewrite the whole project in idiomatic devenv + pnpm + Astro.
