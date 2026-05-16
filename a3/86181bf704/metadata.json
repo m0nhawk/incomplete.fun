@@ -1,0 +1,42 @@
+{
+  "cli_version": "0.6.1",
+  "checkpoint_id": "a386181bf704",
+  "strategy": "manual-commit",
+  "branch": "master",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "old_site/.gitignore",
+    "old_site/AGENTS.md",
+    "old_site/CLAUDE.md",
+    "old_site/README.md",
+    "old_site/app/components/page-layout.tsx",
+    "old_site/app/fib/[n]/page.tsx",
+    "old_site/app/globals.css",
+    "old_site/app/layout.tsx",
+    "old_site/app/page.tsx",
+    "old_site/app/symmetry/page.tsx",
+    "old_site/app/symmetry/symmetry-canvas.tsx",
+    "old_site/app/voronoi/page.tsx",
+    "old_site/app/voronoi/voronoi-canvas.tsx",
+    "old_site/bun.lock",
+    "old_site/next.config.ts",
+    "old_site/package.json",
+    "old_site/postcss.config.mjs",
+    "old_site/tsconfig.json"
+  ],
+  "sessions": [
+    {
+      "metadata": "/a3/86181bf704/0/metadata.json",
+      "transcript": "/a3/86181bf704/0/full.jsonl",
+      "content_hash": "/a3/86181bf704/0/content_hash.txt",
+      "prompt": "/a3/86181bf704/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 94949,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 130816,
+    "output_tokens": 2167,
+    "api_call_count": 6
+  }
+}

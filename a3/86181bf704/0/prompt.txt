@@ -1,0 +1,1 @@
+Move this project from bun in devenv to standard Next.js setup: probably Node.js + pnpm.
