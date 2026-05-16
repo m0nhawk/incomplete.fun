@@ -1,1 +1,29 @@
-Migrate this project from devenv + bun to standard devenv + Node.js + pnpm.
+$ship
+
+---
+
+<skill>
+<name>ship</name>
+<path>/home/resu/.agents/skills/ship/SKILL.md</path>
+---
+name: ship
+description: Use when the user asks to ship changes, meaning commit local changes and push them to the remote. Equivalent to commit plus push.
+---
+
+You are helping ship changes by committing and pushing.
+
+Steps:
+1. Follow the `commit` skill workflow:
+   - inspect status and diffs
+   - stage appropriate files
+   - create a concise commit
+2. Then follow the `push` skill workflow:
+   - identify current branch
+   - push to the configured upstream
+   - if needed, set upstream with `git push -u origin <current-branch>`
+3. Report:
+   - commit hash
+   - commit message
+   - branch pushed
+
+</skill>
