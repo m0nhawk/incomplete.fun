@@ -31,6 +31,12 @@ const MAX_BALLS = 30;
 const DEFAULT_LAUNCH_SPEED = 18;
 const BLAST_HORIZONTAL_FORCE = 3;
 const BLAST_VERTICAL_FORCE = 2.2;
+const GLASS_ROWS = 11;
+const GLASS_COLS = 8;
+const MULTIPLIER_SIDE_OFFSET = 0.28;
+const MULTIPLIER_SIDE_HEIGHT = 145;
+const MULTIPLIER_MIDDLE_HEIGHT = 120;
+const MULTIPLIER_VELOCITY_DAMPING = 0.92;
 const MILLISECONDS_PER_SECOND = 1000;
 const PHYSICS_STEPS_PER_SECOND = 120;
 
@@ -116,13 +122,11 @@ if (canvas && status && resetButton && speedInput) {
   }
 
   function buildGlass(centerX: number, centerY: number, width: number, height: number) {
-    const rows = 11;
-    const cols = 8;
-    const shardWidth = width / cols;
-    const shardHeight = height / rows;
+    const shardWidth = width / GLASS_COLS;
+    const shardHeight = height / GLASS_ROWS;
 
-    for (let row = 0; row < rows; row++) {
-      for (let col = 0; col < cols; col++) {
+    for (let row = 0; row < GLASS_ROWS; row++) {
+      for (let col = 0; col < GLASS_COLS; col++) {
         const shard = Bodies.rectangle(
           centerX - width / 2 + shardWidth * (col + 0.5),
           centerY - height / 2 + shardHeight * (row + 0.5),
@@ -147,9 +151,9 @@ if (canvas && status && resetButton && speedInput) {
 
   function buildMultipliers(centerX: number, centerY: number, width: number) {
     const points = [
-      { x: centerX - width * 0.28, y: centerY - 145 },
-      { x: centerX, y: centerY - 120 },
-      { x: centerX + width * 0.28, y: centerY - 145 },
+      { x: centerX - width * MULTIPLIER_SIDE_OFFSET, y: centerY - MULTIPLIER_SIDE_HEIGHT },
+      { x: centerX, y: centerY - MULTIPLIER_MIDDLE_HEIGHT },
+      { x: centerX + width * MULTIPLIER_SIDE_OFFSET, y: centerY - MULTIPLIER_SIDE_HEIGHT },
     ];
     for (const point of points) {
       const zone = Bodies.circle(point.x, point.y, 16, {
@@ -265,7 +269,12 @@ if (canvas && status && resetButton && speedInput) {
         zone.body.render.fillStyle = "#6b5f35";
         zone.body.render.strokeStyle = "#8b7b42";
 
-        spawnBall(ball.position.x, ball.position.y, -ball.velocity.x * 0.92, ball.velocity.y * 0.92);
+        spawnBall(
+          ball.position.x,
+          ball.position.y,
+          -ball.velocity.x * MULTIPLIER_VELOCITY_DAMPING,
+          ball.velocity.y * MULTIPLIER_VELOCITY_DAMPING,
+        );
       }
     }
     updateStatus();
