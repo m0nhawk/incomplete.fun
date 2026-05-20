@@ -45,7 +45,7 @@ if (canvas && status && resetButton && speedInput) {
   const runner = Runner.create({
     delta: MILLISECONDS_PER_SECOND / PHYSICS_STEPS_PER_SECOND,
   });
-  const getPixelRatio = () => Math.min(window.devicePixelRatio || 1, MAX_PIXEL_RATIO);
+  const getClampedPixelRatio = () => Math.min(window.devicePixelRatio || 1, MAX_PIXEL_RATIO);
 
   const render = Render.create({
     canvas,
@@ -53,7 +53,7 @@ if (canvas && status && resetButton && speedInput) {
     options: {
       background: "#04070f",
       wireframes: false,
-      pixelRatio: getPixelRatio(),
+      pixelRatio: getClampedPixelRatio(),
       width: 0,
       height: 0,
     },
@@ -64,7 +64,7 @@ if (canvas && status && resetButton && speedInput) {
   let shards: GlassShard[] = [];
   let multipliers: MultiplierZone[] = [];
   let boundaries: Matter.Body[] = [];
-  const ballMultiplierHits = new Map<number, Set<number>>();
+  const ballActivatedMultipliers = new Map<number, Set<number>>();
 
   function readSpeed() {
     const parsed = Number(speedInput.value);
@@ -95,7 +95,7 @@ if (canvas && status && resetButton && speedInput) {
       World.remove(world, boundaries);
       boundaries = [];
     }
-    ballMultiplierHits.clear();
+    ballActivatedMultipliers.clear();
   }
 
   function spawnBall(x: number, y: number, velocityX: number, velocityY: number) {
@@ -220,7 +220,7 @@ if (canvas && status && resetButton && speedInput) {
 
     render.options.width = viewport.width;
     render.options.height = viewport.height;
-    const pixelRatio = getPixelRatio();
+    const pixelRatio = getClampedPixelRatio();
     render.canvas.width = viewport.width * pixelRatio;
     render.canvas.height = viewport.height * pixelRatio;
     render.canvas.style.width = `${viewport.width}px`;
@@ -256,10 +256,10 @@ if (canvas && status && resetButton && speedInput) {
         const ball = getBallFromPair(pair, zone.body);
         if (!ball || !balls.includes(ball)) continue;
 
-        const seenByBall = ballMultiplierHits.get(ball.id) ?? new Set<number>();
-        if (seenByBall.has(zone.body.id)) continue;
-        seenByBall.add(zone.body.id);
-        ballMultiplierHits.set(ball.id, seenByBall);
+        const triggeredMultipliers = ballActivatedMultipliers.get(ball.id) ?? new Set<number>();
+        if (triggeredMultipliers.has(zone.body.id)) continue;
+        triggeredMultipliers.add(zone.body.id);
+        ballActivatedMultipliers.set(ball.id, triggeredMultipliers);
 
         zone.used = true;
         zone.body.render.fillStyle = "#6b5f35";
@@ -283,7 +283,7 @@ if (canvas && status && resetButton && speedInput) {
       ) {
         World.remove(world, ball);
         balls.splice(i, 1);
-        ballMultiplierHits.delete(ball.id);
+        ballActivatedMultipliers.delete(ball.id);
         changed = true;
       }
     }
