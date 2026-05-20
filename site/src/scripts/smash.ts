@@ -28,6 +28,9 @@ const speedInput = document.querySelector<HTMLInputElement>("#smash-speed-input"
 const MAX_PIXEL_RATIO = 2;
 const BALL_RADIUS = 8;
 const MAX_BALLS = 30;
+const DEFAULT_LAUNCH_SPEED = 18;
+const BLAST_HORIZONTAL_FORCE = 3;
+const BLAST_VERTICAL_FORCE = 2.2;
 const MILLISECONDS_PER_SECOND = 1000;
 const PHYSICS_STEPS_PER_SECOND = 120;
 
@@ -65,8 +68,14 @@ if (canvas && status && resetButton && speedInput) {
 
   function readSpeed() {
     const parsed = Number(speedInput.value);
-    if (!Number.isFinite(parsed)) return 18;
+    if (!Number.isFinite(parsed)) return DEFAULT_LAUNCH_SPEED;
     return Math.max(8, Math.min(30, parsed));
+  }
+
+  function getBallFromPair(pair: Matter.Pair, zoneBody: Matter.Body) {
+    if (pair.bodyA === zoneBody && balls.includes(pair.bodyB)) return pair.bodyB;
+    if (pair.bodyB === zoneBody && balls.includes(pair.bodyA)) return pair.bodyA;
+    return null;
   }
 
   function clearWorld() {
@@ -233,8 +242,8 @@ if (canvas && status && resetButton && speedInput) {
         shard.broken = true;
         Body.setStatic(shard.body, false);
         shard.body.render.fillStyle = "#d9e6ff";
-        const blastX = (Math.random() - 0.5) * 3;
-        const blastY = -Math.random() * 2.2;
+        const blastX = (Math.random() - 0.5) * BLAST_HORIZONTAL_FORCE;
+        const blastY = -Math.random() * BLAST_VERTICAL_FORCE;
         Body.setVelocity(shard.body, {
           x: shard.body.velocity.x + blastX,
           y: shard.body.velocity.y + blastY,
@@ -244,7 +253,7 @@ if (canvas && status && resetButton && speedInput) {
       for (let i = 0; i < multipliers.length; i++) {
         const zone = multipliers[i];
         if (zone.used) continue;
-        const ball = pair.bodyA === zone.body ? pair.bodyB : pair.bodyB === zone.body ? pair.bodyA : null;
+        const ball = getBallFromPair(pair, zone.body);
         if (!ball || !balls.includes(ball)) continue;
 
         const seenByBall = ballMultiplierHits.get(ball.id) ?? new Set<number>();
