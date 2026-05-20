@@ -219,7 +219,7 @@ if (canvas && status && resetButton) {
     const distanceFromCenter = Math.hypot(ball.position.x - centerX, ball.position.y - centerY);
     let removedRings = false;
     for (const ring of rings) {
-      if (!ring.escaped && distanceFromCenter > ring.radius + RING_THICKNESS) {
+      if (!ring.escaped && distanceFromCenter > ring.radius + RING_THICKNESS + BALL_RADIUS) {
         ring.escaped = true;
         World.remove(world, ring.parts);
         ringSegments = ringSegments.filter((segment) => segment.ringId !== ring.id);
@@ -231,7 +231,7 @@ if (canvas && status && resetButton) {
     }
 
     const velocityMagnitude = Math.hypot(ball.velocity.x, ball.velocity.y);
-    if (needsSpeedCorrection && velocityMagnitude > 0 && ballSpeed > 0) {
+    if (needsSpeedCorrection && velocityMagnitude > 0) {
       Body.setVelocity(ball, {
         x: (ball.velocity.x / velocityMagnitude) * ballSpeed,
         y: (ball.velocity.y / velocityMagnitude) * ballSpeed,
