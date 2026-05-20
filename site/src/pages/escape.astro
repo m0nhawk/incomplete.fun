@@ -1,0 +1,39 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="escape - incomplete.fun">
+  <div class="canvas-app" id="escape-app">
+    <div class="topbar">
+      <a class="back-link" href="/" aria-label="Back to home">←</a>
+      <span><strong>escape</strong></span>
+      <span style="color: var(--border);">|</span>
+      <span id="escape-status">rings: 0</span>
+      <button class="toolbar-button" id="escape-reset" type="button">randomize</button>
+    </div>
+    <div class="canvas-stage">
+      <canvas id="escape-canvas" style="display: block; width: 100%; height: 100%;"></canvas>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  #escape-app {
+    background: #080a2a;
+  }
+
+  #escape-status {
+    color: #d9e0ff;
+    margin-left: auto;
+    font-size: 0.8rem;
+  }
+
+  #escape-reset {
+    color: #d9e0ff;
+    border-color: #3a4a8f;
+  }
+</style>
+
+<script>
+  import '../scripts/escape.ts';
+</script>
