@@ -30,12 +30,19 @@ const RING_SEGMENTS = 96;
 const RING_THICKNESS = 8;
 const BALL_RADIUS = 7;
 const MAX_PIXEL_RATIO = 2;
+const PHYSICS_STEPS_PER_SECOND = 120;
 
 if (canvas && status && resetButton && ringCountInput && speedInput) {
   const engine = Engine.create({
     gravity: { x: 0, y: 0 },
+    positionIterations: 10,
+    velocityIterations: 8,
+    constraintIterations: 4,
   });
   const world = engine.world;
+  const runner = Runner.create({
+    delta: 1000 / PHYSICS_STEPS_PER_SECOND,
+  });
   const getPixelRatio = () => Math.min(window.devicePixelRatio || 1, MAX_PIXEL_RATIO);
 
   const render = Render.create({
@@ -122,6 +129,7 @@ if (canvas && status && resetButton && ringCountInput && speedInput) {
         {
           isStatic: true,
           angle: angle + Math.PI / 2,
+          slop: 0,
           render: {
             fillStyle: "#2e5cff",
             strokeStyle: "#2e5cff",
@@ -168,6 +176,7 @@ if (canvas && status && resetButton && ringCountInput && speedInput) {
       frictionAir: 0,
       friction: 0,
       frictionStatic: 0,
+      slop: 0,
       render: {
         fillStyle: "#ffffff",
       },
@@ -254,5 +263,5 @@ if (canvas && status && resetButton && ringCountInput && speedInput) {
 
   resize();
   Render.run(render);
-  Runner.run(Runner.create(), engine);
+  Runner.run(runner, engine);
 }
