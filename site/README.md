@@ -17,6 +17,7 @@ pnpm preview
 - `/`
 - `/symmetry`
 - `/voronoi`
+- `/escape`
 - `/fib/0` through `/fib/100`
 
 The Fibonacci route is statically generated. Increase the range in `src/pages/fib/[n].astro` if more numbered pages are needed.
