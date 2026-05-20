@@ -1,0 +1,61 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="smash - incomplete.fun">
+  <div class="canvas-app" id="smash-app">
+    <div class="topbar">
+      <a class="back-link" href="/" aria-label="Back to home">←</a>
+      <span><strong>smash</strong></span>
+      <span style="color: var(--border);">|</span>
+      <label class="control" for="smash-speed-input">
+        speed
+        <input id="smash-speed-input" type="number" min="8" max="30" step="1" value="18" />
+      </label>
+      <span id="smash-status">balls: 0 · glass: 0 · x2: 0</span>
+      <button class="toolbar-button" id="smash-reset" type="button">reset</button>
+    </div>
+    <div class="canvas-stage">
+      <canvas id="smash-canvas" style="display: block; width: 100%; height: 100%;"></canvas>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  #smash-app {
+    background: #04070f;
+  }
+
+  #smash-status {
+    color: #d9e0ff;
+    margin-left: auto;
+    font-size: 0.8rem;
+  }
+
+  .control {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    color: #d9e0ff;
+    font-size: 0.8rem;
+  }
+
+  .control input {
+    width: 3.2rem;
+    height: 1.5rem;
+    border: 1px solid #46588f;
+    border-radius: 6px;
+    background: #111a2f;
+    color: #d9e0ff;
+    padding: 0 0.35rem;
+  }
+
+  #smash-reset {
+    color: #d9e0ff;
+    border-color: #46588f;
+  }
+</style>
+
+<script>
+  import '../scripts/smash.ts';
+</script>
