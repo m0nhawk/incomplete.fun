@@ -20,6 +20,7 @@ interface RingSegment {
 const canvas = document.querySelector<HTMLCanvasElement>("#escape-canvas");
 const status = document.querySelector<HTMLElement>("#escape-status");
 const resetButton = document.querySelector<HTMLButtonElement>("#escape-reset");
+const RING_COUNT_RANGE = { min: 4, maxExclusive: 7 };
 
 if (canvas && status && resetButton) {
   const engine = Engine.create({
@@ -34,8 +35,8 @@ if (canvas && status && resetButton) {
       background: "#080a2a",
       wireframes: false,
       pixelRatio: window.devicePixelRatio || 1,
-      width: 1,
-      height: 1,
+      width: 0,
+      height: 0,
     },
   });
 
@@ -131,7 +132,7 @@ if (canvas && status && resetButton) {
     const centerX = viewport.width / 2;
     const centerY = viewport.height / 2;
     const minEdge = Math.min(viewport.width, viewport.height);
-    const ringCount = Math.floor(rand(4, 7));
+    const ringCount = Math.floor(rand(RING_COUNT_RANGE.min, RING_COUNT_RANGE.maxExclusive));
     const spacing = minEdge / (ringCount * 2.2);
 
     for (let i = 0; i < ringCount; i++) {
