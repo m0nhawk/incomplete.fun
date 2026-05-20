@@ -28,12 +28,15 @@ interface Ring {
 const canvas = document.querySelector<HTMLCanvasElement>("#escape-canvas");
 const status = document.querySelector<HTMLElement>("#escape-status");
 const resetButton = document.querySelector<HTMLButtonElement>("#escape-reset");
-const RING_COUNT_MIN = 4;
-const RING_COUNT_MAX = 6;
+const ringCountInput = document.querySelector<HTMLInputElement>("#escape-rings-input");
+const speedInput = document.querySelector<HTMLInputElement>("#escape-speed-input");
+const DEFAULT_RING_COUNT = 5;
+const DEFAULT_BALL_SPEED = 9;
+const RING_SEGMENTS = 96;
 const RING_THICKNESS = 8;
 const BALL_RADIUS = 7;
 
-if (canvas && status && resetButton) {
+if (canvas && status && resetButton && ringCountInput && speedInput) {
   const engine = Engine.create({
     gravity: { x: 0, y: 0 },
   });
@@ -62,8 +65,10 @@ if (canvas && status && resetButton) {
     return min + Math.random() * (max - min);
   }
 
-  function randInt(min: number, max: number) {
-    return Math.floor(rand(min, max + 1));
+  function readInputNumber(input: HTMLInputElement, fallback: number, min: number, max: number) {
+    const parsed = Number(input.value);
+    if (!Number.isFinite(parsed)) return fallback;
+    return Math.max(min, Math.min(max, parsed));
   }
 
   function removeBodies() {
@@ -99,7 +104,7 @@ if (canvas && status && resetButton) {
 
   function createRing(radius: number, thickness: number, gap: number, speed: number, ringId: number): Ring {
     const pieces: Matter.Body[] = [];
-    const segments = 48;
+    const segments = RING_SEGMENTS;
     const gapCenter = Math.floor(rand(0, segments));
     const gapHalf = Math.max(2, Math.floor((segments * gap) / 2));
     const centerX = viewport.width / 2;
@@ -124,8 +129,8 @@ if (canvas && status && resetButton) {
           angle: angle + Math.PI / 2,
           render: {
             fillStyle: "#2e5cff",
-            strokeStyle: "#ff2f93",
-            lineWidth: 1,
+            strokeStyle: "#2e5cff",
+            lineWidth: 0,
           },
         },
       );
@@ -155,7 +160,7 @@ if (canvas && status && resetButton) {
     const centerX = viewport.width / 2;
     const centerY = viewport.height / 2;
     const minEdge = Math.min(viewport.width, viewport.height);
-    const ringCount = randInt(RING_COUNT_MIN, RING_COUNT_MAX);
+    const ringCount = Math.round(readInputNumber(ringCountInput, DEFAULT_RING_COUNT, 1, 12));
     const spacing = minEdge / (ringCount * 2.2);
 
     for (let i = 0; i < ringCount; i++) {
@@ -177,7 +182,7 @@ if (canvas && status && resetButton) {
     });
 
     const launchAngle = rand(0, Math.PI * 2);
-    ballSpeed = rand(8, 10);
+    ballSpeed = readInputNumber(speedInput, DEFAULT_BALL_SPEED, 1, 20);
     Body.setVelocity(ball, {
       x: Math.cos(launchAngle) * ballSpeed,
       y: Math.sin(launchAngle) * ballSpeed,
@@ -251,6 +256,8 @@ if (canvas && status && resetButton) {
   });
 
   resetButton.addEventListener("click", rebuildScene);
+  ringCountInput.addEventListener("change", rebuildScene);
+  speedInput.addEventListener("change", rebuildScene);
 
   const observer = new ResizeObserver(resize);
   if (canvas.parentElement) observer.observe(canvas.parentElement);

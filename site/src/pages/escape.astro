@@ -8,6 +8,14 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       <a class="back-link" href="/" aria-label="Back to home">←</a>
       <span><strong>escape</strong></span>
       <span style="color: var(--border);">|</span>
+      <label class="control" for="escape-rings-input">
+        rings
+        <input id="escape-rings-input" type="number" min="1" max="12" step="1" value="5" />
+      </label>
+      <label class="control" for="escape-speed-input">
+        speed
+        <input id="escape-speed-input" type="number" min="1" max="20" step="0.5" value="9" />
+      </label>
       <span id="escape-status">rings: 0</span>
       <button class="toolbar-button" id="escape-reset" type="button">randomize</button>
     </div>
@@ -26,6 +34,24 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     color: #d9e0ff;
     margin-left: auto;
     font-size: 0.8rem;
+  }
+
+  .control {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    color: #d9e0ff;
+    font-size: 0.8rem;
+  }
+
+  .control input {
+    width: 3.6rem;
+    height: 1.5rem;
+    border: 1px solid #3a4a8f;
+    border-radius: 6px;
+    background: #0f143f;
+    color: #d9e0ff;
+    padding: 0 0.35rem;
   }
 
   #escape-reset {
