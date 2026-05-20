@@ -55,6 +55,7 @@ if (canvas && status && resetButton) {
   let rings: Ring[] = [];
   let ringSegments: RingSegment[] = [];
   let ballSpeed = 0;
+  let needsSpeedCorrection = false;
   let viewport = { width: 0, height: 0 };
 
   function rand(min: number, max: number) {
@@ -201,6 +202,15 @@ if (canvas && status && resetButton) {
     }
   });
 
+  Events.on(engine, "collisionStart", (event) => {
+    for (const pair of event.pairs) {
+      if (pair.bodyA === ball || pair.bodyB === ball) {
+        needsSpeedCorrection = true;
+        return;
+      }
+    }
+  });
+
   Events.on(engine, "afterUpdate", () => {
     if (viewport.width === 0 || viewport.height === 0) return;
 
@@ -221,11 +231,12 @@ if (canvas && status && resetButton) {
     }
 
     const velocityMagnitude = Math.hypot(ball.velocity.x, ball.velocity.y);
-    if (velocityMagnitude > 0 && ballSpeed > 0) {
+    if (needsSpeedCorrection && velocityMagnitude > 0 && ballSpeed > 0) {
       Body.setVelocity(ball, {
         x: (ball.velocity.x / velocityMagnitude) * ballSpeed,
         y: (ball.velocity.y / velocityMagnitude) * ballSpeed,
       });
+      needsSpeedCorrection = false;
     }
 
     const margin = 40;
