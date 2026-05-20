@@ -35,6 +35,8 @@ const PHYSICS_STEPS_PER_SECOND = 120;
 const PHYSICS_POSITION_ITERATIONS = 10;
 const PHYSICS_VELOCITY_ITERATIONS = 8;
 const PHYSICS_CONSTRAINT_ITERATIONS = 4;
+const RING_ANGULAR_SPEED_MIN = 0.09;
+const RING_ANGULAR_SPEED_MAX = 0.24;
 
 if (canvas && status && resetButton && ringCountInput && speedInput) {
   const engine = Engine.create({
@@ -171,7 +173,8 @@ if (canvas && status && resetButton && ringCountInput && speedInput) {
       const ringId = i;
       const radius = spacing * (i + 1.6);
       const gap = rand(0.09, 0.16);
-      const speed = rand(0.0015, 0.004) * (Math.random() > 0.5 ? 1 : -1);
+      const speed =
+        rand(RING_ANGULAR_SPEED_MIN, RING_ANGULAR_SPEED_MAX) * (Math.random() > 0.5 ? 1 : -1);
       rings.push(createRing(radius, RING_THICKNESS, gap, speed, ringId));
     }
 
@@ -202,9 +205,10 @@ if (canvas && status && resetButton && ringCountInput && speedInput) {
 
     const centerX = viewport.width / 2;
     const centerY = viewport.height / 2;
+    const deltaSeconds = engine.timing.lastDelta / MILLISECONDS_PER_SECOND;
     for (const ring of rings) {
       if (ring.escaped) continue;
-      Composite.rotate(ring.composite, ring.speed, {
+      Composite.rotate(ring.composite, ring.speed * deltaSeconds, {
         x: centerX,
         y: centerY,
       });
