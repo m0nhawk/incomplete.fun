@@ -1,6 +1,7 @@
 import {
   Body,
   Bodies,
+  Composite,
   Engine,
   Events,
   Render,
@@ -10,18 +11,11 @@ import {
 
 export {};
 
-interface RingSegment {
-  body: Matter.Body;
-  ringId: number;
-  radius: number;
-  angle: number;
-  speed: number;
-}
-
 interface Ring {
   id: number;
+  composite: Matter.Composite;
   radius: number;
-  parts: Matter.Body[];
+  speed: number;
   escaped: boolean;
 }
 
@@ -35,12 +29,14 @@ const DEFAULT_BALL_SPEED = 9;
 const RING_SEGMENTS = 96;
 const RING_THICKNESS = 8;
 const BALL_RADIUS = 7;
+const MAX_PIXEL_RATIO = 2;
 
 if (canvas && status && resetButton && ringCountInput && speedInput) {
   const engine = Engine.create({
     gravity: { x: 0, y: 0 },
   });
   const world = engine.world;
+  const getPixelRatio = () => Math.min(window.devicePixelRatio || 1, MAX_PIXEL_RATIO);
 
   const render = Render.create({
     canvas,
@@ -48,7 +44,7 @@ if (canvas && status && resetButton && ringCountInput && speedInput) {
     options: {
       background: "#080a2a",
       wireframes: false,
-      pixelRatio: window.devicePixelRatio || 1,
+      pixelRatio: getPixelRatio(),
       width: 0,
       height: 0,
     },
@@ -56,7 +52,6 @@ if (canvas && status && resetButton && ringCountInput && speedInput) {
 
   let ball = Bodies.circle(0, 0, BALL_RADIUS);
   let rings: Ring[] = [];
-  let ringSegments: RingSegment[] = [];
   let ballSpeed = 0;
   let needsSpeedCorrection = false;
   let viewport = { width: 0, height: 0 };
@@ -73,13 +68,12 @@ if (canvas && status && resetButton && ringCountInput && speedInput) {
 
   function removeBodies() {
     if (rings.length > 0) {
-      World.remove(world, rings.flatMap((ring) => ring.parts));
+      World.remove(world, rings.map((ring) => ring.composite));
       rings = [];
     }
     if (ball) {
       World.remove(world, ball);
     }
-    ringSegments = [];
   }
 
   function resize() {
@@ -93,11 +87,12 @@ if (canvas && status && resetButton && ringCountInput && speedInput) {
 
     render.options.width = viewport.width;
     render.options.height = viewport.height;
-    render.canvas.width = viewport.width * (window.devicePixelRatio || 1);
-    render.canvas.height = viewport.height * (window.devicePixelRatio || 1);
+    const pixelRatio = getPixelRatio();
+    render.canvas.width = viewport.width * pixelRatio;
+    render.canvas.height = viewport.height * pixelRatio;
     render.canvas.style.width = `${viewport.width}px`;
     render.canvas.style.height = `${viewport.height}px`;
-    Render.setPixelRatio(render, window.devicePixelRatio || 1);
+    Render.setPixelRatio(render, pixelRatio);
 
     rebuildScene();
   }
@@ -136,19 +131,16 @@ if (canvas && status && resetButton && ringCountInput && speedInput) {
       );
 
       pieces.push(body);
-      ringSegments.push({
-        body,
-        ringId,
-        radius,
-        angle,
-        speed,
-      });
     }
+
+    const composite = Composite.create({ label: `ring-${ringId}` });
+    Composite.add(composite, pieces);
 
     return {
       id: ringId,
+      composite,
       radius,
-      parts: pieces,
+      speed,
       escaped: false,
     };
   }
@@ -188,7 +180,7 @@ if (canvas && status && resetButton && ringCountInput && speedInput) {
       y: Math.sin(launchAngle) * ballSpeed,
     });
 
-    World.add(world, [...rings.flatMap((ring) => ring.parts), ball]);
+    World.add(world, [...rings.map((ring) => ring.composite), ball]);
     status.textContent = `rings: ${ringCount}`;
   }
 
@@ -197,13 +189,12 @@ if (canvas && status && resetButton && ringCountInput && speedInput) {
 
     const centerX = viewport.width / 2;
     const centerY = viewport.height / 2;
-    for (const part of ringSegments) {
-      part.angle += part.speed;
-      Body.setPosition(part.body, {
-        x: centerX + Math.cos(part.angle) * part.radius,
-        y: centerY + Math.sin(part.angle) * part.radius,
+    for (const ring of rings) {
+      if (ring.escaped) continue;
+      Composite.rotate(ring.composite, ring.speed, {
+        x: centerX,
+        y: centerY,
       });
-      Body.setAngle(part.body, part.angle + Math.PI / 2);
     }
   });
 
@@ -226,8 +217,7 @@ if (canvas && status && resetButton && ringCountInput && speedInput) {
     for (const ring of rings) {
       if (!ring.escaped && distanceFromCenter > ring.radius + RING_THICKNESS + BALL_RADIUS) {
         ring.escaped = true;
-        World.remove(world, ring.parts);
-        ringSegments = ringSegments.filter((segment) => segment.ringId !== ring.id);
+        World.remove(world, ring.composite);
         removedRings = true;
       }
     }
