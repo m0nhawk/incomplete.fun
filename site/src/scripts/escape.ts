@@ -30,18 +30,22 @@ const RING_SEGMENTS = 96;
 const RING_THICKNESS = 8;
 const BALL_RADIUS = 7;
 const MAX_PIXEL_RATIO = 2;
+const MILLISECONDS_PER_SECOND = 1000;
 const PHYSICS_STEPS_PER_SECOND = 120;
+const PHYSICS_POSITION_ITERATIONS = 10;
+const PHYSICS_VELOCITY_ITERATIONS = 8;
+const PHYSICS_CONSTRAINT_ITERATIONS = 4;
 
 if (canvas && status && resetButton && ringCountInput && speedInput) {
   const engine = Engine.create({
     gravity: { x: 0, y: 0 },
-    positionIterations: 10,
-    velocityIterations: 8,
-    constraintIterations: 4,
+    positionIterations: PHYSICS_POSITION_ITERATIONS,
+    velocityIterations: PHYSICS_VELOCITY_ITERATIONS,
+    constraintIterations: PHYSICS_CONSTRAINT_ITERATIONS,
   });
   const world = engine.world;
   const runner = Runner.create({
-    delta: 1000 / PHYSICS_STEPS_PER_SECOND,
+    delta: MILLISECONDS_PER_SECOND / PHYSICS_STEPS_PER_SECOND,
   });
   const getPixelRatio = () => Math.min(window.devicePixelRatio || 1, MAX_PIXEL_RATIO);
 
