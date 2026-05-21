@@ -54,6 +54,11 @@ const END_ZONE_H = 40;
 const START_ZONE_R = 20;
 const FIGURE_RESTITUTION = 0.5;
 const FIGURE_FRICTION = 0.1;
+const START_ZONE_BUFFER = 30;
+const END_ZONE_BUFFER = 20;
+const FIGURE_REMOVAL_THRESHOLD = 45;
+const BALL_INITIAL_VELOCITY_NUDGE = 3;
+const WALL_INDICATOR_COLOR = "#1a2a6f";
 
 const canvas = document.querySelector<HTMLCanvasElement>("#playground-canvas");
 const statusEl = document.querySelector<HTMLElement>("#playground-status");
@@ -170,12 +175,12 @@ if (canvas && statusEl && clearButton && launchButton) {
 
   function isNearProtectedZone(x: number, y: number, extra = 0): boolean {
     const start = getStartCenter();
-    if (Math.hypot(x - start.x, y - start.y) < START_ZONE_R + 30 + extra) return true;
+    if (Math.hypot(x - start.x, y - start.y) < START_ZONE_R + START_ZONE_BUFFER + extra) return true;
     const ez = getEndZone();
     if (
-      x > ez.x - 20 - extra &&
-      x < ez.x + ez.w + 20 + extra &&
-      y > ez.y - 20 - extra
+      x > ez.x - END_ZONE_BUFFER - extra &&
+      x < ez.x + ez.w + END_ZONE_BUFFER + extra &&
+      y > ez.y - END_ZONE_BUFFER - extra
     )
       return true;
     return false;
@@ -218,7 +223,7 @@ if (canvas && statusEl && clearButton && launchButton) {
   function removeFigureNear(x: number, y: number) {
     if (gameState !== "placing") return;
     const idx = placedFigures.findIndex(({ cx, cy, type }) => {
-      const threshold = type === "spiral" ? SPIRAL_R_END : 45;
+      const threshold = type === "spiral" ? SPIRAL_R_END : FIGURE_REMOVAL_THRESHOLD;
       return Math.hypot(cx - x, cy - y) < threshold;
     });
     if (idx >= 0) {
@@ -233,7 +238,7 @@ if (canvas && statusEl && clearButton && launchButton) {
   function launchBall() {
     if (gameState !== "placing") return;
     const { x, y } = getStartCenter();
-    const nudge = (Math.random() - 0.5) * 3;
+    const nudge = (Math.random() - 0.5) * BALL_INITIAL_VELOCITY_NUDGE;
     ball = Bodies.circle(x, y, BALL_RADIUS, {
       restitution: 0.7,
       frictionAir: 0.003,
@@ -306,7 +311,7 @@ if (canvas && statusEl && clearButton && launchButton) {
     ctx.scale(pr, pr);
 
     // Wall boundary indicators
-    ctx.fillStyle = "#1a2a6f";
+    ctx.fillStyle = WALL_INDICATOR_COLOR;
     ctx.fillRect(0, 0, 3, viewport.height);
     ctx.fillRect(viewport.width - 3, 0, 3, viewport.height);
 
