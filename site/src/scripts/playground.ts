@@ -306,9 +306,9 @@ if (canvas && statusEl && clearButton && launchButton) {
   function drawOverlays() {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
-    const pr = getPixelRatio();
+    // matter-js already applies setTransform(pixelRatio, ...) before firing
+    // afterRender, so CSS pixel coordinates map correctly without extra scaling.
     ctx.save();
-    ctx.scale(pr, pr);
 
     // Wall boundary indicators
     ctx.fillStyle = WALL_INDICATOR_COLOR;
