@@ -1,0 +1,27 @@
+{
+  "cli_version": "0.6.2",
+  "checkpoint_id": "bd993e5a27a1",
+  "strategy": "manual-commit",
+  "branch": "agents/code-refactor-for-clarity",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "site/src/scripts/escape.ts",
+    "site/src/scripts/playground.ts",
+    "site/src/scripts/voronoi.ts"
+  ],
+  "sessions": [
+    {
+      "metadata": "/bd/993e5a27a1/0/metadata.json",
+      "transcript": "/bd/993e5a27a1/0/full.jsonl",
+      "content_hash": "/bd/993e5a27a1/0/content_hash.txt",
+      "prompt": "/bd/993e5a27a1/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 282049,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 228971,
+    "output_tokens": 891,
+    "api_call_count": 4
+  }
+}

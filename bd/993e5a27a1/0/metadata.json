@@ -1,0 +1,55 @@
+{
+  "cli_version": "0.6.2",
+  "checkpoint_id": "bd993e5a27a1",
+  "session_id": "fe0e2e5b-5a69-4293-9c65-5921bea70547",
+  "strategy": "manual-commit",
+  "created_at": "2026-05-22T16:46:36.180958864Z",
+  "branch": "agents/code-refactor-for-clarity",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "site/src/scripts/escape.ts",
+    "site/src/scripts/playground.ts",
+    "site/src/scripts/voronoi.ts"
+  ],
+  "agent": "Copilot CLI",
+  "model": "",
+  "turn_id": "3b957f542cff",
+  "token_usage": {
+    "input_tokens": 282049,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 228971,
+    "output_tokens": 891,
+    "api_call_count": 4
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-05-22T16:46:36.165457101Z",
+    "agent_lines": 0,
+    "agent_removed": 0,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 389,
+    "total_committed": 0,
+    "total_lines_changed": 389,
+    "agent_percentage": 0,
+    "metric_version": 2
+  },
+  "prompt_attributions": [
+    {
+      "checkpoint_number": 1,
+      "user_lines_added": 496,
+      "user_lines_removed": 389,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0,
+      "user_added_per_file": {
+        "site/src/scripts/escape.ts": 35,
+        "site/src/scripts/playground.ts": 84,
+        "site/src/scripts/voronoi.ts": 377
+      },
+      "user_removed_per_file": {
+        "site/src/scripts/escape.ts": 18,
+        "site/src/scripts/playground.ts": 54,
+        "site/src/scripts/voronoi.ts": 317
+      }
+    }
+  ]
+}
