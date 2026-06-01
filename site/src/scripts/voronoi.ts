@@ -357,8 +357,8 @@ if (glCanvas && markerCanvas && stage && clearButton && help && coords && distan
     render();
   }
 
-  function getPos(e: MouseEvent) {
-    const rect = glCanvas.getBoundingClientRect();
+  function getPos(e: MouseEvent | PointerEvent) {
+    const rect = stage.getBoundingClientRect();
     return { x: e.clientX - rect.left, y: e.clientY - rect.top };
   }
 
@@ -378,9 +378,22 @@ if (glCanvas && markerCanvas && stage && clearButton && help && coords && distan
     renderMarkers();
   }
 
+  function addSite(x: number, y: number) {
+    const hue = (siteCount * 137.508) % 360;
+    const [r, g, b] = hslToRgb(hue, 60, 68);
+    const id = String(nextId++);
+    siteCount++;
+    sites = [...sites, { id, x, y, metric: currentMetric, r, g, b }];
+    setSelected(id);
+    render();
+  }
+
   function bindEvents() {
-    stage.addEventListener("mousedown", (e) => {
+    stage.addEventListener("pointerdown", (e) => {
+      if (!e.isPrimary) return;
       if (e.button !== 0) return;
+      e.preventDefault();
+      stage.setPointerCapture(e.pointerId);
       const { x, y } = getPos(e);
       const near = findNear(x, y);
 
@@ -395,7 +408,8 @@ if (glCanvas && markerCanvas && stage && clearButton && help && coords && distan
       }
     });
 
-    stage.addEventListener("mousemove", (e) => {
+    stage.addEventListener("pointermove", (e) => {
+      if (!e.isPrimary) return;
       const { x, y } = getPos(e);
       mousePos = { x, y };
 
@@ -413,29 +427,37 @@ if (glCanvas && markerCanvas && stage && clearButton && help && coords && distan
       }
       if (!drag.moved) return;
 
-      const nx = Math.max(0, Math.min(glCanvas.clientWidth, drag.origX + dx));
-      const ny = Math.max(0, Math.min(glCanvas.clientHeight, drag.origY + dy));
+      const nx = Math.max(0, Math.min(stage.clientWidth, drag.origX + dx));
+      const ny = Math.max(0, Math.min(stage.clientHeight, drag.origY + dy));
       sites = sites.map((site) => site.id === drag?.id ? { ...site, x: nx, y: ny } : site);
       render();
     });
 
-    stage.addEventListener("mouseup", (e) => {
+    stage.addEventListener("pointerup", (e) => {
+      if (!e.isPrimary) return;
       if (e.button !== 0) return;
+      if (stage.hasPointerCapture(e.pointerId)) {
+        stage.releasePointerCapture(e.pointerId);
+      }
       stage.style.cursor = "crosshair";
       if (drag) { drag = null; return; }
       if (!mouseDownOnSite) {
         const { x, y } = getPos(e);
-        const hue = (siteCount * 137.508) % 360;
-        const [r, g, b] = hslToRgb(hue, 60, 68);
-        const id = String(nextId++);
-        siteCount++;
-        sites = [...sites, { id, x, y, metric: currentMetric, r, g, b }];
-        setSelected(id);
-        render();
+        addSite(x, y);
       }
     });
 
-    stage.addEventListener("mouseleave", () => {
+    stage.addEventListener("pointercancel", (e) => {
+      if (stage.hasPointerCapture(e.pointerId)) {
+        stage.releasePointerCapture(e.pointerId);
+      }
+      drag = null;
+      mouseDownOnSite = false;
+      stage.style.cursor = "crosshair";
+    });
+
+    stage.addEventListener("pointerleave", () => {
+      if (drag) return;
       mousePos = null;
       renderHover();
     });
