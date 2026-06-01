@@ -1,4 +1,5 @@
-export {};
+import { q, qAll } from "./lib/dom";
+import { fmt, hslToRgb } from "./lib/math";
 
 type Metric = "euclidean" | "manhattan" | "chebyshev" | "minkowski3" | "minkowski05";
 
@@ -26,14 +27,6 @@ const METRIC_FORMULA: Record<Metric, string> = {
   chebyshev: "max(dx, dy)",
   minkowski3: "(dx³ + dy³)^(1/3)",
   minkowski05: "(sqrt(dx) + sqrt(dy))²",
-};
-
-const METRIC_GENERIC_CALC: Record<Metric, string> = {
-  euclidean: "sqrt(x² + y²)",
-  manhattan: "x + y",
-  chebyshev: "max(x, y)",
-  minkowski3: "(x³ + y³)^(1/3)",
-  minkowski05: "(sqrt(x) + sqrt(y))²",
 };
 
 const METRIC_INDEX: Record<Metric, number> = {
@@ -120,297 +113,272 @@ void main() {
 }
 `;
 
-const glCanvas = document.querySelector<HTMLCanvasElement>("#voronoi-gl");
-const markerCanvas = document.querySelector<HTMLCanvasElement>("#voronoi-markers");
-const stage = document.querySelector<HTMLDivElement>("#voronoi-stage");
-const clearButton = document.querySelector<HTMLButtonElement>("#voronoi-clear");
-const help = document.querySelector<HTMLElement>("#voronoi-help");
-const coords = document.querySelector<HTMLElement>("#voronoi-coords");
-const distances = document.querySelector<HTMLElement>("#voronoi-distances");
-const empty = document.querySelector<HTMLElement>("#voronoi-empty");
-const metricButtons = Array.from(document.querySelectorAll<HTMLButtonElement>(".metric-button"));
+const glCanvas = q<HTMLCanvasElement>("#voronoi-gl");
+const markerCanvas = q<HTMLCanvasElement>("#voronoi-markers");
+const stage = q<HTMLDivElement>("#voronoi-stage");
+const clearButton = q<HTMLButtonElement>("#voronoi-clear");
+const help = q<HTMLElement>("#voronoi-help");
+const coords = q<HTMLElement>("#voronoi-coords");
+const distances = q<HTMLElement>("#voronoi-distances");
+const empty = q<HTMLElement>("#voronoi-empty");
+const metricButtons = qAll<HTMLButtonElement>(".metric-button");
 
 if (glCanvas && markerCanvas && stage && clearButton && help && coords && distances && empty) {
   const gl = glCanvas.getContext("webgl2", { alpha: true, premultipliedAlpha: false });
   const markerCtx = markerCanvas.getContext("2d");
+  if (!gl || !markerCtx) throw new Error("WebGL or 2D context not available");
 
-  if (gl && markerCtx) {
-    let nextId = 0;
-    let siteCount = 0;
-    let sites: Site[] = [];
-    let selectedId: string | null = null;
-    let currentMetric: Metric = "euclidean";
-    let mousePos: { x: number; y: number } | null = null;
-    let drag: {
-      id: string;
-      startMouseX: number;
-      startMouseY: number;
-      origX: number;
-      origY: number;
-      moved: boolean;
-    } | null = null;
-    let mouseDownOnSite = false;
+  const prog = initWebGL(gl);
 
-    const prog = gl.createProgram();
-    if (!prog) throw new Error("Unable to create WebGL program");
+  let nextId = 0;
+  let siteCount = 0;
+  let sites: Site[] = [];
+  let selectedId: string | null = null;
+  let currentMetric: Metric = "euclidean";
+  let mousePos: { x: number; y: number } | null = null;
+  let drag: { id: string; startMouseX: number; startMouseY: number; origX: number; origY: number; moved: boolean } | null = null;
+  let mouseDownOnSite = false;
 
-    gl.attachShader(prog, compileShader(gl, gl.VERTEX_SHADER, VERT));
-    gl.attachShader(prog, compileShader(gl, gl.FRAGMENT_SHADER, FRAG));
-    gl.linkProgram(prog);
-    gl.useProgram(prog);
+  resizeCanvases();
+  new ResizeObserver(resizeCanvases).observe(stage);
 
-    const buf = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, buf);
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([
-      -1, -1, 1, -1, -1, 1,
-      -1, 1, 1, -1, 1, 1,
-    ]), gl.STATIC_DRAW);
+  bindEvents();
 
-    const loc = gl.getAttribLocation(prog, "a_pos");
-    gl.enableVertexAttribArray(loc);
-    gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+  function initWebGL(glContext: WebGL2RenderingContext) {
+    const prog = glContext.createProgram()!;
 
-    const uniforms = {
-      res: gl.getUniformLocation(prog, "u_res"),
-      dpr: gl.getUniformLocation(prog, "u_dpr"),
-      n: gl.getUniformLocation(prog, "u_n"),
-      sites: gl.getUniformLocation(prog, "u_sites"),
-      colors: gl.getUniformLocation(prog, "u_colors"),
-      metrics: gl.getUniformLocation(prog, "u_metrics"),
-    };
-
-    function compileShader(glContext: WebGL2RenderingContext, type: number, src: string) {
-      const shader = glContext.createShader(type);
-      if (!shader) throw new Error("Unable to create WebGL shader");
+    function compileShader(type: number, src: string) {
+      const shader = glContext.createShader(type)!;
       glContext.shaderSource(shader, src);
       glContext.compileShader(shader);
       return shader;
     }
 
-    function metricDist(m: Metric, ax: number, ay: number): number {
-      switch (m) {
-        case "euclidean": return Math.sqrt(ax * ax + ay * ay);
-        case "manhattan": return ax + ay;
-        case "chebyshev": return Math.max(ax, ay);
-        case "minkowski3": return Math.cbrt(ax * ax * ax + ay * ay * ay);
-        case "minkowski05": {
-          const s = Math.sqrt(ax) + Math.sqrt(ay);
-          return s * s;
-        }
+    glContext.attachShader(prog, compileShader(glContext.VERTEX_SHADER, VERT));
+    glContext.attachShader(prog, compileShader(glContext.FRAGMENT_SHADER, FRAG));
+    glContext.linkProgram(prog);
+    glContext.useProgram(prog);
+
+    const buf = glContext.createBuffer();
+    glContext.bindBuffer(glContext.ARRAY_BUFFER, buf);
+    glContext.bufferData(glContext.ARRAY_BUFFER, new Float32Array([
+      -1, -1, 1, -1, -1, 1,
+      -1, 1, 1, -1, 1, 1,
+    ]), glContext.STATIC_DRAW);
+
+    const loc = glContext.getAttribLocation(prog, "a_pos");
+    glContext.enableVertexAttribArray(loc);
+    glContext.vertexAttribPointer(loc, 2, glContext.FLOAT, false, 0, 0);
+
+    return prog;
+  }
+
+  const u = {
+    res: gl.getUniformLocation(prog, "u_res"),
+    dpr: gl.getUniformLocation(prog, "u_dpr"),
+    n: gl.getUniformLocation(prog, "u_n"),
+    sites: gl.getUniformLocation(prog, "u_sites"),
+    colors: gl.getUniformLocation(prog, "u_colors"),
+    metrics: gl.getUniformLocation(prog, "u_metrics"),
+  };
+
+  function metricDist(m: Metric, ax: number, ay: number): number {
+    switch (m) {
+      case "euclidean": return Math.sqrt(ax * ax + ay * ay);
+      case "manhattan": return ax + ay;
+      case "chebyshev": return Math.max(ax, ay);
+      case "minkowski3": return Math.cbrt(ax * ax * ax + ay * ay * ay);
+      case "minkowski05": { const s = Math.sqrt(ax) + Math.sqrt(ay); return s * s; }
+    }
+  }
+
+  function metricCalculation(m: Metric, dx: number, dy: number): string {
+    const d = metricDist(m, dx, dy);
+    const x = fmt(dx);
+    const y = fmt(dy);
+    const v = fmt(d);
+    switch (m) {
+      case "euclidean": return `sqrt(${x}² + ${y}²) = ${v}`;
+      case "manhattan": return `${x} + ${y} = ${v}`;
+      case "chebyshev": return `max(${x}, ${y}) = ${v}`;
+      case "minkowski3": return `(${x}³ + ${y}³)^(1/3) = ${v}`;
+      case "minkowski05": return `(sqrt(${x}) + sqrt(${y}))² = ${v}`;
+    }
+  }
+
+  function renderGL() {
+    const dpr = window.devicePixelRatio || 1;
+
+    gl.viewport(0, 0, glCanvas.width, glCanvas.height);
+    gl.uniform2f(u.res, glCanvas.width, glCanvas.height);
+    gl.uniform1f(u.dpr, dpr);
+    gl.uniform1i(u.n, sites.length);
+
+    if (sites.length > 0) {
+      const sv = new Float32Array(sites.length * 2);
+      const cv = new Float32Array(sites.length * 3);
+      const mv = new Int32Array(sites.length);
+      for (let i = 0; i < sites.length; i++) {
+        sv[i * 2] = sites[i].x * dpr;
+        sv[i * 2 + 1] = sites[i].y * dpr;
+        cv[i * 3] = sites[i].r / 255;
+        cv[i * 3 + 1] = sites[i].g / 255;
+        cv[i * 3 + 2] = sites[i].b / 255;
+        mv[i] = METRIC_INDEX[sites[i].metric];
       }
+      gl.uniform2fv(u.sites, sv);
+      gl.uniform3fv(u.colors, cv);
+      gl.uniform1iv(u.metrics, mv);
     }
 
-    function fmt(n: number): string {
-      return Math.abs(n - Math.round(n)) < 0.05 ? String(Math.round(n)) : n.toFixed(1);
-    }
+    gl.drawArrays(gl.TRIANGLES, 0, 6);
+  }
 
-    function metricCalculation(m: Metric, dx: number, dy: number): string {
-      const d = metricDist(m, dx, dy);
-      const x = fmt(dx);
-      const y = fmt(dy);
-      const v = fmt(d);
-      switch (m) {
-        case "euclidean": return `sqrt(${x}² + ${y}²) = ${v}`;
-        case "manhattan": return `${x} + ${y} = ${v}`;
-        case "chebyshev": return `max(${x}, ${y}) = ${v}`;
-        case "minkowski3": return `(${x}³ + ${y}³)^(1/3) = ${v}`;
-        case "minkowski05": return `(sqrt(${x}) + sqrt(${y}))² = ${v}`;
-      }
-    }
+  function renderMarkers() {
+    const dpr = window.devicePixelRatio || 1;
+    markerCtx.clearRect(0, 0, markerCanvas.width, markerCanvas.height);
+    markerCtx.save();
+    markerCtx.scale(dpr, dpr);
 
-    function hslToRgb(h: number, s: number, l: number): [number, number, number] {
-      s /= 100;
-      l /= 100;
-      const k = (n: number) => (n + h / 30) % 12;
-      const a = s * Math.min(l, 1 - l);
-      const f = (n: number) => l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1)));
-      return [Math.round(f(0) * 255), Math.round(f(8) * 255), Math.round(f(4) * 255)];
-    }
-
-    function renderGL() {
-      const dpr = window.devicePixelRatio || 1;
-
-      gl.viewport(0, 0, glCanvas.width, glCanvas.height);
-      gl.uniform2f(uniforms.res, glCanvas.width, glCanvas.height);
-      gl.uniform1f(uniforms.dpr, dpr);
-      gl.uniform1i(uniforms.n, sites.length);
-
-      if (sites.length > 0) {
-        const sv = new Float32Array(sites.length * 2);
-        const cv = new Float32Array(sites.length * 3);
-        const mv = new Int32Array(sites.length);
-        for (let i = 0; i < sites.length; i++) {
-          sv[i * 2] = sites[i].x * dpr;
-          sv[i * 2 + 1] = sites[i].y * dpr;
-          cv[i * 3] = sites[i].r / 255;
-          cv[i * 3 + 1] = sites[i].g / 255;
-          cv[i * 3 + 2] = sites[i].b / 255;
-          mv[i] = METRIC_INDEX[sites[i].metric];
-        }
-        gl.uniform2fv(uniforms.sites, sv);
-        gl.uniform3fv(uniforms.colors, cv);
-        gl.uniform1iv(uniforms.metrics, mv);
-      }
-
-      gl.drawArrays(gl.TRIANGLES, 0, 6);
-    }
-
-    function renderMarkers() {
-      const dpr = window.devicePixelRatio || 1;
-
-      markerCtx.clearRect(0, 0, markerCanvas.width, markerCanvas.height);
-      markerCtx.save();
-      markerCtx.scale(dpr, dpr);
-
-      for (const site of sites) {
-        if (site.id === selectedId) {
-          markerCtx.beginPath();
-          markerCtx.arc(site.x, site.y, 11, 0, Math.PI * 2);
-          markerCtx.strokeStyle = "#fff";
-          markerCtx.lineWidth = 2.5;
-          markerCtx.stroke();
-          markerCtx.beginPath();
-          markerCtx.arc(site.x, site.y, 11, 0, Math.PI * 2);
-          markerCtx.strokeStyle = "rgba(0,0,0,0.4)";
-          markerCtx.lineWidth = 1;
-          markerCtx.stroke();
-        }
-
+    for (const site of sites) {
+      if (site.id === selectedId) {
         markerCtx.beginPath();
-        markerCtx.arc(site.x, site.y, 6, 0, Math.PI * 2);
-        markerCtx.fillStyle = "rgba(0,0,0,0.45)";
-        markerCtx.fill();
-
+        markerCtx.arc(site.x, site.y, 11, 0, Math.PI * 2);
+        markerCtx.strokeStyle = "#fff";
+        markerCtx.lineWidth = 2.5;
+        markerCtx.stroke();
         markerCtx.beginPath();
-        markerCtx.arc(site.x, site.y, 4, 0, Math.PI * 2);
-        markerCtx.fillStyle = "#fff";
-        markerCtx.fill();
-
-        markerCtx.font = "bold 11px ui-monospace, monospace";
-        markerCtx.fillStyle = "rgba(0,0,0,0.7)";
-        markerCtx.fillText(METRIC_LABEL[site.metric], site.x + 9, site.y + 4);
+        markerCtx.arc(site.x, site.y, 11, 0, Math.PI * 2);
+        markerCtx.strokeStyle = "rgba(0,0,0,0.4)";
+        markerCtx.lineWidth = 1;
+        markerCtx.stroke();
       }
 
-      markerCtx.restore();
+      markerCtx.beginPath();
+      markerCtx.arc(site.x, site.y, 6, 0, Math.PI * 2);
+      markerCtx.fillStyle = "rgba(0,0,0,0.45)";
+      markerCtx.fill();
+
+      markerCtx.beginPath();
+      markerCtx.arc(site.x, site.y, 4, 0, Math.PI * 2);
+      markerCtx.fillStyle = "#fff";
+      markerCtx.fill();
+
+      markerCtx.font = "bold 11px ui-monospace, monospace";
+      markerCtx.fillStyle = "rgba(0,0,0,0.7)";
+      markerCtx.fillText(METRIC_LABEL[site.metric], site.x + 9, site.y + 4);
     }
 
-    function render() {
-      renderGL();
-      renderMarkers();
-      renderControls();
-      renderHover();
-      empty.style.display = sites.length === 0 ? "flex" : "none";
+    markerCtx.restore();
+  }
+
+  function renderControls() {
+    const active = selectedId ? sites.find((s) => s.id === selectedId)?.metric ?? currentMetric : currentMetric;
+    for (const button of metricButtons) {
+      button.classList.toggle("is-active", button.dataset.metric === active);
     }
+    help.textContent = selectedId
+      ? "drag · change metric · right-click removes"
+      : "click to place · right-click removes";
+  }
 
-    function resizeCanvases() {
-      const dpr = window.devicePixelRatio || 1;
-      const w = stage.clientWidth;
-      const h = stage.clientHeight;
+  function renderHover() {
+    coords.style.visibility = mousePos ? "visible" : "hidden";
+    coords.textContent = mousePos ? `(${Math.round(mousePos.x)}, ${Math.round(mousePos.y)})` : "(0, 0)";
+    distances.replaceChildren();
 
-      for (const canvas of [glCanvas, markerCanvas]) {
-        canvas.width = w * dpr;
-        canvas.height = h * dpr;
-        canvas.style.width = `${w}px`;
-        canvas.style.height = `${h}px`;
-      }
+    if (sites.length === 0) return;
 
-      render();
-    }
-
-    function getPos(e: MouseEvent) {
-      const rect = glCanvas.getBoundingClientRect();
-      return {
-        x: e.clientX - rect.left,
-        y: e.clientY - rect.top,
-      };
-    }
-
-    function findNear(x: number, y: number, r = 14): Site | null {
-      let best: Site | null = null;
-      let bestD = r;
-      for (const site of sites) {
-        const d = Math.hypot(site.x - x, site.y - y);
-        if (d < bestD) {
-          bestD = d;
-          best = site;
-        }
-      }
-      return best;
-    }
-
-    function activeMetric() {
-      if (!selectedId) return currentMetric;
-      return sites.find((site) => site.id === selectedId)?.metric ?? currentMetric;
-    }
-
-    function renderControls() {
-      const active = activeMetric();
-      for (const button of metricButtons) {
-        button.classList.toggle("is-active", button.dataset.metric === active);
-      }
-      help.textContent = selectedId ? "drag · change metric · right-click removes" : "click to place · right-click removes";
-    }
-
-    function renderHover() {
-      coords.style.visibility = mousePos ? "visible" : "hidden";
-      coords.textContent = mousePos ? `(${Math.round(mousePos.x)}, ${Math.round(mousePos.y)})` : "(0, 0)";
-      distances.replaceChildren();
-
-      if (sites.length === 0) return;
-
-      const hover = mousePos
-        ? sites.map((site) => ({
+    const entries = mousePos
+      ? sites.map((site) => ({
           site,
-          d: metricDist(site.metric, Math.abs(mousePos!.x - site.x), Math.abs(mousePos!.y - site.y)),
+          d: metricDist(site.metric, Math.abs(mousePos.x - site.x), Math.abs(mousePos.y - site.y)),
         }))
-        : null;
-      const hoverMin = hover ? Math.min(...hover.map((item) => item.d)) : Infinity;
-      const entries = hover ?? sites.map((site) => ({ site, d: null as number | null }));
+      : sites.map((site) => ({ site, d: null }));
 
-      for (const { site, d } of entries) {
-        const winner = d !== null && d === hoverMin;
-        const content = mousePos
-          ? metricCalculation(site.metric, Math.abs(mousePos.x - site.x), Math.abs(mousePos.y - site.y))
-          : METRIC_GENERIC_CALC[site.metric];
+    const hoverMin = mousePos ? Math.min(...entries.map((e) => e.d!)) : Infinity;
 
-        const entry = document.createElement("span");
-        entry.className = `distance-entry${winner ? " is-winner" : ""}`;
-        entry.title = mousePos
-          ? `dx=${fmt(Math.abs(mousePos.x - site.x))}, dy=${fmt(Math.abs(mousePos.y - site.y))}; ${METRIC_LABEL[site.metric]}: ${METRIC_FORMULA[site.metric]}`
-          : `${METRIC_LABEL[site.metric]}: ${METRIC_FORMULA[site.metric]}`;
+    for (const { site, d } of entries) {
+      const winner = d !== null && d === hoverMin;
+      const content = mousePos
+        ? metricCalculation(site.metric, Math.abs(mousePos.x - site.x), Math.abs(mousePos.y - site.y))
+        : `d = ${METRIC_LABEL[site.metric]}: ${METRIC_FORMULA[site.metric]}`;
 
-        const dot = document.createElement("span");
-        dot.className = "distance-dot";
-        dot.style.background = `rgb(${site.r}, ${site.g}, ${site.b})`;
-        dot.style.boxShadow = winner ? "0 0 0 1.5px var(--fg)" : "none";
+      const entry = document.createElement("span");
+      entry.className = `distance-entry${winner ? " is-winner" : ""}`;
+      entry.title = mousePos
+        ? `dx=${fmt(Math.abs(mousePos.x - site.x))}, dy=${fmt(Math.abs(mousePos.y - site.y))}; ${METRIC_LABEL[site.metric]}: ${METRIC_FORMULA[site.metric]}`
+        : `${METRIC_LABEL[site.metric]}: ${METRIC_FORMULA[site.metric]}`;
 
-        const label = document.createElement("span");
-        label.className = "distance-label";
-        label.textContent = METRIC_LABEL[site.metric];
+      const dot = document.createElement("span");
+      dot.className = "distance-dot";
+      dot.style.background = `rgb(${site.r}, ${site.g}, ${site.b})`;
+      dot.style.boxShadow = winner ? "0 0 0 1.5px var(--fg)" : "none";
 
-        const value = document.createElement("span");
-        value.className = "distance-value";
-        value.textContent = content;
+      const label = document.createElement("span");
+      label.className = "distance-label";
+      label.textContent = METRIC_LABEL[site.metric];
 
-        entry.append(dot, label, value);
-        if (winner) {
-          const marker = document.createElement("span");
-          marker.textContent = "◀";
-          marker.style.color = "var(--accent)";
-          marker.style.flexShrink = "0";
-          entry.append(marker);
-        }
+      const value = document.createElement("span");
+      value.className = "distance-value";
+      value.textContent = content;
 
-        distances.append(entry);
+      entry.append(dot, label, value);
+      if (winner) {
+        const marker = document.createElement("span");
+        marker.textContent = "◀";
+        marker.style.color = "var(--accent)";
+        marker.style.flexShrink = "0";
+        entry.append(marker);
       }
-    }
 
-    function setSelected(id: string | null) {
-      selectedId = id;
-      renderControls();
-      renderMarkers();
+      distances.append(entry);
     }
+  }
 
+  function render() {
+    renderGL();
+    renderMarkers();
+    renderControls();
+    renderHover();
+    empty.style.display = sites.length === 0 ? "flex" : "none";
+  }
+
+  function resizeCanvases() {
+    const dpr = window.devicePixelRatio || 1;
+    const w = stage.clientWidth;
+    const h = stage.clientHeight;
+    for (const canvas of [glCanvas, markerCanvas]) {
+      canvas.width = w * dpr;
+      canvas.height = h * dpr;
+      canvas.style.width = `${w}px`;
+      canvas.style.height = `${h}px`;
+    }
+    render();
+  }
+
+  function getPos(e: MouseEvent) {
+    const rect = glCanvas.getBoundingClientRect();
+    return { x: e.clientX - rect.left, y: e.clientY - rect.top };
+  }
+
+  function findNear(x: number, y: number, r = 14): Site | null {
+    let best: Site | null = null;
+    let bestD = r;
+    for (const site of sites) {
+      const d = Math.hypot(site.x - x, site.y - y);
+      if (d < bestD) { bestD = d; best = site; }
+    }
+    return best;
+  }
+
+  function setSelected(id: string | null) {
+    selectedId = id;
+    renderControls();
+    renderMarkers();
+  }
+
+  function bindEvents() {
     stage.addEventListener("mousedown", (e) => {
       if (e.button !== 0) return;
       const { x, y } = getPos(e);
@@ -454,12 +422,7 @@ if (glCanvas && markerCanvas && stage && clearButton && help && coords && distan
     stage.addEventListener("mouseup", (e) => {
       if (e.button !== 0) return;
       stage.style.cursor = "crosshair";
-
-      if (drag) {
-        drag = null;
-        return;
-      }
-
+      if (drag) { drag = null; return; }
       if (!mouseDownOnSite) {
         const { x, y } = getPos(e);
         const hue = (siteCount * 137.508) % 360;
@@ -505,9 +468,5 @@ if (glCanvas && markerCanvas && stage && clearButton && help && coords && distan
       sites = [];
       render();
     });
-
-    resizeCanvases();
-    const observer = new ResizeObserver(resizeCanvases);
-    observer.observe(stage);
   }
 }
