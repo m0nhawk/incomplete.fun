@@ -1,0 +1,26 @@
+{
+  "cli_version": "0.6.3",
+  "checkpoint_id": "4e5b4bd5f428",
+  "strategy": "manual-commit",
+  "branch": "master",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "site/src/pages/voronoi.astro",
+    "site/src/scripts/voronoi.ts"
+  ],
+  "sessions": [
+    {
+      "metadata": "/4e/5b4bd5f428/0/metadata.json",
+      "transcript": "/4e/5b4bd5f428/0/full.jsonl",
+      "content_hash": "/4e/5b4bd5f428/0/content_hash.txt",
+      "prompt": "/4e/5b4bd5f428/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 31376,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 674176,
+    "output_tokens": 4939,
+    "api_call_count": 17
+  }
+}

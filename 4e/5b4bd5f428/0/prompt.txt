@@ -1,0 +1,1 @@
+The voronoi is broken (I can't place points), fix it.
