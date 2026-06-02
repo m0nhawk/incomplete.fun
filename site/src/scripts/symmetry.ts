@@ -1,9 +1,18 @@
-import { clampInt } from "./lib/math";
-import { q } from "./lib/dom";
+export {};
 
 interface Point {
   x: number;
   y: number;
+}
+
+interface Elements {
+  canvas: HTMLCanvasElement;
+  segmentsInput: HTMLInputElement;
+  mirrorInput: HTMLInputElement;
+  colorInput: HTMLInputElement;
+  widthInput: HTMLInputElement;
+  widthValue: HTMLElement;
+  clearButton: HTMLButtonElement;
 }
 
 interface SymmetryState {
@@ -17,50 +26,82 @@ interface SymmetryState {
 }
 
 const SEGMENT_STORAGE_KEY = "symmetry-n";
+const INITIAL_SEGMENT_RANGE = { min: 1, max: 36, fallback: 6 };
+const SEGMENT_INPUT_RANGE = { min: 1, max: 36, fallback: 1 };
+const WIDTH_RANGE = { min: 1, max: 20, fallback: 2 };
 
-const canvas = q<HTMLCanvasElement>("#symmetry-canvas");
-const segmentsInput = q<HTMLInputElement>("#symmetry-segments");
-const mirrorInput = q<HTMLInputElement>("#symmetry-mirror");
-const colorInput = q<HTMLInputElement>("#symmetry-color");
-const widthInput = q<HTMLInputElement>("#symmetry-width");
-const widthValue = q<HTMLElement>("#symmetry-width-value");
-const clearButton = q<HTMLButtonElement>("#symmetry-clear");
+const elements = getElements();
+if (elements) initSymmetry(elements);
 
-if (canvas && segmentsInput && mirrorInput && colorInput && widthInput && widthValue && clearButton) {
-  const ctx = canvas.getContext("2d")!;
-  const state = createState();
+function getElements(): Elements | null {
+  const canvas = document.querySelector<HTMLCanvasElement>("#symmetry-canvas");
+  const segmentsInput = document.querySelector<HTMLInputElement>("#symmetry-segments");
+  const mirrorInput = document.querySelector<HTMLInputElement>("#symmetry-mirror");
+  const colorInput = document.querySelector<HTMLInputElement>("#symmetry-color");
+  const widthInput = document.querySelector<HTMLInputElement>("#symmetry-width");
+  const widthValue = document.querySelector<HTMLElement>("#symmetry-width-value");
+  const clearButton = document.querySelector<HTMLButtonElement>("#symmetry-clear");
 
-  syncControls();
+  if (!canvas || !segmentsInput || !mirrorInput || !colorInput || !widthInput || !widthValue || !clearButton) {
+    return null;
+  }
+
+  return {
+    canvas,
+    segmentsInput,
+    mirrorInput,
+    colorInput,
+    widthInput,
+    widthValue,
+    clearButton,
+  };
+}
+
+function initSymmetry(elements: Elements) {
+  const ctx = elements.canvas.getContext("2d");
+  if (!ctx) return;
+
+  const state = createInitialState(elements);
+  syncControls(elements, state);
+
+  const resizeCanvas = createCanvasResizer(elements.canvas, ctx);
+  const drawStroke = createStrokeRenderer(elements.canvas, ctx, state);
+
   resizeCanvas();
-  observeParent();
-  bindControls();
-  bindDrawing();
+  observeCanvasParent(elements.canvas, resizeCanvas);
+  bindControls(elements, ctx, state);
+  bindDrawing(elements.canvas, ctx, state, drawStroke);
+}
 
-  function createState(): SymmetryState {
-    const stored = localStorage.getItem(SEGMENT_STORAGE_KEY) ?? segmentsInput.value;
-    return {
-      drawing: false,
-      points: [],
-      snapshot: null,
-      segments: clampInt(stored, 1, 36, 6),
-      mirror: mirrorInput.checked,
-      color: colorInput.value,
-      lineWidth: clampInt(widthInput.value, 1, 20, 2),
-    };
-  }
+function createInitialState(elements: Elements): SymmetryState {
+  const storedSegments = localStorage.getItem(SEGMENT_STORAGE_KEY) ?? elements.segmentsInput.value;
 
-  function syncControls() {
-    segmentsInput.value = String(state.segments);
-    widthInput.value = String(state.lineWidth);
-    widthValue.textContent = String(state.lineWidth);
-  }
+  return {
+    drawing: false,
+    points: [],
+    snapshot: null,
+    segments: clampInt(storedSegments, INITIAL_SEGMENT_RANGE),
+    mirror: elements.mirrorInput.checked,
+    color: elements.colorInput.value,
+    lineWidth: clampInt(elements.widthInput.value, WIDTH_RANGE),
+  };
+}
 
-  function resizeCanvas() {
+function syncControls(elements: Elements, state: SymmetryState) {
+  elements.segmentsInput.value = String(state.segments);
+  elements.widthInput.value = String(state.lineWidth);
+  elements.widthValue.textContent = String(state.lineWidth);
+}
+
+function createCanvasResizer(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
+  return () => {
     const parent = canvas.parentElement;
     if (!parent) return;
 
     const dpr = window.devicePixelRatio || 1;
-    const imageData = hasSize() ? ctx.getImageData(0, 0, canvas.width, canvas.height) : null;
+    const imageData = hasCanvasSize(canvas)
+      ? ctx.getImageData(0, 0, canvas.width, canvas.height)
+      : null;
 
     canvas.width = parent.clientWidth * dpr;
     canvas.height = parent.clientHeight * dpr;
@@ -68,25 +109,32 @@ if (canvas && segmentsInput && mirrorInput && colorInput && widthInput && widthV
     canvas.style.height = `${parent.clientHeight}px`;
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-    if (imageData) ctx.putImageData(imageData, 0, 0);
-  }
+    if (imageData) {
+      ctx.putImageData(imageData, 0, 0);
+    }
+  };
+}
 
-  function hasSize() {
-    return canvas.width > 0 && canvas.height > 0;
-  }
+function hasCanvasSize(canvas: HTMLCanvasElement) {
+  return canvas.width > 0 && canvas.height > 0;
+}
 
-  function observeParent() {
-    if (!canvas.parentElement) return;
-    new ResizeObserver(resizeCanvas).observe(canvas.parentElement);
-  }
+function observeCanvasParent(canvas: HTMLCanvasElement, resizeCanvas: () => void) {
+  if (!canvas.parentElement) return;
 
-  function getCenter(): Point {
-    return { x: canvas.clientWidth / 2, y: canvas.clientHeight / 2 };
-  }
+  const observer = new ResizeObserver(resizeCanvas);
+  observer.observe(canvas.parentElement);
+}
 
-  function drawStroke(points: Point[]) {
+function createStrokeRenderer(
+  canvas: HTMLCanvasElement,
+  ctx: CanvasRenderingContext2D,
+  state: SymmetryState,
+) {
+  return (points: Point[]) => {
     if (points.length < 2) return;
-    const center = getCenter();
+
+    const center = getCanvasCenter(canvas);
     const angle = (Math.PI * 2) / state.segments;
 
     ctx.strokeStyle = state.color;
@@ -98,91 +146,133 @@ if (canvas && segmentsInput && mirrorInput && colorInput && widthInput && widthV
       ctx.save();
       ctx.translate(center.x, center.y);
       ctx.rotate(angle * segment);
-      drawPath(points, center, false);
-      if (state.mirror) drawPath(points, center, true);
+      drawPath(ctx, points, center, false);
+      if (state.mirror) drawPath(ctx, points, center, true);
       ctx.restore();
     }
+  };
+}
+
+function getCanvasCenter(canvas: HTMLCanvasElement): Point {
+  return {
+    x: canvas.clientWidth / 2,
+    y: canvas.clientHeight / 2,
+  };
+}
+
+function drawPath(
+  ctx: CanvasRenderingContext2D,
+  points: Point[],
+  center: Point,
+  flip: boolean,
+) {
+  const first = toCenteredPoint(points[0], center, flip);
+
+  ctx.beginPath();
+  ctx.moveTo(first.x, first.y);
+
+  for (let i = 0; i < points.length - 1; i++) {
+    const current = toCenteredPoint(points[i], center, flip);
+    const next = toCenteredPoint(points[i + 1], center, flip);
+    const mid = midpoint(current, next);
+
+    ctx.quadraticCurveTo(current.x, current.y, mid.x, mid.y);
   }
 
-  function drawPath(points: Point[], center: Point, flip: boolean) {
-    const first = toCentered(points[0], center, flip);
-    ctx.beginPath();
-    ctx.moveTo(first.x, first.y);
+  const last = toCenteredPoint(points[points.length - 1], center, flip);
+  ctx.lineTo(last.x, last.y);
+  ctx.stroke();
+}
 
-    for (let i = 0; i < points.length - 1; i++) {
-      const current = toCentered(points[i], center, flip);
-      const next = toCentered(points[i + 1], center, flip);
-      const mid = { x: (current.x + next.x) / 2, y: (current.y + next.y) / 2 };
-      ctx.quadraticCurveTo(current.x, current.y, mid.x, mid.y);
+function toCenteredPoint(point: Point, center: Point, flip: boolean): Point {
+  return {
+    x: point.x - center.x,
+    y: flip ? -(point.y - center.y) : point.y - center.y,
+  };
+}
+
+function midpoint(a: Point, b: Point): Point {
+  return {
+    x: (a.x + b.x) / 2,
+    y: (a.y + b.y) / 2,
+  };
+}
+
+function bindControls(
+  elements: Elements,
+  ctx: CanvasRenderingContext2D,
+  state: SymmetryState,
+) {
+  elements.segmentsInput.addEventListener("input", () => {
+    state.segments = clampInt(elements.segmentsInput.value, SEGMENT_INPUT_RANGE);
+    elements.segmentsInput.value = String(state.segments);
+    localStorage.setItem(SEGMENT_STORAGE_KEY, String(state.segments));
+  });
+
+  elements.mirrorInput.addEventListener("change", () => {
+    state.mirror = elements.mirrorInput.checked;
+  });
+
+  elements.colorInput.addEventListener("input", () => {
+    state.color = elements.colorInput.value;
+  });
+
+  elements.widthInput.addEventListener("input", () => {
+    state.lineWidth = clampInt(elements.widthInput.value, WIDTH_RANGE);
+    elements.widthValue.textContent = String(state.lineWidth);
+  });
+
+  elements.clearButton.addEventListener("click", () => {
+    ctx.clearRect(0, 0, elements.canvas.width, elements.canvas.height);
+  });
+}
+
+function bindDrawing(
+  canvas: HTMLCanvasElement,
+  ctx: CanvasRenderingContext2D,
+  state: SymmetryState,
+  drawStroke: (points: Point[]) => void,
+) {
+  canvas.addEventListener("pointerdown", (event) => {
+    state.drawing = true;
+    state.points = [getPointerPoint(canvas, event)];
+    state.snapshot = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    canvas.setPointerCapture(event.pointerId);
+  });
+
+  canvas.addEventListener("pointermove", (event) => {
+    if (!state.drawing || !state.snapshot) return;
+
+    state.points.push(getPointerPoint(canvas, event));
+    ctx.putImageData(state.snapshot, 0, 0);
+    drawStroke(state.points);
+  });
+
+  const endDrawing = (event: PointerEvent) => {
+    state.drawing = false;
+    state.points = [];
+    state.snapshot = null;
+
+    if (canvas.hasPointerCapture(event.pointerId)) {
+      canvas.releasePointerCapture(event.pointerId);
     }
+  };
 
-    const last = toCentered(points[points.length - 1], center, flip);
-    ctx.lineTo(last.x, last.y);
-    ctx.stroke();
-  }
+  canvas.addEventListener("pointerup", endDrawing);
+  canvas.addEventListener("pointercancel", endDrawing);
+}
 
-  function toCentered(point: Point, center: Point, flip: boolean): Point {
-    return {
-      x: point.x - center.x,
-      y: flip ? -(point.y - center.y) : point.y - center.y,
-    };
-  }
+function getPointerPoint(canvas: HTMLCanvasElement, event: PointerEvent): Point {
+  const rect = canvas.getBoundingClientRect();
 
-  function bindControls() {
-    segmentsInput.addEventListener("input", () => {
-      state.segments = clampInt(segmentsInput.value, 1, 36, 1);
-      segmentsInput.value = String(state.segments);
-      localStorage.setItem(SEGMENT_STORAGE_KEY, String(state.segments));
-    });
+  return {
+    x: event.clientX - rect.left,
+    y: event.clientY - rect.top,
+  };
+}
 
-    mirrorInput.addEventListener("change", () => {
-      state.mirror = mirrorInput.checked;
-    });
-
-    colorInput.addEventListener("input", () => {
-      state.color = colorInput.value;
-    });
-
-    widthInput.addEventListener("input", () => {
-      state.lineWidth = clampInt(widthInput.value, 1, 20, 2);
-      widthValue.textContent = String(state.lineWidth);
-    });
-
-    clearButton.addEventListener("click", () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-    });
-  }
-
-  function bindDrawing() {
-    canvas.addEventListener("pointerdown", (event) => {
-      state.drawing = true;
-      state.points = [getPointerPoint(event)];
-      state.snapshot = ctx.getImageData(0, 0, canvas.width, canvas.height);
-      canvas.setPointerCapture(event.pointerId);
-    });
-
-    canvas.addEventListener("pointermove", (event) => {
-      if (!state.drawing || !state.snapshot) return;
-      state.points.push(getPointerPoint(event));
-      ctx.putImageData(state.snapshot, 0, 0);
-      drawStroke(state.points);
-    });
-
-    const endDrawing = (event: PointerEvent) => {
-      state.drawing = false;
-      state.points = [];
-      state.snapshot = null;
-      if (canvas.hasPointerCapture(event.pointerId)) {
-        canvas.releasePointerCapture(event.pointerId);
-      }
-    };
-
-    canvas.addEventListener("pointerup", endDrawing);
-    canvas.addEventListener("pointercancel", endDrawing);
-  }
-
-  function getPointerPoint(event: PointerEvent): Point {
-    const rect = canvas.getBoundingClientRect();
-    return { x: event.clientX - rect.left, y: event.clientY - rect.top };
-  }
+function clampInt(value: string, range: { min: number; max: number; fallback: number }) {
+  const parsed = parseInt(value, 10);
+  if (Number.isNaN(parsed)) return range.fallback;
+  return Math.max(range.min, Math.min(range.max, parsed));
 }

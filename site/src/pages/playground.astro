@@ -3,7 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
 <BaseLayout title="playground - incomplete.fun">
-  <div class="canvas-app canvas-app-dark" id="playground-app">
+  <div class="canvas-app" id="playground-app">
     <div class="topbar">
       <a class="back-link" href="/" aria-label="Back to home">←</a>
       <span><strong>playground</strong></span>
@@ -13,7 +13,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       <button class="shape-btn" data-figure="circle" title="circle" type="button">○</button>
       <button class="shape-btn" data-figure="triangle" title="triangle" type="button">△</button>
       <button class="shape-btn" data-figure="spiral" title="spiral" type="button">↺</button>
-      <span class="status-text" id="playground-status">click to place · right-click removes</span>
+      <span id="playground-status">click to place · right-click removes</span>
       <button class="toolbar-button" id="playground-clear" type="button">clear</button>
       <button class="toolbar-button" id="playground-launch" type="button">launch</button>
     </div>
@@ -24,6 +24,16 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 </BaseLayout>
 
 <style>
+  #playground-app {
+    background: #080a2a;
+  }
+
+  #playground-status {
+    color: #d9e0ff;
+    margin-left: auto;
+    font-size: 0.8rem;
+  }
+
   .shape-btn {
     background: none;
     border: 1px solid #3a4a8f;
@@ -36,6 +46,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     cursor: pointer;
     border-radius: 4px;
     line-height: 1;
+  }
+
+  #playground-clear {
+    color: #d9e0ff;
+    border-color: #3a4a8f;
   }
 
   #playground-launch {

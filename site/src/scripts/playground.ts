@@ -1,6 +1,14 @@
-import { Body, Bodies, Engine, Events, World } from "matter-js";
-import { createPhysicsApp, resizePhysicsCanvas } from "./lib/matter";
-import { q, qAll } from "./lib/dom";
+import {
+  Body,
+  Bodies,
+  Engine,
+  Events,
+  Render,
+  Runner,
+  World,
+} from "matter-js";
+
+export {};
 
 type FigureType = "box" | "plank" | "circle" | "triangle" | "spiral";
 
@@ -16,7 +24,6 @@ const BALL_COLOR = "#ffffff";
 const START_COLOR = "#22c55e";
 const END_COLOR = "#f59e0b";
 const WALL_COLOR = "#0c1540";
-const WALL_INDICATOR_COLOR = "#1a2a6f";
 
 const FIGURE_COLORS: Record<FigureType, string> = {
   box: "#2e5cff",
@@ -38,6 +45,10 @@ const SPIRAL_TURNS = 2;
 const SPIRAL_SEGMENTS = 48;
 const SPIRAL_THICKNESS = 8;
 const WALL_THICKNESS = 50;
+
+const MAX_PIXEL_RATIO = 2;
+const PHYSICS_STEPS_PER_SECOND = 60;
+const MS_PER_SECOND = 1000;
 const END_ZONE_W = 110;
 const END_ZONE_H = 40;
 const START_ZONE_R = 20;
@@ -47,17 +58,34 @@ const START_ZONE_BUFFER = 30;
 const END_ZONE_BUFFER = 20;
 const FIGURE_REMOVAL_THRESHOLD = 45;
 const BALL_INITIAL_VELOCITY_NUDGE = 3;
+const WALL_INDICATOR_COLOR = "#1a2a6f";
 
-const canvas = q<HTMLCanvasElement>("#playground-canvas");
-const statusEl = q<HTMLElement>("#playground-status");
-const clearButton = q<HTMLButtonElement>("#playground-clear");
-const launchButton = q<HTMLButtonElement>("#playground-launch");
-const figureButtons = qAll<HTMLButtonElement>("[data-figure]");
+const canvas = document.querySelector<HTMLCanvasElement>("#playground-canvas");
+const statusEl = document.querySelector<HTMLElement>("#playground-status");
+const clearButton = document.querySelector<HTMLButtonElement>("#playground-clear");
+const launchButton = document.querySelector<HTMLButtonElement>("#playground-launch");
+const figureButtons = document.querySelectorAll<HTMLButtonElement>("[data-figure]");
 
 if (canvas && statusEl && clearButton && launchButton) {
-  const { engine, render } = createPhysicsApp(canvas, {
+  const engine = Engine.create({
     gravity: { x: 0, y: 1.2 },
-    background: BG_COLOR,
+  });
+  const world = engine.world;
+  const runner = Runner.create({
+    delta: MS_PER_SECOND / PHYSICS_STEPS_PER_SECOND,
+  });
+  const getPixelRatio = () => Math.min(window.devicePixelRatio || 1, MAX_PIXEL_RATIO);
+
+  const render = Render.create({
+    canvas,
+    engine,
+    options: {
+      background: BG_COLOR,
+      wireframes: false,
+      pixelRatio: getPixelRatio(),
+      width: 0,
+      height: 0,
+    },
   });
 
   let viewport = { width: 0, height: 0 };
@@ -92,7 +120,7 @@ if (canvas && statusEl && clearButton && launchButton) {
         render: { fillStyle: WALL_COLOR, strokeStyle: WALL_COLOR, lineWidth: 0 },
       }),
     ];
-    World.add(engine.world, walls);
+    World.add(world, walls);
   }
 
   function makeSingleBody(type: Exclude<FigureType, "spiral">, x: number, y: number): Matter.Body {
@@ -186,7 +214,7 @@ if (canvas && statusEl && clearButton && launchButton) {
       bodies = [makeSingleBody(selectedFigure, x, y)];
     }
     for (const body of bodies) {
-      World.add(engine.world, body);
+      World.add(world, body);
     }
     placedFigures.push({ type: selectedFigure, bodies, cx: x, cy: y });
     updateStatus();
@@ -200,7 +228,7 @@ if (canvas && statusEl && clearButton && launchButton) {
     });
     if (idx >= 0) {
       for (const body of placedFigures[idx].bodies) {
-        World.remove(engine.world, body);
+        World.remove(world, body);
       }
       placedFigures.splice(idx, 1);
       updateStatus();
@@ -219,14 +247,14 @@ if (canvas && statusEl && clearButton && launchButton) {
       render: { fillStyle: BALL_COLOR },
     });
     Body.setVelocity(ball, { x: nudge, y: 2 });
-    World.add(engine.world, ball);
+    World.add(world, ball);
     gameState = "launched";
     updateStatus();
   }
 
   function resetBall() {
     if (ball) {
-      World.remove(engine.world, ball);
+      World.remove(world, ball);
       ball = null;
     }
     gameState = "placing";
@@ -236,7 +264,7 @@ if (canvas && statusEl && clearButton && launchButton) {
   function clearAll() {
     for (const fig of placedFigures) {
       for (const body of fig.bodies) {
-        World.remove(engine.world, body);
+        World.remove(world, body);
       }
     }
     placedFigures = [];
@@ -247,7 +275,7 @@ if (canvas && statusEl && clearButton && launchButton) {
     launchButton.disabled = gameState === "launched";
     launchButton.textContent = gameState === "placing" ? "launch" : "retry";
     if (gameState === "won") {
-      statusEl.textContent = "reached the goal!";
+      statusEl.textContent = "🎉 reached the goal!";
     } else if (gameState === "lost") {
       statusEl.textContent = "missed · retry to try again";
     } else if (gameState === "launched") {
@@ -278,12 +306,16 @@ if (canvas && statusEl && clearButton && launchButton) {
   function drawOverlays() {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
+    // matter-js already applies setTransform(pixelRatio, ...) before firing
+    // afterRender, so CSS pixel coordinates map correctly without extra scaling.
     ctx.save();
 
+    // Wall boundary indicators
     ctx.fillStyle = WALL_INDICATOR_COLOR;
     ctx.fillRect(0, 0, 3, viewport.height);
     ctx.fillRect(viewport.width - 3, 0, 3, viewport.height);
 
+    // Start zone
     const start = getStartCenter();
     ctx.beginPath();
     ctx.arc(start.x, start.y, START_ZONE_R, 0, Math.PI * 2);
@@ -297,6 +329,7 @@ if (canvas && statusEl && clearButton && launchButton) {
     ctx.textAlign = "center";
     ctx.fillText("START", start.x, start.y + START_ZONE_R + 14);
 
+    // End zone
     const ez = getEndZone();
     ctx.fillStyle = END_COLOR + "33";
     ctx.fillRect(ez.x, ez.y, ez.w, ez.h);
@@ -308,6 +341,7 @@ if (canvas && statusEl && clearButton && launchButton) {
     ctx.textAlign = "center";
     ctx.fillText("GOAL", ez.x + ez.w / 2, ez.y + ez.h / 2 + 4);
 
+    // Placement preview
     if (mouseOnCanvas && gameState === "placing") {
       const extra = selectedFigure === "spiral" ? SPIRAL_R_END : 0;
       const blocked = isNearProtectedZone(mousePos.x, mousePos.y, extra);
@@ -342,6 +376,7 @@ if (canvas && statusEl && clearButton && launchButton) {
       ctx.globalAlpha = 1;
     }
 
+    // Win/loss tint
     if (gameState === "won") {
       ctx.fillStyle = "rgba(34, 197, 94, 0.15)";
       ctx.fillRect(0, 0, viewport.width, viewport.height);
@@ -369,7 +404,7 @@ if (canvas && statusEl && clearButton && launchButton) {
     }
 
     if (by > viewport.height + BALL_RADIUS * 3) {
-      World.remove(engine.world, ball);
+      World.remove(world, ball);
       ball = null;
       gameState = "lost";
       updateStatus();
@@ -418,11 +453,19 @@ if (canvas && statusEl && clearButton && launchButton) {
     const parent = canvas.parentElement;
     if (!parent) return;
     viewport = { width: parent.clientWidth, height: parent.clientHeight };
-    resizePhysicsCanvas(render, viewport);
+
+    render.options.width = viewport.width;
+    render.options.height = viewport.height;
+    const pr = getPixelRatio();
+    render.canvas.width = viewport.width * pr;
+    render.canvas.height = viewport.height * pr;
+    render.canvas.style.width = `${viewport.width}px`;
+    render.canvas.style.height = `${viewport.height}px`;
+    Render.setPixelRatio(render, pr);
 
     if (walls.length > 0) {
       for (const wall of walls) {
-        World.remove(engine.world, wall);
+        World.remove(world, wall);
       }
       walls = [];
     }
@@ -435,4 +478,6 @@ if (canvas && statusEl && clearButton && launchButton) {
   updateFigureButtons();
   resize();
   updateStatus();
+  Render.run(render);
+  Runner.run(runner, engine);
 }

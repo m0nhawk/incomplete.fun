@@ -1,7 +1,15 @@
-import { Body, Bodies, Composite, Events, World } from "matter-js";
-import { createPhysicsApp, resizePhysicsCanvas } from "./lib/matter";
-import { q } from "./lib/dom";
-import { clampInt, rand } from "./lib/math";
+import {
+  Body,
+  Bodies,
+  Composite,
+  Engine,
+  Events,
+  Render,
+  Runner,
+  World,
+} from "matter-js";
+
+export {};
 
 interface Ring {
   id: number;
@@ -11,45 +19,95 @@ interface Ring {
   escaped: boolean;
 }
 
-interface Viewport {
-  width: number;
-  height: number;
-}
-
-const INPUT_RANGE = { min: 1, max: 12, fallback: 5 };
-const SPEED_RANGE = { min: 1, max: 20, fallback: 9 };
+const canvas = document.querySelector<HTMLCanvasElement>("#escape-canvas");
+const status = document.querySelector<HTMLElement>("#escape-status");
+const resetButton = document.querySelector<HTMLButtonElement>("#escape-reset");
+const ringCountInput = document.querySelector<HTMLInputElement>("#escape-rings-input");
+const speedInput = document.querySelector<HTMLInputElement>("#escape-speed-input");
+const DEFAULT_RING_COUNT = 5;
+const DEFAULT_BALL_SPEED = 9;
 const RING_SEGMENTS = 96;
 const RING_THICKNESS = 8;
 const BALL_RADIUS = 7;
+const MAX_PIXEL_RATIO = 2;
+const MILLISECONDS_PER_SECOND = 1000;
+const PHYSICS_STEPS_PER_SECOND = 120;
+const PHYSICS_POSITION_ITERATIONS = 10;
+const PHYSICS_VELOCITY_ITERATIONS = 8;
+const PHYSICS_CONSTRAINT_ITERATIONS = 4;
 const RING_ANGULAR_SPEED_MIN = 0.09;
 const RING_ANGULAR_SPEED_MAX = 0.24;
 
-const canvas = q<HTMLCanvasElement>("#escape-canvas");
-const status = q<HTMLElement>("#escape-status");
-const resetButton = q<HTMLButtonElement>("#escape-reset");
-const ringCountInput = q<HTMLInputElement>("#escape-rings-input");
-const speedInput = q<HTMLInputElement>("#escape-speed-input");
-
 if (canvas && status && resetButton && ringCountInput && speedInput) {
-  const { engine, render } = createPhysicsApp(canvas, {
-    delta: 1000 / 120,
+  const engine = Engine.create({
     gravity: { x: 0, y: 0 },
+    positionIterations: PHYSICS_POSITION_ITERATIONS,
+    velocityIterations: PHYSICS_VELOCITY_ITERATIONS,
+    constraintIterations: PHYSICS_CONSTRAINT_ITERATIONS,
+  });
+  const world = engine.world;
+  const runner = Runner.create({
+    delta: MILLISECONDS_PER_SECOND / PHYSICS_STEPS_PER_SECOND,
+  });
+  const getPixelRatio = () => Math.min(window.devicePixelRatio || 1, MAX_PIXEL_RATIO);
+
+  const render = Render.create({
+    canvas,
+    engine,
+    options: {
+      background: "#080a2a",
+      wireframes: false,
+      pixelRatio: getPixelRatio(),
+      width: 0,
+      height: 0,
+    },
   });
 
   let ball = Bodies.circle(0, 0, BALL_RADIUS);
   let rings: Ring[] = [];
   let ballSpeed = 0;
   let needsSpeedCorrection = false;
-  let viewport: Viewport = { width: 0, height: 0 };
+  let viewport = { width: 0, height: 0 };
+
+  function rand(min: number, max: number) {
+    return min + Math.random() * (max - min);
+  }
+
+  function readInputNumber(input: HTMLInputElement, fallback: number, min: number, max: number) {
+    const parsed = Number(input.value);
+    if (!Number.isFinite(parsed)) return fallback;
+    return Math.max(min, Math.min(max, parsed));
+  }
 
   function removeBodies() {
     if (rings.length > 0) {
-      World.remove(engine.world, rings.map((ring) => ring.composite));
+      World.remove(world, rings.map((ring) => ring.composite));
       rings = [];
     }
     if (ball) {
-      World.remove(engine.world, ball);
+      World.remove(world, ball);
     }
+  }
+
+  function resize() {
+    const parent = canvas.parentElement;
+    if (!parent) return;
+
+    viewport = {
+      width: parent.clientWidth,
+      height: parent.clientHeight,
+    };
+
+    render.options.width = viewport.width;
+    render.options.height = viewport.height;
+    const pixelRatio = getPixelRatio();
+    render.canvas.width = viewport.width * pixelRatio;
+    render.canvas.height = viewport.height * pixelRatio;
+    render.canvas.style.width = `${viewport.width}px`;
+    render.canvas.style.height = `${viewport.height}px`;
+    Render.setPixelRatio(render, pixelRatio);
+
+    rebuildScene();
   }
 
   function createRing(radius: number, thickness: number, gap: number, speed: number, ringId: number): Ring {
@@ -85,13 +143,20 @@ if (canvas && status && resetButton && ringCountInput && speedInput) {
           },
         },
       );
+
       pieces.push(body);
     }
 
     const composite = Composite.create({ label: `ring-${ringId}` });
     Composite.add(composite, pieces);
 
-    return { id: ringId, composite, radius, speed, escaped: false };
+    return {
+      id: ringId,
+      composite,
+      radius,
+      speed,
+      escaped: false,
+    };
   }
 
   function rebuildScene() {
@@ -101,14 +166,16 @@ if (canvas && status && resetButton && ringCountInput && speedInput) {
     const centerX = viewport.width / 2;
     const centerY = viewport.height / 2;
     const minEdge = Math.min(viewport.width, viewport.height);
-    const ringCount = Math.round(clampInt(ringCountInput.value, INPUT_RANGE.min, INPUT_RANGE.max, INPUT_RANGE.fallback));
+    const ringCount = Math.round(readInputNumber(ringCountInput, DEFAULT_RING_COUNT, 1, 12));
     const spacing = minEdge / (ringCount * 2.2);
 
     for (let i = 0; i < ringCount; i++) {
+      const ringId = i;
       const radius = spacing * (i + 1.6);
       const gap = rand(0.09, 0.16);
-      const speed = rand(RING_ANGULAR_SPEED_MIN, RING_ANGULAR_SPEED_MAX) * (Math.random() > 0.5 ? 1 : -1);
-      rings.push(createRing(radius, RING_THICKNESS, gap, speed, i));
+      const speed =
+        rand(RING_ANGULAR_SPEED_MIN, RING_ANGULAR_SPEED_MAX) * (Math.random() > 0.5 ? 1 : -1);
+      rings.push(createRing(radius, RING_THICKNESS, gap, speed, ringId));
     }
 
     ball = Bodies.circle(centerX, centerY, BALL_RADIUS, {
@@ -117,33 +184,28 @@ if (canvas && status && resetButton && ringCountInput && speedInput) {
       friction: 0,
       frictionStatic: 0,
       slop: 0,
-      render: { fillStyle: "#ffffff" },
+      render: {
+        fillStyle: "#ffffff",
+      },
     });
 
     const launchAngle = rand(0, Math.PI * 2);
-    ballSpeed = clampInt(speedInput.value, SPEED_RANGE.min, SPEED_RANGE.max, SPEED_RANGE.fallback);
+    ballSpeed = readInputNumber(speedInput, DEFAULT_BALL_SPEED, 1, 20);
     Body.setVelocity(ball, {
       x: Math.cos(launchAngle) * ballSpeed,
       y: Math.sin(launchAngle) * ballSpeed,
     });
 
-    World.add(engine.world, [...rings.map((ring) => ring.composite), ball]);
+    World.add(world, [...rings.map((ring) => ring.composite), ball]);
     status.textContent = `rings: ${ringCount}`;
-  }
-
-  function resize() {
-    const parent = canvas.parentElement;
-    if (!parent) return;
-    viewport = { width: parent.clientWidth, height: parent.clientHeight };
-    resizePhysicsCanvas(render, viewport);
-    rebuildScene();
   }
 
   Events.on(engine, "beforeUpdate", () => {
     if (viewport.width === 0 || viewport.height === 0) return;
+
     const centerX = viewport.width / 2;
     const centerY = viewport.height / 2;
-    const deltaSeconds = engine.timing.lastDelta / 1000;
+    const deltaSeconds = engine.timing.lastDelta / MILLISECONDS_PER_SECOND;
     for (const ring of rings) {
       if (ring.escaped) continue;
       Composite.rotate(ring.composite, ring.speed * deltaSeconds, {
@@ -172,7 +234,7 @@ if (canvas && status && resetButton && ringCountInput && speedInput) {
     for (const ring of rings) {
       if (!ring.escaped && distanceFromCenter > ring.radius + RING_THICKNESS + BALL_RADIUS) {
         ring.escaped = true;
-        World.remove(engine.world, ring.composite);
+        World.remove(world, ring.composite);
         removedRings = true;
       }
     }
@@ -208,4 +270,6 @@ if (canvas && status && resetButton && ringCountInput && speedInput) {
   if (canvas.parentElement) observer.observe(canvas.parentElement);
 
   resize();
+  Render.run(render);
+  Runner.run(runner, engine);
 }

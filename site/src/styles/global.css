@@ -119,46 +119,9 @@ strong {
   cursor: pointer;
 }
 
-.control-label,
-.control {
-  display: inline-flex;
+.control-label {
+  display: flex;
   align-items: center;
-  gap: 0.35rem;
+  gap: 0.4rem;
   color: var(--fg);
-  font-size: 0.8rem;
-}
-
-.control input {
-  width: 3.6rem;
-  height: 1.5rem;
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  background: var(--bg);
-  color: var(--fg);
-  padding: 0 0.35rem;
-}
-
-.status-text {
-  margin-left: auto;
-  font-size: 0.8rem;
-}
-
-.canvas-app-dark {
-  background: #080a2a;
-}
-
-.canvas-app-dark .status-text,
-.canvas-app-dark .control,
-.canvas-app-dark .toolbar-button {
-  color: #d9e0ff;
-}
-
-.canvas-app-dark .control input {
-  border-color: #3a4a8f;
-  background: #0f143f;
-  color: #d9e0ff;
-}
-
-.canvas-app-dark .toolbar-button {
-  border-color: #3a4a8f;
 }
