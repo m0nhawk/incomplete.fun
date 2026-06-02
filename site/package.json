@@ -13,8 +13,7 @@
     "astro": "cross-env ASTRO_TELEMETRY_DISABLED=1 astro"
   },
   "dependencies": {
-    "astro": "^6.3.1",
-    "matter-js": "^0.20.0"
+    "astro": "^6.3.1"
   },
   "devDependencies": {
     "cross-env": "10.1.0"
