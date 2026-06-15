@@ -15,6 +15,7 @@
     "astro": "cross-env ASTRO_TELEMETRY_DISABLED=1 astro"
   },
   "dependencies": {
+    "@astrojs/vercel": "^10.0.8",
     "astro": "^6.4.4"
   },
   "devDependencies": {

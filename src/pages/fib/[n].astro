@@ -1,17 +1,19 @@
 ---
 import PageLayout from '../../layouts/PageLayout.astro';
 
-export function getStaticPaths() {
-  return Array.from({ length: 101 }, (_, n) => ({ params: { n: String(n) } }));
-}
-
 function fib(n: number): bigint {
   let a = 0n, b = 1n;
   for (let i = 0; i < n; i++) [a, b] = [b, a + b];
   return a;
 }
 
-const n = parseInt(Astro.params.n, 10);
+const nParam = Astro.params.n ?? '';
+
+if (!/^\d+$/.test(nParam)) {
+  return new Response(null, { status: 404 });
+}
+
+const n = Number.parseInt(nParam, 10);
 ---
 
 <PageLayout name="fibonacci" back>
