@@ -10,12 +10,18 @@
     "dev": "cross-env ASTRO_TELEMETRY_DISABLED=1 astro dev",
     "build": "cross-env ASTRO_TELEMETRY_DISABLED=1 astro build",
     "preview": "cross-env ASTRO_TELEMETRY_DISABLED=1 astro preview",
+    "check": "cross-env ASTRO_TELEMETRY_DISABLED=1 astro check",
+    "lint": "eslint src/scripts/**/*.ts",
     "astro": "cross-env ASTRO_TELEMETRY_DISABLED=1 astro"
   },
   "dependencies": {
     "astro": "^6.4.4"
   },
   "devDependencies": {
-    "cross-env": "10.1.0"
+    "@astrojs/check": "^0.9.9",
+    "cross-env": "10.1.0",
+    "eslint": "^10.4.1",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.61.0"
   }
 }

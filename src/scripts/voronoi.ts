@@ -44,6 +44,8 @@ const METRIC_INDEX: Record<Metric, number> = {
   minkowski05: 4,
 };
 
+const MAX_SITES = 64;
+
 const VERT = `#version 300 es
 in vec2 a_pos;
 void main() { gl_Position = vec4(a_pos, 0.0, 1.0); }
@@ -120,19 +122,25 @@ void main() {
 }
 `;
 
-const glCanvas = document.querySelector<HTMLCanvasElement>("#voronoi-gl");
-const markerCanvas = document.querySelector<HTMLCanvasElement>("#voronoi-markers");
-const stage = document.querySelector<HTMLDivElement>("#voronoi-stage");
-const clearButton = document.querySelector<HTMLButtonElement>("#voronoi-clear");
-const help = document.querySelector<HTMLElement>("#voronoi-help");
-const coords = document.querySelector<HTMLElement>("#voronoi-coords");
-const distances = document.querySelector<HTMLElement>("#voronoi-distances");
-const empty = document.querySelector<HTMLElement>("#voronoi-empty");
+const glCanvas = document.querySelector<HTMLCanvasElement>("#voronoi-gl")!;
+const markerCanvas = document.querySelector<HTMLCanvasElement>("#voronoi-markers")!;
+const stage = document.querySelector<HTMLDivElement>("#voronoi-stage")!;
+const clearButton = document.querySelector<HTMLButtonElement>("#voronoi-clear")!;
+const help = document.querySelector<HTMLElement>("#voronoi-help")!;
+const coords = document.querySelector<HTMLElement>("#voronoi-coords")!;
+const distances = document.querySelector<HTMLElement>("#voronoi-distances")!;
+const empty = document.querySelector<HTMLElement>("#voronoi-empty")!;
+const webglError = document.querySelector<HTMLElement>("#voronoi-webgl-error")!;
 const metricButtons = Array.from(document.querySelectorAll<HTMLButtonElement>(".metric-button"));
 
-if (glCanvas && markerCanvas && stage && clearButton && help && coords && distances && empty) {
-  const gl = glCanvas.getContext("webgl2", { alpha: true, premultipliedAlpha: false });
-  const markerCtx = markerCanvas.getContext("2d");
+if (glCanvas && markerCanvas && stage && clearButton && help && coords && distances && empty && webglError) {
+  const gl = glCanvas.getContext("webgl2", { alpha: true, premultipliedAlpha: false })!;
+  const markerCtx = markerCanvas.getContext("2d")!;
+
+  if (!gl || !markerCtx) {
+    empty.style.display = "none";
+    webglError.style.display = "flex";
+  }
 
   if (gl && markerCtx) {
     let nextId = 0;
@@ -157,6 +165,9 @@ if (glCanvas && markerCanvas && stage && clearButton && help && coords && distan
     gl.attachShader(prog, compileShader(gl, gl.VERTEX_SHADER, VERT));
     gl.attachShader(prog, compileShader(gl, gl.FRAGMENT_SHADER, FRAG));
     gl.linkProgram(prog);
+    if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) {
+      throw new Error(`Unable to link WebGL program: ${gl.getProgramInfoLog(prog) ?? "unknown error"}`);
+    }
     gl.useProgram(prog);
 
     const buf = gl.createBuffer();
@@ -184,6 +195,11 @@ if (glCanvas && markerCanvas && stage && clearButton && help && coords && distan
       if (!shader) throw new Error("Unable to create WebGL shader");
       glContext.shaderSource(shader, src);
       glContext.compileShader(shader);
+      if (!glContext.getShaderParameter(shader, glContext.COMPILE_STATUS)) {
+        const message = glContext.getShaderInfoLog(shader) ?? "unknown error";
+        glContext.deleteShader(shader);
+        throw new Error(`Unable to compile WebGL shader: ${message}`);
+      }
       return shader;
     }
 
@@ -347,6 +363,7 @@ if (glCanvas && markerCanvas && stage && clearButton && help && coords && distan
       const active = activeMetric();
       for (const button of metricButtons) {
         button.classList.toggle("is-active", button.dataset.metric === active);
+        button.setAttribute("aria-pressed", String(button.dataset.metric === active));
       }
       help.textContent = selectedId ? "drag · change metric · right-click removes" : "click to place · right-click removes";
     }
@@ -411,10 +428,11 @@ if (glCanvas && markerCanvas && stage && clearButton && help && coords && distan
       renderMarkers();
     }
 
-    stage.addEventListener("mousedown", (e) => {
+    stage.addEventListener("pointerdown", (e) => {
       if (e.button !== 0) return;
       const { x, y } = getPos(e);
       const near = findNear(x, y);
+      stage.setPointerCapture(e.pointerId);
 
       if (near) {
         setSelected(near.id);
@@ -427,7 +445,7 @@ if (glCanvas && markerCanvas && stage && clearButton && help && coords && distan
       }
     });
 
-    stage.addEventListener("mousemove", (e) => {
+    stage.addEventListener("pointermove", (e) => {
       const { x, y } = getPos(e);
       mousePos = { x, y };
 
@@ -451,9 +469,13 @@ if (glCanvas && markerCanvas && stage && clearButton && help && coords && distan
       render();
     });
 
-    stage.addEventListener("mouseup", (e) => {
+    stage.addEventListener("pointerup", (e) => {
       if (e.button !== 0) return;
       stage.style.cursor = "crosshair";
+
+      if (stage.hasPointerCapture(e.pointerId)) {
+        stage.releasePointerCapture(e.pointerId);
+      }
 
       if (drag) {
         drag = null;
@@ -461,6 +483,11 @@ if (glCanvas && markerCanvas && stage && clearButton && help && coords && distan
       }
 
       if (!mouseDownOnSite) {
+        if (sites.length >= MAX_SITES) {
+          help.textContent = `maximum of ${MAX_SITES} points reached`;
+          return;
+        }
+
         const { x, y } = getPos(e);
         const hue = (siteCount * 137.508) % 360;
         const [r, g, b] = hslToRgb(hue, 60, 68);
@@ -472,7 +499,16 @@ if (glCanvas && markerCanvas && stage && clearButton && help && coords && distan
       }
     });
 
-    stage.addEventListener("mouseleave", () => {
+    stage.addEventListener("pointercancel", (e) => {
+      drag = null;
+      mouseDownOnSite = false;
+      stage.style.cursor = "crosshair";
+      if (stage.hasPointerCapture(e.pointerId)) {
+        stage.releasePointerCapture(e.pointerId);
+      }
+    });
+
+    stage.addEventListener("pointerleave", () => {
       mousePos = null;
       renderHover();
     });

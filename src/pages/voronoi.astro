@@ -26,9 +26,12 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       <div id="voronoi-distances"></div>
     </div>
 
-    <div class="canvas-stage" id="voronoi-stage" style="cursor: crosshair;">
+    <div class="canvas-stage" id="voronoi-stage" style="cursor: crosshair; touch-action: none;">
       <canvas id="voronoi-gl" style="position: absolute; inset: 0; display: block;"></canvas>
       <canvas id="voronoi-markers" style="position: absolute; inset: 0; display: block; pointer-events: none;"></canvas>
+      <div id="voronoi-webgl-error" role="status">
+        WebGL2 is required for this experiment.
+      </div>
       <div id="voronoi-empty">
         <span>click to place points</span>
         <span style="font-size: 0.75rem;">each point uses its own distance metric</span>
@@ -86,6 +89,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     padding: 0.25rem 0;
   }
 
+  #voronoi-webgl-error,
   #voronoi-empty {
     position: absolute;
     inset: 0;
@@ -97,6 +101,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     color: var(--muted);
     font-family: var(--mono);
     pointer-events: none;
+  }
+
+  #voronoi-webgl-error {
+    display: none;
   }
 </style>
 
