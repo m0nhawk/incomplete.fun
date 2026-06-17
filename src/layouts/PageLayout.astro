@@ -4,9 +4,10 @@ import BaseLayout from './BaseLayout.astro';
 interface Props {
   name: string;
   back?: boolean;
+  wide?: boolean;
 }
 
-const { name, back = false } = Astro.props;
+const { name, back = false, wide = false } = Astro.props;
 const title = name === 'incomplete.fun' ? name : `${name} - incomplete.fun`;
 ---
 
@@ -16,7 +17,7 @@ const title = name === 'incomplete.fun' ? name : `${name} - incomplete.fun`;
       {back && <a class="back-link" href="/" aria-label="Back to home">←</a>}
       <span><strong>{name}</strong></span>
     </div>
-    <main class="page">
+    <main class={wide ? 'page page-wide' : 'page'}>
       <slot />
     </main>
   </div>

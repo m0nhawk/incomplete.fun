@@ -1,0 +1,176 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+---
+
+<PageLayout name="finite group explorer" back wide>
+  <p class="group-intro">Explore Cayley tables, element orders, subgroups, normal subgroups, centers, conjugacy classes, and quotients for small finite groups.</p>
+
+  <section class="group-panel" id="group-app">
+    <div class="group-controls">
+      <label>
+        group
+        <select id="group-select">
+          <option value="C2">cyclic C₂</option>
+          <option value="C3">cyclic C₃</option>
+          <option value="C4">cyclic C₄</option>
+          <option value="C5">cyclic C₅</option>
+          <option value="C6">cyclic C₆</option>
+          <option value="C7">cyclic C₇</option>
+          <option value="C8">cyclic C₈</option>
+          <option value="V4">klein four V₄</option>
+          <option value="D3">dihedral D₃</option>
+          <option value="D4" selected>dihedral D₄</option>
+          <option value="D5">dihedral D₅</option>
+          <option value="D6">dihedral D₆</option>
+          <option value="S3">symmetric S₃</option>
+          <option value="Q8">quaternion Q₈</option>
+        </select>
+      </label>
+      <label>
+        quotient by normal subgroup
+        <select id="normal-select"></select>
+      </label>
+    </div>
+
+    <div class="group-summary" id="group-summary"></div>
+
+    <div class="group-grid">
+      <article class="group-card group-wide">
+        <h2>cayley table</h2>
+        <div class="group-table-wrap" id="cayley-table"></div>
+      </article>
+
+      <article class="group-card">
+        <h2>element orders</h2>
+        <div id="element-orders"></div>
+      </article>
+
+      <article class="group-card">
+        <h2>center</h2>
+        <div id="center-output"></div>
+      </article>
+
+      <article class="group-card">
+        <h2>conjugacy classes</h2>
+        <div id="conjugacy-output"></div>
+      </article>
+
+      <article class="group-card group-wide">
+        <h2>subgroups</h2>
+        <div id="subgroups-output"></div>
+      </article>
+
+      <article class="group-card group-wide">
+        <h2>quotient</h2>
+        <div id="quotient-output"></div>
+      </article>
+    </div>
+  </section>
+</PageLayout>
+
+<style>
+  .group-intro {
+    color: var(--muted);
+  }
+
+  .group-panel {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .group-controls {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    align-items: end;
+  }
+
+  .group-controls label {
+    display: grid;
+    gap: 0.25rem;
+    color: var(--muted);
+  }
+
+  .group-controls select {
+    min-width: 14rem;
+    background: var(--bg);
+    color: var(--fg);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 0.35rem 0.45rem;
+    font: inherit;
+  }
+
+  .group-summary,
+  .group-card {
+    border: 1px solid var(--line);
+    padding: 1rem;
+  }
+
+  .group-summary {
+    color: var(--muted);
+  }
+
+  .group-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+    gap: 1rem;
+  }
+
+  .group-wide {
+    grid-column: 1 / -1;
+  }
+
+  .group-card h2 {
+    font-size: 1rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .group-table-wrap {
+    overflow: auto;
+  }
+
+  .group-table {
+    width: 100%;
+    min-width: max-content;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .group-table th,
+  .group-table td {
+    border: 1px solid var(--line);
+    padding: 0.25rem 0.45rem;
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  .group-table th {
+    font-weight: 600;
+  }
+
+  .group-list {
+    display: grid;
+    gap: 0.35rem;
+    margin: 0;
+    padding-left: 1.25rem;
+  }
+
+  .group-muted {
+    color: var(--muted);
+  }
+
+  .group-chip {
+    display: inline-block;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 0.05rem 0.45rem;
+    margin: 0.1rem;
+    white-space: nowrap;
+  }
+</style>
+
+<script>
+  import '../scripts/groups.ts';
+</script>

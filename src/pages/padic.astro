@@ -1,0 +1,163 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+---
+
+<PageLayout name="p-adic calculator" back wide>
+  <p class="padic-intro">Explore rational numbers by their base-p digits extending to the left.</p>
+
+  <section class="padic-grid" id="padic-app">
+      <form class="padic-card" id="padic-expansion-form">
+        <h2>rational expansion</h2>
+        <label>
+          prime p
+          <input id="padic-prime" type="number" min="2" max="97" step="1" value="5" />
+        </label>
+        <label>
+          rational number
+          <input id="padic-rational" type="text" value="1/3" inputmode="text" />
+        </label>
+        <label>
+          digits
+          <input id="padic-digits" type="number" min="1" max="40" step="1" value="16" />
+        </label>
+        <button class="toolbar-button" type="submit">compute</button>
+        <div class="padic-output" id="padic-expansion-output" aria-live="polite"></div>
+      </form>
+
+      <form class="padic-card" id="padic-inverse-form">
+        <h2>modular inverse</h2>
+        <label>
+          a
+          <input id="padic-inverse-a" type="text" value="7" />
+        </label>
+        <label>
+          modulus p^k
+          <span class="padic-inline-inputs">
+            <input id="padic-inverse-p" type="number" min="2" max="97" step="1" value="5" aria-label="prime p" />
+            <input id="padic-inverse-k" type="number" min="1" max="30" step="1" value="6" aria-label="exponent k" />
+          </span>
+        </label>
+        <button class="toolbar-button" type="submit">invert</button>
+        <div class="padic-output" id="padic-inverse-output" aria-live="polite"></div>
+      </form>
+
+      <form class="padic-card padic-wide" id="padic-hensel-form">
+        <h2>hensel lift</h2>
+        <p class="padic-note">Enter polynomial coefficients low to high. Example: <code>-2,0,1</code> is x² − 2.</p>
+        <label>
+          coefficients
+          <input id="padic-poly" type="text" value="-2,0,1" />
+        </label>
+        <label>
+          root mod p
+          <input id="padic-root" type="text" value="3" />
+        </label>
+        <label>
+          lift to p^k
+          <span class="padic-inline-inputs">
+            <input id="padic-hensel-p" type="number" min="2" max="97" step="1" value="7" aria-label="prime p" />
+            <input id="padic-hensel-k" type="number" min="1" max="30" step="1" value="8" aria-label="exponent k" />
+          </span>
+        </label>
+        <button class="toolbar-button" type="submit">lift</button>
+        <div class="padic-output" id="padic-hensel-output" aria-live="polite"></div>
+      </form>
+  </section>
+</PageLayout>
+
+<style>
+  .padic-intro,
+  .padic-note {
+    color: var(--muted);
+  }
+
+  .padic-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+    gap: 1rem;
+  }
+
+  .padic-card {
+    border: 1px solid var(--line);
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .padic-wide {
+    grid-column: 1 / -1;
+  }
+
+  .padic-card h2 {
+    font-size: 1rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .padic-card label {
+    display: grid;
+    gap: 0.25rem;
+    color: var(--muted);
+  }
+
+  .padic-card input {
+    width: 100%;
+    background: transparent;
+    color: var(--fg);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 0.35rem 0.45rem;
+    font-family: var(--mono);
+  }
+
+  .padic-inline-inputs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+  }
+
+  .padic-output {
+    min-height: 7rem;
+    border-top: 1px solid var(--line);
+    padding-top: 0.75rem;
+    overflow-x: auto;
+  }
+</style>
+
+<style is:global>
+  .padic-result {
+    display: grid;
+    gap: 0.6rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .padic-result code {
+    white-space: nowrap;
+  }
+
+  .padic-error {
+    color: #c33;
+  }
+
+  .padic-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+  }
+
+  .padic-table th,
+  .padic-table td {
+    border-bottom: 1px solid var(--line);
+    padding: 0.25rem 0.4rem;
+    text-align: left;
+    white-space: nowrap;
+  }
+
+  .padic-muted {
+    color: var(--muted);
+  }
+</style>
+
+<script>
+  import '../scripts/padic.ts';
+</script>

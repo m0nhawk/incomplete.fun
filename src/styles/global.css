@@ -81,6 +81,8 @@ code {
   padding: calc(var(--space) * 1.4) var(--space);
 }
 
+.page-wide { --measure: 72rem; }
+
 .home-intro { color: var(--muted); }
 
 .home-links {

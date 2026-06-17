@@ -15,6 +15,7 @@ pnpm preview
 ## Routes
 
 - `/`
+- `/padic`
 - `/symmetry`
 - `/voronoi`
 - `/fib/0` through `/fib/100`

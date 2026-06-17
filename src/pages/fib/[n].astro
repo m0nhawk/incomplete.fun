@@ -7,6 +7,10 @@ function fib(n: number): bigint {
   return a;
 }
 
+export function getStaticPaths() {
+  return Array.from({ length: 101 }, (_, n) => ({ params: { n: String(n) } }));
+}
+
 const nParam = Astro.params.n ?? '';
 
 if (!/^\d+$/.test(nParam)) {
