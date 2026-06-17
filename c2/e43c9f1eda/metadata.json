@@ -1,0 +1,33 @@
+{
+  "cli_version": "0.6.3",
+  "checkpoint_id": "c2e43c9f1eda",
+  "strategy": "manual-commit",
+  "branch": "master",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "src/components/TopBar.astro",
+    "src/data/experiments.ts",
+    "src/layouts/CanvasLayout.astro",
+    "src/layouts/PageLayout.astro",
+    "src/pages/complex.astro",
+    "src/pages/index.astro",
+    "src/pages/symmetry.astro",
+    "src/pages/voronoi.astro",
+    "src/styles/global.css"
+  ],
+  "sessions": [
+    {
+      "metadata": "/c2/e43c9f1eda/0/metadata.json",
+      "transcript": "/c2/e43c9f1eda/0/full.jsonl",
+      "content_hash": "/c2/e43c9f1eda/0/content_hash.txt",
+      "prompt": "/c2/e43c9f1eda/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 51330,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 478720,
+    "output_tokens": 7619,
+    "api_call_count": 26
+  }
+}
