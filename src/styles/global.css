@@ -1,144 +1,150 @@
 :root {
-  --sans: Inter, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  --mono: ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, Consolas, "DejaVu Sans Mono", monospace;
-
-  --bg: #ffffff;
-  --fg: #111827;
-  --accent: #111827;
-  --muted: #6b7280;
-  --border: #e5e7eb;
-
-  --pad: 1.5rem;
-  --max-width: 42rem;
+  color-scheme: light dark;
+  --bg: #fbfbf9;
+  --fg: #181817;
+  --muted: #77736b;
+  --line: #dedbd2;
+  --accent: currentColor;
+  --border: var(--line);
+  --mono: inherit;
+  --space: clamp(1rem, 4vw, 2.5rem);
+  --measure: 38rem;
+  font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #0f0f0f;
-    --fg: #e0e0e0;
-    --accent: #4d9fff;
-    --muted: #888;
-    --border: #2a2a2a;
+    --bg: #10100f;
+    --fg: #eeeeea;
+    --muted: #98948b;
+    --line: #2d2b28;
   }
 }
 
-*, *::before, *::after {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 body {
-  font-family: var(--sans);
-  font-size: 0.95rem;
-  line-height: 1.6;
+  margin: 0;
   background: var(--bg);
   color: var(--fg);
-  margin: 0;
+  font-size: 15px;
+  line-height: 1.65;
 }
 
 a {
-  color: var(--accent);
-  text-decoration: none;
-}
-
-a:hover {
+  color: inherit;
   text-decoration: underline;
-  text-underline-offset: 0.15em;
+  text-decoration-color: var(--line);
+  text-underline-offset: .25em;
 }
 
-h1, h2, h3 {
-  font-size: 1rem;
-  font-weight: bold;
-  margin: 0 0 1rem;
-}
+a:hover { text-decoration-color: currentColor; }
 
-p, ul, ol {
-  margin: 0 0 0.75rem;
-}
+h1, h2, h3, p, ul, ol { margin: 0 0 1rem; }
 
-ul, ol {
-  padding-left: 1.5rem;
-}
+h1, h2, h3, strong { font-weight: 600; }
+
+ul, ol { padding-left: 1.25rem; }
 
 code {
-  background: var(--border);
-  padding: 0.1em 0.35em;
-  border-radius: 2px;
+  padding: .1em .3em;
+  border: 1px solid var(--line);
+  border-radius: 3px;
 }
 
-strong {
-  font-weight: bold;
-}
-
-.app-shell {
-  display: flex;
-  flex-direction: column;
+.app-shell, .canvas-app {
   min-height: 100dvh;
   background: var(--bg);
 }
 
+.app-shell { display: grid; grid-template-rows: auto 1fr; }
+.canvas-app { display: flex; flex-direction: column; }
+
 .topbar {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  min-height: 3rem;
-  padding: 0.5rem 1rem;
-  border-bottom: 1px solid var(--border);
-  font-size: 0.85rem;
-  font-family: var(--sans);
+  gap: 1rem;
+  min-height: 3.25rem;
+  padding: .75rem var(--space);
+  border-bottom: 1px solid var(--line);
+  flex-wrap: wrap;
 }
 
 .back-link {
   color: var(--muted);
   text-decoration: none;
-  font-size: 1.1rem;
 }
 
 .page {
-  padding: var(--pad);
-  max-width: var(--max-width);
+  width: min(100%, var(--measure));
   margin: 0 auto;
+  padding: calc(var(--space) * 1.4) var(--space);
 }
 
-.home-intro {
-  color: var(--muted);
-  margin-bottom: 1rem;
-}
+.home-intro { color: var(--muted); }
 
 .home-links {
   list-style: none;
-  padding-left: 0;
+  padding: 0;
 }
 
-.home-links li + li {
-  margin-top: 0.35rem;
-}
-
-.canvas-app {
-  display: flex;
-  flex-direction: column;
-  height: 100dvh;
-  background: var(--bg);
+.home-links a {
+  display: inline-block;
+  padding: .15rem 0;
 }
 
 .canvas-stage {
+  position: relative;
   flex: 1;
   overflow: hidden;
-  position: relative;
 }
 
-.toolbar-button {
-  background: none;
-  border: 1px solid var(--border);
-  color: var(--muted);
-  font-family: var(--mono);
-  font-size: 0.85rem;
-  padding: 0.1rem 0.6rem;
+button, input {
+  font: inherit;
+  color: inherit;
+}
+
+.toolbar-button,
+.metric-button {
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: .15rem .7rem;
   cursor: pointer;
 }
 
+.toolbar-button:hover,
+.metric-button:hover,
+.metric-button.is-active {
+  background: var(--fg);
+  border-color: var(--fg);
+  color: var(--bg);
+}
+
 .control-label {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
-  color: var(--fg);
+  gap: .4rem;
+  color: var(--muted);
+}
+
+input[type="number"] {
+  width: 3.5rem;
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: .1rem .35rem;
+}
+
+input[type="color"] {
+  width: 2rem;
+  height: 1.4rem;
+  padding: 0;
+  border: 1px solid var(--line);
+  background: transparent;
+}
+
+input[type="checkbox"],
+input[type="range"] {
+  accent-color: var(--fg);
 }
