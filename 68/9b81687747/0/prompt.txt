@@ -1,0 +1,1 @@
+make a minimalistic redesign with minimal CSS
