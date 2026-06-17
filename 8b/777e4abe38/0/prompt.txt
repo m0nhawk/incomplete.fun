@@ -1,0 +1,21 @@
+update IDEAS.md with a list of 5 ideas from math that is not well-known, but nice
+
+---
+
+Let's do number 4.
+
+---
+
+the birthdats section need more love with wrapping
+
+---
+
+"day 5" doesn't wrap properly
+
+---
+
+Still, it's not wrapped properly.
+
+---
+
+Check this again, day 5 doesn't wrap properly.
