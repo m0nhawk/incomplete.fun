@@ -1,0 +1,9 @@
+new page have inconsistent design, fix it
+
+---
+
+now implement idea 2 from less-known-math-tool-suggestions.md
+
+---
+
+let's make idea number 3
