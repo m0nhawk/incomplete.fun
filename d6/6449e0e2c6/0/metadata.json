@@ -1,0 +1,52 @@
+{
+  "cli_version": "0.6.3",
+  "checkpoint_id": "d66449e0e2c6",
+  "session_id": "019ed398-ba67-7bdd-b084-911e84708546",
+  "strategy": "manual-commit",
+  "created_at": "2026-06-17T04:17:08.633655524Z",
+  "branch": "master",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "README.md",
+    "src/pages/cellular.astro",
+    "src/pages/index.astro",
+    "src/scripts/cellular.ts"
+  ],
+  "agent": "Pi",
+  "model": "",
+  "turn_id": "6cbdea4db8fd",
+  "token_usage": {
+    "input_tokens": 43030,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 101888,
+    "output_tokens": 7104,
+    "api_call_count": 12
+  },
+  "session_metrics": {
+    "turn_count": 1
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-06-17T04:17:08.631011383Z",
+    "agent_lines": 485,
+    "agent_removed": 2,
+    "human_added": 1133,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 1618,
+    "total_lines_changed": 1620,
+    "agent_percentage": 30.061728395061728,
+    "metric_version": 2
+  },
+  "prompt_attributions": [
+    {
+      "checkpoint_number": 1,
+      "user_lines_added": 6,
+      "user_lines_removed": 0,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0,
+      "user_added_per_file": {
+        "IDEAS.md": 6
+      }
+    }
+  ]
+}
