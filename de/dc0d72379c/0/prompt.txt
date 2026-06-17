@@ -1,0 +1,1 @@
+implement new page for dual numbers and as much as possible information on that

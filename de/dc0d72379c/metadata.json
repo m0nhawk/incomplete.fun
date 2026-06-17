@@ -1,0 +1,27 @@
+{
+  "cli_version": "0.6.3",
+  "checkpoint_id": "dedc0d72379c",
+  "strategy": "manual-commit",
+  "branch": "master",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "src/data/experiments.ts",
+    "src/pages/dual.astro",
+    "src/scripts/dual.ts"
+  ],
+  "sessions": [
+    {
+      "metadata": "/de/dc0d72379c/0/metadata.json",
+      "transcript": "/de/dc0d72379c/0/full.jsonl",
+      "content_hash": "/de/dc0d72379c/0/content_hash.txt",
+      "prompt": "/de/dc0d72379c/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 111902,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 345088,
+    "output_tokens": 8516,
+    "api_call_count": 19
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "cli_version": "0.6.3",
+  "checkpoint_id": "dedc0d72379c",
+  "session_id": "019ed3d2-b6d4-7a5c-bdaf-319c1fe97861",
+  "strategy": "manual-commit",
+  "created_at": "2026-06-17T04:38:02.313670527Z",
+  "branch": "master",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "src/data/experiments.ts",
+    "src/pages/dual.astro",
+    "src/scripts/dual.ts"
+  ],
+  "agent": "Pi",
+  "model": "",
+  "turn_id": "81c8e41796ab",
+  "token_usage": {
+    "input_tokens": 111902,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 345088,
+    "output_tokens": 8516,
+    "api_call_count": 19
+  },
+  "session_metrics": {
+    "turn_count": 1
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-06-17T04:38:02.309621799Z",
+    "agent_lines": 387,
+    "agent_removed": 0,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 387,
+    "total_lines_changed": 387,
+    "agent_percentage": 100,
+    "metric_version": 2
+  },
+  "prompt_attributions": [
+    {
+      "checkpoint_number": 1,
+      "user_lines_added": 0,
+      "user_lines_removed": 0,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0
+    },
+    {
+      "checkpoint_number": 2,
+      "user_lines_added": 0,
+      "user_lines_removed": 0,
+      "agent_lines_added": 387,
+      "agent_lines_removed": 0
+    }
+  ]
+}
