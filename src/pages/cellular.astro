@@ -1,0 +1,191 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+---
+
+<PageLayout name="cellular automata lab" back wide>
+  <p class="cellular-intro">Explore simple local rules by editing seed states, stepping time forward, and watching compact histories accumulate.</p>
+
+  <section class="cellular-lab" id="cellular-app">
+    <article class="cellular-card">
+      <div class="cellular-card-head">
+        <div>
+          <h2>1D elementary rules</h2>
+          <p>Each cell looks at its left, center, and right neighbors. The 8-bit rule number decides the next row.</p>
+        </div>
+        <div class="cellular-toolbar" aria-label="1D controls">
+          <label>rule <input id="ca1-rule" type="number" min="0" max="255" value="30" /></label>
+          <button class="toolbar-button" id="ca1-step" type="button">step</button>
+          <button class="toolbar-button" id="ca1-play" type="button">play</button>
+          <button class="toolbar-button" id="ca1-single" type="button">single seed</button>
+          <button class="toolbar-button" id="ca1-random" type="button">random</button>
+          <button class="toolbar-button" id="ca1-clear" type="button">clear</button>
+        </div>
+      </div>
+
+      <div class="cellular-rule" id="ca1-rule-table" aria-live="polite"></div>
+      <div class="cellular-canvas-wrap">
+        <canvas id="ca1-canvas" width="960" height="560" aria-label="1D automaton history"></canvas>
+      </div>
+      <p class="cellular-hint">Click the top row to toggle cells and restart the visible history from that edited seed.</p>
+    </article>
+
+    <article class="cellular-card">
+      <div class="cellular-card-head">
+        <div>
+          <h2>2D outer-totalistic rules</h2>
+          <p>Birth/survival rules use the count of live neighbors around each square. Start with Conway's Life, then try variants.</p>
+        </div>
+        <div class="cellular-toolbar" aria-label="2D controls">
+          <label>
+            rule
+            <select id="ca2-rule">
+              <option value="life">Life B3/S23</option>
+              <option value="highlife">HighLife B36/S23</option>
+              <option value="seeds">Seeds B2/S</option>
+              <option value="daynight">Day &amp; Night B3678/S34678</option>
+              <option value="majority">Majority B5678/S45678</option>
+            </select>
+          </label>
+          <button class="toolbar-button" id="ca2-step" type="button">step</button>
+          <button class="toolbar-button" id="ca2-play" type="button">play</button>
+          <button class="toolbar-button" id="ca2-random" type="button">random</button>
+          <button class="toolbar-button" id="ca2-clear" type="button">clear</button>
+        </div>
+      </div>
+
+      <div class="cellular-2d-grid">
+        <div>
+          <div class="cellular-canvas-wrap">
+            <canvas id="ca2-canvas" width="768" height="480" aria-label="2D automaton grid"></canvas>
+          </div>
+          <p class="cellular-hint">Click or drag on the grid to draw live cells. Edges wrap like a torus.</p>
+        </div>
+        <aside class="cellular-history-panel">
+          <h3>history</h3>
+          <canvas id="ca2-history" width="280" height="280" aria-label="2D automaton population history"></canvas>
+          <div class="cellular-stats" id="ca2-stats" aria-live="polite"></div>
+        </aside>
+      </div>
+    </article>
+  </section>
+</PageLayout>
+
+<style>
+  .cellular-intro,
+  .cellular-hint,
+  .cellular-card p,
+  .cellular-stats { color: var(--muted); }
+
+  .cellular-lab { display: grid; gap: 1rem; }
+
+  .cellular-card {
+    border: 1px solid var(--line);
+    padding: 1rem;
+    display: grid;
+    gap: 1rem;
+  }
+
+  .cellular-card-head {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 1rem;
+    align-items: start;
+  }
+
+  .cellular-card h2,
+  .cellular-card h3 { font-size: 1rem; margin-bottom: 0.25rem; }
+
+  .cellular-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: end;
+    gap: 0.45rem;
+    align-items: center;
+  }
+
+  .cellular-toolbar label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    color: var(--muted);
+  }
+
+  .cellular-toolbar input,
+  .cellular-toolbar select {
+    background: transparent;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    color: var(--fg);
+    padding: 0.15rem 0.35rem;
+    font: inherit;
+  }
+
+  .cellular-toolbar input { width: 4.25rem; }
+
+  .cellular-rule {
+    display: grid;
+    grid-template-columns: repeat(8, minmax(4.25rem, 1fr));
+    gap: 0.35rem;
+    overflow-x: auto;
+    font-size: 0.78rem;
+  }
+
+  .rule-chip {
+    border: 1px solid var(--line);
+    padding: 0.35rem;
+    display: grid;
+    gap: 0.25rem;
+    justify-items: center;
+  }
+
+  .rule-cells { display: grid; grid-template-columns: repeat(3, 0.7rem); gap: 0.12rem; }
+  .rule-cell, .rule-out { width: 0.7rem; height: 0.7rem; border: 1px solid var(--line); }
+  .rule-out { width: 1rem; }
+  .is-alive { background: var(--fg); }
+
+  .cellular-canvas-wrap {
+    border: 1px solid var(--line);
+    overflow: auto;
+    background: color-mix(in srgb, var(--bg) 94%, var(--fg));
+  }
+
+  .cellular-canvas-wrap canvas {
+    display: block;
+    width: 100%;
+    height: auto;
+    image-rendering: pixelated;
+    cursor: crosshair;
+  }
+
+  .cellular-2d-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(16rem, 18rem);
+    gap: 1rem;
+  }
+
+  .cellular-history-panel {
+    border: 1px solid var(--line);
+    padding: 0.75rem;
+  }
+
+  #ca2-history {
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--line);
+    image-rendering: pixelated;
+    background: color-mix(in srgb, var(--bg) 94%, var(--fg));
+  }
+
+  .cellular-stats { font-size: 0.85rem; margin-top: 0.75rem; }
+
+  @media (max-width: 56rem) {
+    .cellular-card-head,
+    .cellular-2d-grid { grid-template-columns: 1fr; }
+    .cellular-toolbar { justify-content: start; }
+    .cellular-rule { grid-template-columns: repeat(8, 4.25rem); }
+  }
+</style>
+
+<script>
+  import '../scripts/cellular.ts';
+</script>

@@ -1,0 +1,115 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="complex dynamics - incomplete.fun">
+  <div class="canvas-app" id="complex-app">
+    <div class="topbar" id="complex-toolbar">
+      <a class="back-link" href="/" aria-label="Back to home">←</a>
+      <span><strong>complex dynamics</strong></span>
+
+      <button class="mode-button is-active" id="complex-mandelbrot" type="button">mandelbrot</button>
+      <button class="mode-button" id="complex-julia" type="button">julia</button>
+
+      <label class="control-label">
+        c=
+        <input id="complex-c-real" type="number" step="0.001" value="-0.800" />
+        <input id="complex-c-imag" type="number" step="0.001" value="0.156" />
+      </label>
+
+      <label class="control-label">
+        iter
+        <input id="complex-iterations" type="range" min="40" max="600" step="10" value="180" />
+        <span id="complex-iteration-value">180</span>
+      </label>
+
+      <button class="toolbar-button" id="complex-reset" type="button">reset</button>
+      <span class="complex-help">wheel zoom · drag pan · click Mandelbrot to pick Julia c</span>
+    </div>
+
+    <div id="complex-readout">
+      <span id="complex-coords">z = 0 + 0i</span>
+      <span id="complex-status">ready</span>
+    </div>
+
+    <div class="canvas-stage" id="complex-stage">
+      <canvas id="complex-canvas"></canvas>
+      <canvas id="complex-orbit"></canvas>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .mode-button {
+    background: transparent;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: .15rem .7rem;
+    cursor: pointer;
+  }
+
+  .mode-button:hover,
+  .mode-button.is-active {
+    background: var(--fg);
+    border-color: var(--fg);
+    color: var(--bg);
+  }
+
+  #complex-c-real,
+  #complex-c-imag {
+    width: 5.5rem;
+  }
+
+  #complex-iterations {
+    width: 6rem;
+  }
+
+  #complex-iteration-value {
+    min-width: 2.25rem;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .complex-help {
+    margin-left: auto;
+    color: var(--muted);
+    font-size: .78rem;
+  }
+
+  #complex-readout {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: .35rem var(--space);
+    border-bottom: 1px solid var(--line);
+    color: var(--muted);
+    font-size: .78rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  #complex-status {
+    text-align: right;
+  }
+
+  #complex-stage {
+    cursor: crosshair;
+    touch-action: none;
+  }
+
+  #complex-canvas,
+  #complex-orbit {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  #complex-orbit {
+    pointer-events: none;
+  }
+</style>
+
+<script>
+  import '../scripts/complex.ts';
+</script>

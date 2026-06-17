@@ -18,6 +18,7 @@ pnpm preview
 - `/padic`
 - `/groups`
 - `/tropical`
+- `/cellular`
 - `/surreal`
 - `/symmetry`
 - `/voronoi`

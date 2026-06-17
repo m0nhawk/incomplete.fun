@@ -1,0 +1,61 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+---
+
+<PageLayout name="knot diagram explorer" back wide>
+  <p class="knot-intro">Draw a closed curve. Crossings are detected from the polygonal diagram; click a crossing to flip over/under data.</p>
+
+  <section class="knot-grid" id="knot-app">
+    <article class="knot-card knot-wide">
+      <div class="knot-toolbar">
+        <button class="toolbar-button" id="knot-trefoil" type="button">trefoil</button>
+        <button class="toolbar-button" id="knot-circle" type="button">unknot</button>
+        <button class="toolbar-button" id="knot-r1" type="button" title="Smooth the drawn polygon by rounding every corner">smooth corners</button>
+        <button class="toolbar-button" id="knot-r2" type="button" title="Remove one visible crossing by reversing the strand between its segments">remove one crossing</button>
+        <button class="toolbar-button" id="knot-clear" type="button">clear</button>
+        <span class="knot-note">drag to draw · click crossings to flip over/under</span>
+      </div>
+      <div class="knot-stage">
+        <canvas id="knot-canvas" width="1000" height="560"></canvas>
+        <div class="knot-status" id="knot-status">smooth rounds the curve · remove one crossing untangles a local overlap</div>
+      </div>
+    </article>
+
+    <article class="knot-card">
+      <h2>diagram data</h2>
+      <dl class="knot-stats" id="knot-stats"></dl>
+    </article>
+
+    <article class="knot-card">
+      <h2>crossings</h2>
+      <div class="knot-output" id="knot-crossings"></div>
+    </article>
+
+    <article class="knot-card knot-wide">
+      <h2>polynomial sketches</h2>
+      <p class="knot-note">These are fast diagram invariants/readouts for exploration: writhe changes under R1; the bracket normalization is a compact crossing-sign summary, not a full knot table recognizer.</p>
+      <div class="knot-output" id="knot-polys"></div>
+    </article>
+  </section>
+</PageLayout>
+
+<style>
+  .knot-intro, .knot-note { color: var(--muted); }
+  .knot-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr)); gap: 1rem; }
+  .knot-wide { grid-column: 1 / -1; }
+  .knot-card { border: 1px solid var(--line); padding: 1rem; display: grid; gap: .75rem; }
+  .knot-card h2 { font-size: 1rem; margin: 0; }
+  .knot-toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem; }
+  .knot-stage { border: 1px solid var(--line); min-height: 24rem; height: 58vh; position: relative; overflow: hidden; }
+  #knot-canvas { width: 100%; height: 100%; display: block; cursor: crosshair; touch-action: none; }
+  .knot-status { position: absolute; left: .75rem; bottom: .75rem; max-width: calc(100% - 1.5rem); padding: .35rem .55rem; border: 1px solid var(--line); background: color-mix(in srgb, var(--bg) 88%, transparent); color: var(--muted); font-size: .78rem; pointer-events: none; }
+  .knot-status.is-active { color: var(--fg); border-color: var(--fg); }
+  .knot-stats { display: grid; grid-template-columns: max-content 1fr; gap: .35rem .75rem; margin: 0; }
+  .knot-stats dt { color: var(--muted); }
+  .knot-output { overflow-x: auto; font-variant-numeric: tabular-nums; }
+  .knot-crossing-row { display: flex; justify-content: space-between; gap: 1rem; border-top: 1px solid var(--line); padding: .35rem 0; }
+</style>
+
+<script>
+  import '../scripts/knot.ts';
+</script>
