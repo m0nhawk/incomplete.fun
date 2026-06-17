@@ -3,16 +3,16 @@ export {};
 type Point = { x: number; y: number };
 type Crossing = { i: number; j: number; p: Point; sign: 1 | -1; over: number };
 
-const canvas = document.querySelector<HTMLCanvasElement>("#knot-canvas");
-const stats = document.querySelector<HTMLElement>("#knot-stats");
-const crossingBox = document.querySelector<HTMLElement>("#knot-crossings");
-const polyBox = document.querySelector<HTMLElement>("#knot-polys");
-const status = document.querySelector<HTMLElement>("#knot-status");
-const clearButton = document.querySelector<HTMLButtonElement>("#knot-clear");
-const circleButton = document.querySelector<HTMLButtonElement>("#knot-circle");
-const trefoilButton = document.querySelector<HTMLButtonElement>("#knot-trefoil");
-const r1Button = document.querySelector<HTMLButtonElement>("#knot-r1");
-const r2Button = document.querySelector<HTMLButtonElement>("#knot-r2");
+const canvas = document.querySelector<HTMLCanvasElement>("#knot-canvas")!;
+const stats = document.querySelector<HTMLElement>("#knot-stats")!;
+const crossingBox = document.querySelector<HTMLElement>("#knot-crossings")!;
+const polyBox = document.querySelector<HTMLElement>("#knot-polys")!;
+const status = document.querySelector<HTMLElement>("#knot-status")!;
+const clearButton = document.querySelector<HTMLButtonElement>("#knot-clear")!;
+const circleButton = document.querySelector<HTMLButtonElement>("#knot-circle")!;
+const trefoilButton = document.querySelector<HTMLButtonElement>("#knot-trefoil")!;
+const r1Button = document.querySelector<HTMLButtonElement>("#knot-r1")!;
+const r2Button = document.querySelector<HTMLButtonElement>("#knot-r2")!;
 
 const fg = () => getComputedStyle(document.documentElement).getPropertyValue("--fg").trim() || "#181817";
 const bg = () => getComputedStyle(document.documentElement).getPropertyValue("--bg").trim() || "#fbfbf9";

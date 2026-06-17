@@ -2,15 +2,15 @@ export {};
 
 type Convergent = { n: number; a: number; p: bigint; q: bigint; value: number; error: number };
 
-const form = document.querySelector<HTMLFormElement>("#cf-form");
-const kind = document.querySelector<HTMLSelectElement>("#cf-kind");
-const rationalFields = document.querySelector<HTMLElement>(".cf-rational-fields");
-const quadraticFields = document.querySelector<HTMLElement>(".cf-quadratic-fields");
-const summary = document.querySelector<HTMLElement>("#cf-summary");
-const expanded = document.querySelector<HTMLElement>("#cf-expanded");
-const table = document.querySelector<HTMLTableElement>("#cf-table");
-const errorPlot = document.querySelector<SVGSVGElement>("#cf-error-plot");
-const intervals = document.querySelector<SVGSVGElement>("#cf-intervals");
+const form = document.querySelector<HTMLFormElement>("#cf-form")!;
+const kind = document.querySelector<HTMLSelectElement>("#cf-kind")!;
+const rationalFields = document.querySelector<HTMLElement>(".cf-rational-fields")!;
+const quadraticFields = document.querySelector<HTMLElement>(".cf-quadratic-fields")!;
+const summary = document.querySelector<HTMLElement>("#cf-summary")!;
+const expanded = document.querySelector<HTMLElement>("#cf-expanded")!;
+const table = document.querySelector<HTMLTableElement>("#cf-table")!;
+const errorPlot = document.querySelector<SVGSVGElement>("#cf-error-plot")!;
+const intervals = document.querySelector<SVGSVGElement>("#cf-intervals")!;
 
 const input = (id: string) => document.querySelector<HTMLInputElement>(id)!;
 const esc = (s: string) => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;" })[c]!);
@@ -118,7 +118,7 @@ if (form && kind && rationalFields && quadraticFields && summary && expanded && 
     const maxScore = Math.max(1, Math.ceil(Math.max(...scores)));
     const x = (i: number) => left + (i / Math.max(1, rows.length - 1)) * (w - left - right);
     const y = (score: number) => h - bottom - (score / maxScore) * (h - top - bottom);
-    const path = rows.map((r, i) => `${i ? "L" : "M"}${x(i)},${y(scores[i])}`).join(" ");
+    const path = rows.map((_r, i) => `${i ? "L" : "M"}${x(i)},${y(scores[i])}`).join(" ");
     const grid = Array.from({ length: Math.min(maxScore, 8) + 1 }, (_unused, i) => {
       const value = (i / Math.min(maxScore, 8)) * maxScore;
       const yy = y(value);

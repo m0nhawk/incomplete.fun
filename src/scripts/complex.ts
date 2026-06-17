@@ -123,24 +123,24 @@ void main() {
 }
 `;
 
-const canvas = document.querySelector<HTMLCanvasElement>("#complex-canvas");
-const orbitCanvas = document.querySelector<HTMLCanvasElement>("#complex-orbit");
-const stage = document.querySelector<HTMLDivElement>("#complex-stage");
-const mandelbrotButton = document.querySelector<HTMLButtonElement>("#complex-mandelbrot");
-const juliaButton = document.querySelector<HTMLButtonElement>("#complex-julia");
-const cRealInput = document.querySelector<HTMLInputElement>("#complex-c-real");
-const cImagInput = document.querySelector<HTMLInputElement>("#complex-c-imag");
-const iterationsInput = document.querySelector<HTMLInputElement>("#complex-iterations");
-const iterationValue = document.querySelector<HTMLSpanElement>("#complex-iteration-value");
-const resetButton = document.querySelector<HTMLButtonElement>("#complex-reset");
-const coords = document.querySelector<HTMLSpanElement>("#complex-coords");
-const status = document.querySelector<HTMLSpanElement>("#complex-status");
+const canvas = document.querySelector<HTMLCanvasElement>("#complex-canvas")!;
+const orbitCanvas = document.querySelector<HTMLCanvasElement>("#complex-orbit")!;
+const stage = document.querySelector<HTMLDivElement>("#complex-stage")!;
+const mandelbrotButton = document.querySelector<HTMLButtonElement>("#complex-mandelbrot")!;
+const juliaButton = document.querySelector<HTMLButtonElement>("#complex-julia")!;
+const cRealInput = document.querySelector<HTMLInputElement>("#complex-c-real")!;
+const cImagInput = document.querySelector<HTMLInputElement>("#complex-c-imag")!;
+const iterationsInput = document.querySelector<HTMLInputElement>("#complex-iterations")!;
+const iterationValue = document.querySelector<HTMLSpanElement>("#complex-iteration-value")!;
+const resetButton = document.querySelector<HTMLButtonElement>("#complex-reset")!;
+const coords = document.querySelector<HTMLSpanElement>("#complex-coords")!;
+const status = document.querySelector<HTMLSpanElement>("#complex-status")!;
 
 if (
   canvas && orbitCanvas && stage && mandelbrotButton && juliaButton && cRealInput && cImagInput &&
   iterationsInput && iterationValue && resetButton && coords && status
 ) {
-  const gl = canvas.getContext("webgl2", { alpha: false, antialias: false, premultipliedAlpha: false });
+  const gl = canvas.getContext("webgl2", { alpha: false, antialias: false, premultipliedAlpha: false })!;
   const orbitCtx = orbitCanvas.getContext("2d")!;
 
   if (!gl || !orbitCtx) {

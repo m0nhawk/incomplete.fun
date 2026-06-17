@@ -22,14 +22,14 @@ function fillCell(ctx: CanvasRenderingContext2D, x: number, y: number, size: num
 }
 
 // 1D elementary automata ----------------------------------------------------
-const ca1Canvas = document.querySelector<HTMLCanvasElement>("#ca1-canvas");
-const ca1RuleInput = document.querySelector<HTMLInputElement>("#ca1-rule");
-const ca1RuleTable = document.querySelector<HTMLDivElement>("#ca1-rule-table");
-const ca1Step = document.querySelector<HTMLButtonElement>("#ca1-step");
-const ca1Play = document.querySelector<HTMLButtonElement>("#ca1-play");
-const ca1Single = document.querySelector<HTMLButtonElement>("#ca1-single");
-const ca1Random = document.querySelector<HTMLButtonElement>("#ca1-random");
-const ca1Clear = document.querySelector<HTMLButtonElement>("#ca1-clear");
+const ca1Canvas = document.querySelector<HTMLCanvasElement>("#ca1-canvas")!;
+const ca1RuleInput = document.querySelector<HTMLInputElement>("#ca1-rule")!;
+const ca1RuleTable = document.querySelector<HTMLDivElement>("#ca1-rule-table")!;
+const ca1Step = document.querySelector<HTMLButtonElement>("#ca1-step")!;
+const ca1Play = document.querySelector<HTMLButtonElement>("#ca1-play")!;
+const ca1Single = document.querySelector<HTMLButtonElement>("#ca1-single")!;
+const ca1Random = document.querySelector<HTMLButtonElement>("#ca1-random")!;
+const ca1Clear = document.querySelector<HTMLButtonElement>("#ca1-clear")!;
 
 if (ca1Canvas && ca1RuleInput && ca1RuleTable && ca1Step && ca1Play && ca1Single && ca1Random && ca1Clear) {
   const ctx = ca1Canvas.getContext("2d")!;
@@ -125,14 +125,14 @@ const RULES: Record<RuleName, RuleDef> = {
   majority: { birth: new Set([5, 6, 7, 8]), survive: new Set([4, 5, 6, 7, 8]), label: "B5678/S45678" },
 };
 
-const ca2Canvas = document.querySelector<HTMLCanvasElement>("#ca2-canvas");
-const ca2HistoryCanvas = document.querySelector<HTMLCanvasElement>("#ca2-history");
-const ca2Rule = document.querySelector<HTMLSelectElement>("#ca2-rule");
-const ca2Step = document.querySelector<HTMLButtonElement>("#ca2-step");
-const ca2Play = document.querySelector<HTMLButtonElement>("#ca2-play");
-const ca2Random = document.querySelector<HTMLButtonElement>("#ca2-random");
-const ca2Clear = document.querySelector<HTMLButtonElement>("#ca2-clear");
-const ca2Stats = document.querySelector<HTMLDivElement>("#ca2-stats");
+const ca2Canvas = document.querySelector<HTMLCanvasElement>("#ca2-canvas")!;
+const ca2HistoryCanvas = document.querySelector<HTMLCanvasElement>("#ca2-history")!;
+const ca2Rule = document.querySelector<HTMLSelectElement>("#ca2-rule")!;
+const ca2Step = document.querySelector<HTMLButtonElement>("#ca2-step")!;
+const ca2Play = document.querySelector<HTMLButtonElement>("#ca2-play")!;
+const ca2Random = document.querySelector<HTMLButtonElement>("#ca2-random")!;
+const ca2Clear = document.querySelector<HTMLButtonElement>("#ca2-clear")!;
+const ca2Stats = document.querySelector<HTMLDivElement>("#ca2-stats")!;
 
 if (ca2Canvas && ca2HistoryCanvas && ca2Rule && ca2Step && ca2Play && ca2Random && ca2Clear && ca2Stats) {
   const ctx = ca2Canvas.getContext("2d")!;
