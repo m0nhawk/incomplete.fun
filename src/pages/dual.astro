@@ -1,0 +1,187 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+---
+
+<PageLayout name="dual numbers" back wide description="Dual numbers, nilpotents, tangent arithmetic, and forward-mode automatic differentiation.">
+  <section class="dual-hero">
+    <p class="eyebrow">ε² = 0, ε ≠ 0</p>
+    <h1>dual numbers</h1>
+    <p>
+      A dual number is <strong>a + bε</strong>, where <code>a,b ∈ R</code> and the new infinitesimal unit
+      <code>ε</code> is nonzero but squares to zero. They are the smallest useful algebraic model of
+      first-order change: values ride in the real part, derivatives ride in the ε part.
+    </p>
+  </section>
+
+  <section class="dual-grid" id="dual-app">
+    <form class="dual-card" id="dual-arithmetic-form">
+      <h2>arithmetic playground</h2>
+      <div class="dual-two">
+        <label>z = a + bε <span><input id="dual-a" type="number" step="0.1" value="2" /> <input id="dual-b" type="number" step="0.1" value="3" /></span></label>
+        <label>w = c + dε <span><input id="dual-c" type="number" step="0.1" value="4" /> <input id="dual-d" type="number" step="0.1" value="-1" /></span></label>
+      </div>
+      <label>operation
+        <select id="dual-op">
+          <option value="add">z + w</option>
+          <option value="sub">z - w</option>
+          <option value="mul" selected>z · w</option>
+          <option value="div">z / w</option>
+          <option value="pow">zⁿ</option>
+        </select>
+      </label>
+      <label id="dual-power-label">n <input id="dual-n" type="number" step="1" value="3" /></label>
+      <button class="toolbar-button" type="submit">compute</button>
+      <div class="dual-output" id="dual-arithmetic-output" aria-live="polite"></div>
+    </form>
+
+    <form class="dual-card" id="dual-function-form">
+      <h2>automatic differentiation</h2>
+      <p class="dual-note">Evaluate <code>f(x + sε) = f(x) + s f′(x)ε</code>. Put <code>s = 1</code> to read the derivative directly.</p>
+      <div class="dual-two">
+        <label>x <input id="dual-x" type="number" step="0.05" value="1.2" /></label>
+        <label>seed s <input id="dual-seed" type="number" step="0.1" value="1" /></label>
+      </div>
+      <label>function
+        <select id="dual-function">
+          <option value="square">x²</option>
+          <option value="cube">x³</option>
+          <option value="sin" selected>sin x</option>
+          <option value="cos">cos x</option>
+          <option value="tan">tan x</option>
+          <option value="exp">exp x</option>
+          <option value="log">log x</option>
+          <option value="sqrt">sqrt x</option>
+          <option value="reciprocal">1/x</option>
+          <option value="logistic">1/(1+e⁻ˣ)</option>
+        </select>
+      </label>
+      <button class="toolbar-button" type="submit">differentiate</button>
+      <div class="dual-output" id="dual-function-output" aria-live="polite"></div>
+      <svg id="dual-graph" viewBox="0 0 640 260" role="img" aria-label="function and tangent line"></svg>
+    </form>
+  </section>
+
+  <section class="dual-section">
+    <h2>definition and arithmetic</h2>
+    <p>The dual numbers form the commutative real algebra <code>R[ε]/(ε²)</code>. Every element has the form <code>a + bε</code>.</p>
+    <div class="dual-table-wrap"><table>
+      <thead><tr><th>operation</th><th>rule</th><th>condition / note</th></tr></thead>
+      <tbody>
+        <tr><td>equality</td><td><code>a+bε = c+dε ⇔ a=c and b=d</code></td><td>ε part is independent of real part</td></tr>
+        <tr><td>addition</td><td><code>(a+bε)+(c+dε)=(a+c)+(b+d)ε</code></td><td>componentwise</td></tr>
+        <tr><td>multiplication</td><td><code>(a+bε)(c+dε)=ac+(ad+bc)ε</code></td><td>the <code>bdε²</code> term vanishes</td></tr>
+        <tr><td>powers</td><td><code>(a+bε)ⁿ = aⁿ + n aⁿ⁻¹ bε</code></td><td>integer n; for negative n need <code>a≠0</code></td></tr>
+        <tr><td>inverse</td><td><code>(a+bε)⁻¹ = 1/a − b/a² ε</code></td><td>exists exactly when <code>a≠0</code></td></tr>
+        <tr><td>division</td><td><code>(a+bε)/(c+dε)=a/c + (bc-ad)/c² ε</code></td><td>requires <code>c≠0</code></td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section class="dual-columns">
+    <article>
+      <h2>algebraic facts</h2>
+      <ul>
+        <li><strong>Not a field:</strong> every nonzero pure infinitesimal <code>bε</code> has no inverse.</li>
+        <li><strong>Zero divisors:</strong> <code>ε · ε = 0</code> although <code>ε ≠ 0</code>.</li>
+        <li><strong>Units:</strong> <code>a+bε</code> is invertible iff its real part <code>a</code> is nonzero.</li>
+        <li><strong>Local ring:</strong> the non-units form the maximal ideal <code>(ε)</code>; the residue field is <code>R</code>.</li>
+        <li><strong>Nilpotents:</strong> all elements of <code>(ε)</code> square to zero.</li>
+        <li><strong>Conjugation:</strong> sometimes <code>¯(a+bε)=a-bε</code>, but <code>(a+bε)(a-bε)=a²</code>, not a norm that detects ε.</li>
+      </ul>
+    </article>
+    <article>
+      <h2>functions</h2>
+      <p>If <code>f</code> is differentiable at <code>a</code>, the nilpotence of ε truncates the Taylor series after the linear term:</p>
+      <p class="dual-formula"><code>f(a+bε) = f(a) + b f′(a) ε</code></p>
+      <ul>
+        <li><code>exp(a+bε)=eᵃ + b eᵃ ε</code></li>
+        <li><code>sin(a+bε)=sin a + b cos a ε</code></li>
+        <li><code>cos(a+bε)=cos a − b sin a ε</code></li>
+        <li><code>log(a+bε)=log a + b/a ε</code> for <code>a&gt;0</code></li>
+        <li><code>sqrt(a+bε)=√a + b/(2√a) ε</code> for <code>a&gt;0</code></li>
+      </ul>
+    </article>
+  </section>
+
+  <section class="dual-section">
+    <h2>why derivatives appear</h2>
+    <p>
+      Substituting <code>x + ε</code> into a polynomial forces exactly the first derivative to appear:
+      <code>(x+ε)³ = x³ + 3x²ε + 3xε² + ε³ = x³ + 3x²ε</code>. For smooth functions this is the same Taylor-series phenomenon.
+      No limiting process, symbolic simplification, or finite-difference step size is needed.
+    </p>
+    <pre><code>{`function square(x) { return x * x }
+
+square(3 + 1ε) = 9 + 6ε
+// value = 9, derivative at 3 = 6`}</code></pre>
+  </section>
+
+  <section class="dual-columns">
+    <article>
+      <h2>geometry</h2>
+      <p>
+        A dual number can be read as a point plus a tangent vector. The real projection <code>a+bε ↦ a</code>
+        forgets tangent information; the ε coefficient stores a direction and scale. In differential geometry,
+        maps on manifolds send tangent vectors forward; dual numbers implement that idea algebraically in one dimension.
+      </p>
+    </article>
+    <article>
+      <h2>automatic differentiation</h2>
+      <p>
+        Forward-mode AD evaluates an ordinary program with dual-number arithmetic. Each elementary operation propagates both
+        value and derivative by the chain rule. It gives machine-precision derivatives and is especially efficient for
+        functions with few input variables and many outputs.
+      </p>
+    </article>
+  </section>
+
+  <section class="dual-section">
+    <h2>relatives and contrasts</h2>
+    <ul>
+      <li><strong>Complex numbers:</strong> <code>i²=-1</code> creates rotations; <code>ε²=0</code> creates tangents.</li>
+      <li><strong>Split-complex numbers:</strong> <code>j²=+1</code> model hyperbolic geometry; dual numbers are the degenerate case between circular and hyperbolic behavior.</li>
+      <li><strong>Truncated polynomials:</strong> <code>R[ε]/(ε²)</code> is the order-1 version; <code>R[ε]/(εⁿ)</code> carries higher derivatives up to order <code>n-1</code>.</li>
+      <li><strong>Synthetic differential geometry:</strong> nilpotent infinitesimals are used axiomatically to reason about tangent spaces.</li>
+    </ul>
+  </section>
+</PageLayout>
+
+<style>
+  .dual-hero { margin-bottom: calc(var(--space) * 1.2); }
+  .dual-hero h1 { max-width: none; }
+  .dual-hero p:not(.eyebrow) { max-width: 56rem; color: var(--muted); }
+  .dual-grid, .dual-columns { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 24rem), 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+  .dual-card, .dual-section, .dual-columns article { border: 1px solid var(--line); padding: 1rem; }
+  .dual-card { display: flex; flex-direction: column; gap: .75rem; }
+  .dual-card h2, .dual-section h2, .dual-columns h2 { font-size: 1rem; margin-bottom: .4rem; }
+  .dual-card label { display: grid; gap: .25rem; color: var(--muted); }
+  .dual-card input, .dual-card select { width: 100%; padding: .35rem .45rem; }
+  .dual-card label span { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; }
+  .dual-two { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; }
+  .dual-note, .dual-output, .dual-section p, .dual-columns p, .dual-columns li, .dual-section li { color: var(--muted); }
+  .dual-output { min-height: 4.5rem; border-top: 1px solid var(--line); padding-top: .75rem; font-variant-numeric: tabular-nums; }
+  .dual-output strong { color: var(--fg); }
+  #dual-graph { width: 100%; height: auto; border: 1px solid var(--line); background: var(--wash); }
+  .dual-section { margin-bottom: 1.5rem; }
+  .dual-table-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; }
+  th, td { border-bottom: 1px solid var(--line); padding: .45rem .55rem; text-align: left; vertical-align: top; }
+  th { color: var(--fg); }
+  pre { overflow-x: auto; padding: 1rem; border: 1px solid var(--line); }
+  .dual-formula { color: var(--fg) !important; }
+  @media (max-width: 38rem) { .dual-two { grid-template-columns: 1fr; } }
+</style>
+
+<style is:global>
+  .dual-error { color: #c33; }
+  .dual-result-line { margin-bottom: .35rem; }
+  .dual-graph-axis { stroke: var(--line); stroke-width: 1; }
+  .dual-graph-curve { fill: none; stroke: var(--fg); stroke-width: 2; }
+  .dual-graph-tangent { fill: none; stroke: #c66; stroke-width: 2; stroke-dasharray: 7 5; }
+  .dual-graph-point { fill: var(--fg); }
+  .dual-graph-label { fill: var(--muted); font: 12px ui-monospace, monospace; }
+</style>
+
+<script>
+  import '../scripts/dual.ts';
+</script>
