@@ -1,0 +1,23 @@
+Read less-known-math-tool-suggestions.md and implement the first idea for p-adic numbers.
+
+---
+
+Summary of my BTW side conversation:
+
+Issue fixed: `@astrojs/vercel` adapter was blocking `astro preview` for a static Astro site.
+
+Changes made:
+- Removed Vercel adapter usage from `astro.config.mjs`
+- Added `getStaticPaths()` to `src/pages/fib/[n].astro` so static build supports the dynamic route
+
+Verified successfully:
+- `pnpm lint`
+- `pnpm check`
+- `pnpm build`
+- `pnpm preview` starts successfully
+
+No known remaining risks/actions.
+
+---
+
+Why it's "initial root is not a root modulo p"?
