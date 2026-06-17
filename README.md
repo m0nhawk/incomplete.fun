@@ -16,6 +16,9 @@ pnpm preview
 
 - `/`
 - `/padic`
+- `/groups`
+- `/tropical`
+- `/surreal`
 - `/symmetry`
 - `/voronoi`
 - `/fib/0` through `/fib/100`
