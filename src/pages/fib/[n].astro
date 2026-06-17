@@ -17,5 +17,12 @@ const n = Number.parseInt(nParam, 10);
 ---
 
 <PageLayout name="fibonacci" back>
-  <p>fib({n}) = <strong>{fib(n).toString()}</strong></p>
+  <p class="fib-result">fib({n}) = <strong>{fib(n).toString()}</strong></p>
 </PageLayout>
+
+<style>
+  .fib-result {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+</style>
