@@ -1,0 +1,22 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import TopBar from '../components/TopBar.astro';
+
+interface Props {
+  name: string;
+  description?: string;
+  appId?: string;
+}
+
+const { name, description, appId } = Astro.props;
+const title = `${name} - incomplete.fun`;
+---
+
+<BaseLayout title={title} description={description}>
+  <div class="canvas-app" id={appId}>
+    <TopBar name={name} back>
+      <slot name="toolbar" />
+    </TopBar>
+    <slot />
+  </div>
+</BaseLayout>

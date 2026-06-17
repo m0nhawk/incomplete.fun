@@ -1,71 +1,54 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
+import CanvasLayout from '../layouts/CanvasLayout.astro';
 ---
 
-<BaseLayout title="voronoi - incomplete.fun">
-  <div class="canvas-app" id="voronoi-app">
-    <div class="topbar" id="voronoi-toolbar">
-      <a class="back-link" href="/" aria-label="Back to home">←</a>
-      <span><strong>voronoi</strong></span>
-      <span style="color: var(--border);">|</span>
+<CanvasLayout name="voronoi" appId="voronoi-app">
+  <Fragment slot="toolbar">
+    <span class="toolbar-separator" aria-hidden="true">|</span>
+    <button class="metric-button" type="button" data-metric="minkowski05" title="minkowski p=1/2 (star)">L½</button>
+    <button class="metric-button" type="button" data-metric="manhattan" title="manhattan (diamond)">L1</button>
+    <button class="metric-button" type="button" data-metric="euclidean" title="euclidean (circular)">L2</button>
+    <button class="metric-button" type="button" data-metric="minkowski3" title="minkowski p=3 (rounded square)">L3</button>
+    <button class="metric-button" type="button" data-metric="chebyshev" title="chebyshev (square)">L∞</button>
 
-      <button class="metric-button" type="button" data-metric="minkowski05" title="minkowski p=1/2 (star)">L½</button>
-      <button class="metric-button" type="button" data-metric="manhattan" title="manhattan (diamond)">L1</button>
-      <button class="metric-button" type="button" data-metric="euclidean" title="euclidean (circular)">L2</button>
-      <button class="metric-button" type="button" data-metric="minkowski3" title="minkowski p=3 (rounded square)">L3</button>
-      <button class="metric-button" type="button" data-metric="chebyshev" title="chebyshev (square)">L∞</button>
+    <span id="voronoi-help">click to place · right-click removes</span>
+    <button class="toolbar-button" id="voronoi-clear" type="button">clear</button>
+  </Fragment>
 
-      <span id="voronoi-help" style="color: var(--muted); font-size: 0.75rem; margin-left: auto;">
-        click to place · right-click removes
-      </span>
-      <button class="toolbar-button" id="voronoi-clear" type="button">clear</button>
-    </div>
+  <div id="voronoi-hover-row">
+    <span id="voronoi-coords">(0, 0)</span>
+    <div id="voronoi-distances"></div>
+  </div>
 
-    <div id="voronoi-hover-row">
-      <span id="voronoi-coords">(0, 0)</span>
-      <div id="voronoi-distances"></div>
-    </div>
-
-    <div class="canvas-stage" id="voronoi-stage" style="cursor: crosshair; touch-action: none;">
-      <canvas id="voronoi-gl" style="position: absolute; inset: 0; display: block;"></canvas>
-      <canvas id="voronoi-markers" style="position: absolute; inset: 0; display: block; pointer-events: none;"></canvas>
-      <div id="voronoi-webgl-error" role="status">
-        WebGL2 is required for this experiment.
-      </div>
-      <div id="voronoi-empty">
-        <span>click to place points</span>
-        <span style="font-size: 0.75rem;">each point uses its own distance metric</span>
-      </div>
+  <div class="canvas-stage" id="voronoi-stage">
+    <canvas id="voronoi-gl"></canvas>
+    <canvas id="voronoi-markers"></canvas>
+    <div id="voronoi-webgl-error" role="status">WebGL2 is required for this experiment.</div>
+    <div id="voronoi-empty">
+      <span>click to place points</span>
+      <span class="small-muted">each point uses its own distance metric</span>
     </div>
   </div>
-</BaseLayout>
+</CanvasLayout>
 
 <style>
-  .metric-button {
-    background: none;
-    border: 1px solid var(--border);
-    color: var(--fg);
-    font-family: var(--mono);
-    font-size: 0.8rem;
-    padding: 0.15rem 0.55rem;
-    cursor: pointer;
-    border-radius: 2px;
+  .toolbar-separator {
+    color: var(--line);
   }
 
-  .metric-button.is-active {
-    background: var(--accent);
-    border-color: var(--accent);
-    color: #fff;
+  #voronoi-help {
+    color: var(--muted);
+    font-size: 0.75rem;
+    margin-left: auto;
   }
 
   #voronoi-hover-row {
     display: grid;
     grid-template-columns: 6.5rem minmax(0, 1fr);
     column-gap: 0.75rem;
-    padding: 0 1rem;
-    border-bottom: 1px solid var(--border);
+    padding: 0 var(--space);
+    border-bottom: 1px solid var(--line);
     font-size: 0.78rem;
-    font-family: var(--mono);
     line-height: 1.25;
     min-height: 1.9rem;
     max-height: 6.5rem;
@@ -89,6 +72,20 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     padding: 0.25rem 0;
   }
 
+  #voronoi-stage {
+    cursor: crosshair;
+    touch-action: none;
+  }
+
+  #voronoi-gl,
+  #voronoi-markers {
+    position: absolute;
+    inset: 0;
+    display: block;
+  }
+
+  #voronoi-markers { pointer-events: none; }
+
   #voronoi-webgl-error,
   #voronoi-empty {
     position: absolute;
@@ -99,17 +96,14 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     flex-direction: column;
     gap: 0.4rem;
     color: var(--muted);
-    font-family: var(--mono);
     pointer-events: none;
   }
 
-  #voronoi-webgl-error {
-    display: none;
-  }
+  #voronoi-webgl-error { display: none; }
+  .small-muted { font-size: 0.75rem; }
 </style>
 
 <style is:global>
-  /* Applied to elements created dynamically in voronoi.ts */
   .distance-entry {
     display: inline-flex;
     align-items: center;

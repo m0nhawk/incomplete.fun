@@ -1,0 +1,15 @@
+---
+interface Props {
+  name: string;
+  back?: boolean;
+}
+
+const { name, back = false } = Astro.props;
+---
+
+<header class="topbar">
+  {back && <a class="back-link" href="/" aria-label="Back to home">←</a>}
+  <a class="brand" href="/" aria-label="incomplete.fun home">incomplete.fun</a>
+  {name !== 'incomplete.fun' && <span class="topbar-title">/ {name}</span>}
+  <slot />
+</header>

@@ -1,20 +1,21 @@
 ---
 import PageLayout from '../layouts/PageLayout.astro';
+import { experiments } from '../data/experiments';
 ---
 
-<PageLayout name="incomplete.fun">
-  <p class="home-intro">small experiments, intentionally incomplete.</p>
-  <ul class="home-links">
-    <li><a href="/cellular">cellular automata lab</a></li>
-    <li><a href="/complex">complex dynamics playground</a></li>
-    <li><a href="/continued-fractions">continued fraction calculator</a></li>
-    <li><a href="/fib/10">fibonacci</a></li>
-    <li><a href="/groups">finite group explorer</a></li>
-    <li><a href="/knot">knot diagram explorer</a></li>
-    <li><a href="/padic">p-adic calculator</a></li>
-    <li><a href="/surreal">surreal number playground</a></li>
-    <li><a href="/symmetry">symmetry</a></li>
-    <li><a href="/tropical">tropical geometry calculator</a></li>
-    <li><a href="/voronoi">voronoi</a></li>
-  </ul>
+<PageLayout name="incomplete.fun" description="Small mathematical experiments, intentionally incomplete.">
+  <section class="home-hero">
+    <p class="eyebrow">small experiments</p>
+    <h1>mathematical toys, kept intentionally incomplete.</h1>
+    <p class="home-intro">A quiet collection of visual calculators and playgrounds. Pick a thread and pull.</p>
+  </section>
+
+  <nav class="home-links" aria-label="Experiments">
+    {experiments.map((experiment) => (
+      <a class="home-link" href={experiment.href}>
+        <span>{experiment.title}</span>
+        <small>{experiment.summary}</small>
+      </a>
+    ))}
+  </nav>
 </PageLayout>
