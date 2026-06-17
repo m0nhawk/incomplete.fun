@@ -8,6 +8,7 @@ export const experiments: Experiment[] = [
   { href: '/cellular', title: 'cellular automata lab', summary: 'local rules, seeds, histories' },
   { href: '/complex', title: 'complex dynamics', summary: 'mandelbrot, julia, orbit traces' },
   { href: '/continued-fractions', title: 'continued fractions', summary: 'expansions, convergents, errors' },
+  { href: '/chu-spaces', title: 'Chu spaces', summary: 'dual tables, tests, morphisms' },
   { href: '/dual', title: 'dual numbers', summary: 'nilpotents, tangents, automatic differentiation' },
   { href: '/fib/10', title: 'fibonacci', summary: 'static bigint sequence sample' },
   { href: '/groups', title: 'finite groups', summary: 'tables, classes, quotients' },

@@ -1,0 +1,142 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+---
+
+<PageLayout name="Chu spaces" back wide description="Finite Chu spaces, duality, separation, extensionality, and Chu morphisms.">
+  <section class="chu-hero">
+    <p class="eyebrow">points × states → values</p>
+    <h1>Chu spaces</h1>
+    <p>
+      A Chu space is a rectangular table of observations. Its rows are <strong>points</strong>, its columns are
+      <strong>states</strong> or tests, and each cell records a value in a fixed set <code>K</code>. This tiny
+      format carries a surprising amount of structure: duality is matrix transposition, and maps are pairs of
+      functions that preserve every observation.
+    </p>
+  </section>
+
+  <section class="chu-panel" id="chu-app">
+    <div class="chu-controls">
+      <label>
+        space
+        <select id="chu-space-select">
+          <option value="sierpinski" selected>Sierpiński open-set tester</option>
+          <option value="powerset">subsets versus membership</option>
+          <option value="preorder">three-point preorder</option>
+          <option value="ratings">objects rated by observers</option>
+        </select>
+      </label>
+      <label>
+        view
+        <select id="chu-view-select">
+          <option value="space" selected>space</option>
+          <option value="dual">dual</option>
+        </select>
+      </label>
+    </div>
+
+    <div class="chu-summary" id="chu-summary"></div>
+
+    <div class="chu-grid">
+      <article class="chu-card chu-wide">
+        <h2>evaluation matrix</h2>
+        <div class="chu-table-wrap" id="chu-matrix"></div>
+      </article>
+
+      <article class="chu-card">
+        <h2>separation diagnostics</h2>
+        <div id="chu-diagnostics"></div>
+      </article>
+
+      <article class="chu-card">
+        <h2>orthogonality profile</h2>
+        <div id="chu-profile"></div>
+      </article>
+    </div>
+  </section>
+
+  <section class="chu-panel">
+    <h2>morphism finder</h2>
+    <p class="chu-muted">
+      A morphism <code>(f,g): (A,r,X) → (B,s,Y)</code> uses a point map <code>f: A → B</code> and a
+      backwards state map <code>g: Y → X</code>. The adjointness condition is
+      <code>s(f(a), y) = r(a, g(y))</code> for every point <code>a</code> and state <code>y</code>.
+    </p>
+    <div class="chu-controls">
+      <label>
+        source C
+        <select id="chu-source-select"></select>
+      </label>
+      <label>
+        target D
+        <select id="chu-target-select"></select>
+      </label>
+    </div>
+    <div class="chu-morphism-output" id="chu-morphism-output"></div>
+  </section>
+
+  <section class="chu-columns">
+    <article>
+      <h2>definition</h2>
+      <p>
+        Fix a set <code>K</code> of truth values, colors, scores, or observations. A Chu space over <code>K</code>
+        is a triple <code>(A, r, X)</code> where <code>A</code> is a set of points, <code>X</code> is a set of states,
+        and <code>r: A × X → K</code> is the evaluation map.
+      </p>
+      <p class="chu-formula"><code>a ⊥ x = r(a,x)</code></p>
+    </article>
+    <article>
+      <h2>dual</h2>
+      <p>
+        The dual space swaps rows and columns: <code>(A,r,X)* = (X, rᵀ, A)</code>. In the dual, old states
+        become points and old points become states. Applying duality twice gets back the original space.
+      </p>
+    </article>
+  </section>
+
+  <section class="chu-columns">
+    <article>
+      <h2>separated and extensional</h2>
+      <ul>
+        <li><strong>Separated:</strong> no two points have the same row.</li>
+        <li><strong>Extensional:</strong> no two states have the same column.</li>
+        <li><strong>Biextensional collapse:</strong> identify equal rows and equal columns to remove observational duplicates.</li>
+      </ul>
+    </article>
+    <article>
+      <h2>why they matter</h2>
+      <p>
+        Chu spaces give a symmetric language for objects and predicates. They appear in categorical logic,
+        linear logic, formal concept analysis, topology, automata, and models where systems are understood by
+        the tests they pass and the observations they produce.
+      </p>
+    </article>
+  </section>
+</PageLayout>
+
+<style>
+  .chu-hero { margin-bottom: calc(var(--space) * 1.2); }
+  .chu-hero h1 { max-width: none; }
+  .chu-hero p:not(.eyebrow), .chu-muted, .chu-card li, .chu-card p, .chu-columns p, .chu-columns li { color: var(--muted); }
+  .chu-hero p:not(.eyebrow) { max-width: 58rem; }
+  .chu-panel, .chu-card, .chu-columns article { border: 1px solid var(--line); padding: 1rem; margin-bottom: 1.5rem; }
+  .chu-panel { display: grid; gap: 1rem; }
+  .chu-controls { display: flex; flex-wrap: wrap; gap: 1rem; align-items: end; }
+  .chu-controls label { display: grid; gap: .25rem; color: var(--muted); }
+  .chu-controls select { min-width: 16rem; background: var(--bg); color: var(--fg); border: 1px solid var(--line); border-radius: 4px; padding: .35rem .45rem; font: inherit; }
+  .chu-summary, .chu-morphism-output { border: 1px solid var(--line); padding: 1rem; color: var(--muted); }
+  .chu-grid, .chu-columns { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr)); gap: 1rem; }
+  .chu-wide { grid-column: 1 / -1; }
+  .chu-card { margin-bottom: 0; }
+  .chu-card h2, .chu-panel h2, .chu-columns h2 { font-size: 1rem; margin-bottom: .6rem; }
+  .chu-table-wrap { overflow-x: auto; }
+  .chu-table { width: 100%; border-collapse: collapse; min-width: max-content; font-variant-numeric: tabular-nums; }
+  .chu-table th, .chu-table td { border: 1px solid var(--line); padding: .4rem .55rem; text-align: center; }
+  .chu-table th { color: var(--fg); font-weight: 600; }
+  .chu-list { display: grid; gap: .35rem; margin: 0; padding-left: 1.25rem; }
+  .chu-chip { display: inline-block; border: 1px solid var(--line); border-radius: 999px; padding: .05rem .45rem; margin: .1rem; white-space: nowrap; color: var(--fg); }
+  .chu-formula { color: var(--fg) !important; }
+</style>
+
+<script>
+  import '../scripts/chu-spaces.ts';
+</script>
