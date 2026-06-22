@@ -160,6 +160,36 @@ code {
   text-transform: uppercase;
 }
 
+.constellation-map {
+  margin-bottom: calc(var(--space) * 1.2);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: .75rem;
+  background: var(--wash);
+}
+
+.constellation-map svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.constellation-map line {
+  stroke: var(--fg);
+  stroke-width: .15;
+  opacity: .2;
+  stroke-dasharray: 1 1.5;
+  animation: map-pulse 6s linear infinite;
+}
+
+.constellation-map circle {
+  fill: var(--fg);
+  opacity: .6;
+}
+
+@keyframes map-pulse { to { stroke-dashoffset: -10; } }
+
 .home-links {
   display: grid;
   gap: .5rem;
