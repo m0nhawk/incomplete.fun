@@ -1,0 +1,61 @@
+{
+  "cli_version": "0.7.7",
+  "checkpoint_id": "edc8ef80b27b",
+  "session_id": "019ef123-dde0-7ced-a7b0-794539563ee7",
+  "strategy": "manual-commit",
+  "created_at": "2026-06-22T21:13:22.371708342Z",
+  "branch": "master",
+  "checkpoints_count": 2,
+  "save_step_count": 3,
+  "files_touched": [
+    "src/styles/global.css"
+  ],
+  "agent": "Pi",
+  "model": "gpt-5.5",
+  "turn_id": "c91b6d6feba1",
+  "token_usage": {
+    "input_tokens": 97925,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 891392,
+    "output_tokens": 8589,
+    "api_call_count": 42
+  },
+  "session_metrics": {
+    "turn_count": 5
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-06-22T21:13:22.360161744Z",
+    "agent_lines": 4,
+    "agent_removed": 1,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 4,
+    "total_lines_changed": 5,
+    "agent_percentage": 100,
+    "metric_version": 2
+  },
+  "prompt_attributions": [
+    {
+      "checkpoint_number": 2,
+      "user_lines_added": 0,
+      "user_lines_removed": 0,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0
+    },
+    {
+      "checkpoint_number": 3,
+      "user_lines_added": 0,
+      "user_lines_removed": 0,
+      "agent_lines_added": 12,
+      "agent_lines_removed": 0
+    },
+    {
+      "checkpoint_number": 4,
+      "user_lines_added": 0,
+      "user_lines_removed": 0,
+      "agent_lines_added": 16,
+      "agent_lines_removed": 1
+    }
+  ]
+}
