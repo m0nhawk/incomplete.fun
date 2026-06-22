@@ -15,6 +15,7 @@ export const experiments: Experiment[] = [
   { href: '/groups', title: 'finite groups', summary: 'tables, classes, quotients' },
   { href: '/hyperbolic', title: 'hyperbolic tessellation explorer', summary: 'poincaré disk, {p,q} tilings, geodesics' },
   { href: '/knot', title: 'knot diagrams', summary: 'crossings and polynomial sketches' },
+  { href: '/lsystem', title: 'L-system garden', summary: 'rewrite rules, turtle paths, fractal plants' },
   { href: '/modular', title: 'modular multiplication circles', summary: 'residue chords, primitive roots, cycles' },
   { href: '/padic', title: 'p-adics', summary: 'digits, inverses, hensel lifts' },
   { href: '/penrose', title: 'Penrose tiling studio', summary: 'inflation, matching rules, aperiodic tiles' },

@@ -1,0 +1,139 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+---
+
+<PageLayout name="L-system garden" back wide>
+  <p class="lsystem-intro">Rewrite symbols, then let a turtle walk the result. Tiny local grammar rules become curves, plants, and fractal silhouettes.</p>
+
+  <section class="lsystem-grid" id="lsystem-app">
+    <form class="lsystem-card" id="lsystem-form">
+      <h2>grammar</h2>
+      <label>
+        preset
+        <select id="lsystem-preset">
+          <option value="koch">koch snowflake edge</option>
+          <option value="dragon">dragon curve</option>
+          <option value="sierpinski">sierpinski arrowhead</option>
+          <option value="plant">fractal plant</option>
+        </select>
+      </label>
+      <label>
+        axiom
+        <input id="lsystem-axiom" type="text" value="F" />
+      </label>
+      <label>
+        rules, one per line
+        <textarea id="lsystem-rules" rows="5">F=F+F--F+F</textarea>
+      </label>
+      <div class="lsystem-two">
+        <label>iterations <input id="lsystem-iterations" type="number" min="0" max="8" value="4" /></label>
+        <label>angle <input id="lsystem-angle" type="number" min="1" max="180" value="60" /></label>
+      </div>
+      <button class="toolbar-button" type="submit">grow</button>
+      <div class="lsystem-output" id="lsystem-summary" aria-live="polite"></div>
+    </form>
+
+    <article class="lsystem-card lsystem-wide">
+      <div class="lsystem-head">
+        <div>
+          <h2>turtle path</h2>
+          <p class="lsystem-intro">Commands: <code>F/G</code> draw, <code>f</code> moves, <code>+/-</code> turns, <code>[ ]</code> branches.</p>
+        </div>
+        <button class="toolbar-button" id="lsystem-download" type="button">copy svg</button>
+      </div>
+      <div class="lsystem-svg-wrap">
+        <svg id="lsystem-plot" role="img" aria-label="L-system turtle drawing"></svg>
+      </div>
+    </article>
+  </section>
+</PageLayout>
+
+<style>
+  .lsystem-intro,
+  .lsystem-card label,
+  .lsystem-output { color: var(--muted); }
+
+  .lsystem-grid {
+    display: grid;
+    grid-template-columns: minmax(17rem, 24rem) minmax(0, 1fr);
+    gap: 1rem;
+  }
+
+  .lsystem-card {
+    border: 1px solid var(--line);
+    padding: 1rem;
+    display: grid;
+    gap: .75rem;
+    align-content: start;
+  }
+
+  .lsystem-wide { min-width: 0; }
+
+  .lsystem-card h2 {
+    font-size: 1rem;
+    margin: 0;
+  }
+
+  .lsystem-card label {
+    display: grid;
+    gap: .25rem;
+  }
+
+  .lsystem-card input,
+  .lsystem-card select,
+  .lsystem-card textarea {
+    width: 100%;
+    padding: .35rem .45rem;
+  }
+
+  .lsystem-card textarea {
+    min-height: 7rem;
+    resize: vertical;
+  }
+
+  .lsystem-two {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: .75rem;
+  }
+
+  .lsystem-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    gap: 1rem;
+  }
+
+  .lsystem-svg-wrap {
+    border: 1px solid var(--line);
+    background: var(--wash);
+    overflow: auto;
+  }
+
+  #lsystem-plot {
+    display: block;
+    width: 100%;
+    min-width: 38rem;
+    height: 38rem;
+  }
+
+  .lsystem-output {
+    border-top: 1px solid var(--line);
+    padding-top: .75rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  @media (max-width: 58rem) {
+    .lsystem-grid { grid-template-columns: 1fr; }
+  }
+</style>
+
+<style is:global>
+  .lsystem-path { fill: none; stroke: var(--fg); stroke-linecap: round; stroke-linejoin: round; }
+  .lsystem-frame { fill: none; stroke: var(--line); }
+  .lsystem-label { fill: var(--muted); font: 12px ui-monospace, monospace; }
+</style>
+
+<script>
+  import '../scripts/lsystem.ts';
+</script>
