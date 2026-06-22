@@ -11,6 +11,7 @@ export const experiments: Experiment[] = [
   { href: '/chu-spaces', title: 'Chu spaces', summary: 'dual tables, tests, morphisms' },
   { href: '/dual', title: 'dual numbers', summary: 'nilpotents, tangents, automatic differentiation' },
   { href: '/fib/10', title: 'fibonacci', summary: 'static bigint sequence sample' },
+  { href: '/fourier', title: 'Fourier epicycle sketcher', summary: 'draw, decompose, replay with epicycles' },
   { href: '/groups', title: 'finite groups', summary: 'tables, classes, quotients' },
   { href: '/hyperbolic', title: 'hyperbolic tessellation explorer', summary: 'poincaré disk, {p,q} tilings, geodesics' },
   { href: '/knot', title: 'knot diagrams', summary: 'crossings and polynomial sketches' },

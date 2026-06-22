@@ -1,0 +1,74 @@
+---
+import CanvasLayout from '../layouts/CanvasLayout.astro';
+---
+
+<CanvasLayout name="Fourier epicycle sketcher" appId="fourier-app">
+  <Fragment slot="toolbar">
+    <label class="control-label">
+      harmonics
+      <input id="fourier-harmonics" type="range" min="1" max="80" value="28" />
+      <span id="fourier-harmonics-value">28</span>
+    </label>
+    <label class="control-label">
+      speed
+      <input id="fourier-speed" type="range" min="1" max="120" value="34" />
+    </label>
+    <button class="toolbar-button" id="fourier-example" type="button">example</button>
+    <button class="toolbar-button" id="fourier-clear" type="button">clear</button>
+    <span class="fourier-help">drag to draw · epicycles replay the closed path</span>
+  </Fragment>
+
+  <div id="fourier-readout" aria-live="polite">
+    <span id="fourier-status">draw a path</span>
+    <span id="fourier-energy">0 coefficients</span>
+  </div>
+
+  <div class="canvas-stage" id="fourier-stage">
+    <canvas id="fourier-canvas"></canvas>
+  </div>
+</CanvasLayout>
+
+<style>
+  #fourier-harmonics,
+  #fourier-speed { width: 5rem; }
+
+  #fourier-harmonics-value {
+    min-width: 2rem;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .fourier-help {
+    margin-left: auto;
+    color: var(--muted);
+    font-size: .78rem;
+  }
+
+  #fourier-readout {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: .35rem var(--space);
+    border-bottom: 1px solid var(--line);
+    color: var(--muted);
+    font-size: .78rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  #fourier-status { color: var(--fg); }
+
+  #fourier-stage {
+    cursor: crosshair;
+    touch-action: none;
+  }
+
+  #fourier-canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+</style>
+
+<script>
+  import '../scripts/fourier.ts';
+</script>
