@@ -4,12 +4,12 @@ Astro version of the site. The canvas experiments are implemented with plain bro
 
 ## Commands
 
-Run these from `site/`:
+Run these from the repository root:
 
 ```sh
-pnpm dev
-pnpm build
-pnpm preview
+bun run dev
+bun run build
+bun run preview
 ```
 
 ## Routes
