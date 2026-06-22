@@ -1,0 +1,59 @@
+{
+  "cli_version": "0.7.7",
+  "checkpoint_id": "8a2e44fe93c7",
+  "session_id": "019ef123-dde0-7ced-a7b0-794539563ee7",
+  "strategy": "manual-commit",
+  "created_at": "2026-06-22T21:06:13.002441933Z",
+  "branch": "master",
+  "checkpoints_count": 1,
+  "save_step_count": 1,
+  "files_touched": [
+    "src/scripts/fourier.ts",
+    "src/scripts/preset-atlas.ts",
+    "src/styles/global.css"
+  ],
+  "agent": "Pi",
+  "model": "gpt-5.5",
+  "turn_id": "a4d99a297652",
+  "token_usage": {
+    "input_tokens": 41891,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 179200,
+    "output_tokens": 3083,
+    "api_call_count": 19
+  },
+  "session_metrics": {
+    "turn_count": 1
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-06-22T21:06:12.99906997Z",
+    "agent_lines": 88,
+    "agent_removed": 0,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 88,
+    "total_lines_changed": 88,
+    "agent_percentage": 100,
+    "metric_version": 2
+  },
+  "prompt_attributions": [
+    {
+      "checkpoint_number": 1,
+      "user_lines_added": 12,
+      "user_lines_removed": 0,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0,
+      "user_added_per_file": {
+        "IDEAS.md": 12
+      }
+    },
+    {
+      "checkpoint_number": 2,
+      "user_lines_added": 0,
+      "user_lines_removed": 0,
+      "agent_lines_added": 100,
+      "agent_lines_removed": 0
+    }
+  ]
+}

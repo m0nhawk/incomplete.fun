@@ -1,0 +1,1 @@
+in "Fourier epicycle sketcher" the preset selection doesn't work; and part of the page is not visible (<aside class="math-notebook" aria-label="Math notebook">)
