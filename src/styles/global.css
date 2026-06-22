@@ -22,6 +22,41 @@
   }
 }
 
+:root[data-theme="chalkboard"] {
+  --bg: #101815;
+  --fg: #e8f5df;
+  --muted: #a9b9a2;
+  --line: #314038;
+}
+
+:root[data-theme="blueprint"] {
+  --bg: #071a2c;
+  --fg: #d8f1ff;
+  --muted: #8db7d4;
+  --line: #21486a;
+}
+
+:root[data-theme="vaporwave"] {
+  --bg: #19051f;
+  --fg: #ffd6ff;
+  --muted: #70f2ff;
+  --line: #6d2b87;
+}
+
+:root[data-theme="ink"] {
+  --bg: #fbfaf4;
+  --fg: #10100f;
+  --muted: #595750;
+  --line: #c9c4b8;
+}
+
+:root[data-theme="solarized"] {
+  --bg: #fdf6e3;
+  --fg: #073642;
+  --muted: #657b83;
+  --line: #eee8d5;
+}
+
 * { box-sizing: border-box; }
 
 body {
