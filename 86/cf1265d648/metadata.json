@@ -1,0 +1,26 @@
+{
+  "cli_version": "0.7.7",
+  "checkpoint_id": "86cf1265d648",
+  "strategy": "manual-commit",
+  "branch": "master",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "src/data/experiments.ts",
+    "src/scripts/preset-atlas.ts"
+  ],
+  "sessions": [
+    {
+      "metadata": "/86/cf1265d648/0/metadata.json",
+      "transcript": "/86/cf1265d648/0/full.jsonl",
+      "content_hash": "/86/cf1265d648/0/content_hash.txt",
+      "prompt": ""
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 6923,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 66560,
+    "output_tokens": 725,
+    "api_call_count": 4
+  }
+}
