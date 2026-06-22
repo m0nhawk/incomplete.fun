@@ -1,0 +1,36 @@
+{
+  "cli_version": "0.7.7",
+  "checkpoint_id": "1eaf9fbca6a5",
+  "session_id": "019ef114-0904-7763-82db-0c030f1551a1",
+  "strategy": "manual-commit",
+  "created_at": "2026-06-22T20:46:51.294738539Z",
+  "branch": "master",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "src/scripts/unified-controls.ts"
+  ],
+  "agent": "Pi",
+  "model": "gpt-5.5",
+  "turn_id": "a57bd562fce6",
+  "checkpoint_transcript_start": 38,
+  "transcript_lines_at_start": 38,
+  "token_usage": {
+    "input_tokens": 4487,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 47616,
+    "output_tokens": 788,
+    "api_call_count": 3
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-06-22T20:46:51.291463936Z",
+    "agent_lines": 16,
+    "agent_removed": 0,
+    "human_added": 21,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 37,
+    "total_lines_changed": 37,
+    "agent_percentage": 43.24324324324324,
+    "metric_version": 2
+  }
+}
