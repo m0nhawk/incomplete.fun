@@ -13,9 +13,14 @@ import { experiments } from '../data/experiments';
   <nav class="home-links" aria-label="Experiments">
     {experiments.map((experiment) => (
       <a class="home-link" href={experiment.href}>
+        <canvas class="home-preview" data-preview-canvas={experiment.href} aria-hidden="true"></canvas>
         <span>{experiment.title}</span>
         <small>{experiment.summary}</small>
       </a>
     ))}
   </nav>
 </PageLayout>
+
+<script>
+  import '../scripts/gallery-previews.ts';
+</script>
