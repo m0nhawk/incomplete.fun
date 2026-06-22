@@ -40,6 +40,8 @@ interface State {
   lastTime: number;
 }
 
+type FourierPreset = "quiet-lattice" | "golden-bloom" | "deep-spiral" | "edge-storm";
+
 const SAMPLE_COUNT = 512;
 const TRACE_STEPS = 420;
 
@@ -136,6 +138,38 @@ function bindControls(elements: Elements, state: State) {
     state.phase = 0;
     recompute(state);
   });
+  window.addEventListener("incomplete:preset", (event) => {
+    const preset = normalizePreset((event as CustomEvent<{ preset?: string }>).detail?.preset);
+    if (!preset) return;
+    applyPreset(elements, state, preset);
+  });
+
+  const initialPreset = normalizePreset(new URLSearchParams(window.location.search).get("preset") ?? undefined);
+  if (initialPreset) applyPreset(elements, state, initialPreset);
+}
+
+function applyPreset(elements: Elements, state: State, preset: FourierPreset) {
+  const settings: Record<FourierPreset, { harmonics: number; speed: number; path: Complex[] }> = {
+    "quiet-lattice": { harmonics: 18, speed: 22, path: parametricPath(4, 0.42, 0.04, 0.05) },
+    "golden-bloom": { harmonics: 34, speed: 36, path: flowerPath(5, 0.5, 0.2, Math.PI / 5) },
+    "deep-spiral": { harmonics: 56, speed: 48, path: spiralPath() },
+    "edge-storm": { harmonics: 74, speed: 72, path: jaggedPath() },
+  };
+  const next = settings[preset];
+  state.draft = [];
+  state.samples = next.path;
+  state.phase = 0;
+  state.harmonics = next.harmonics;
+  state.speed = next.speed;
+  elements.harmonicsInput.value = String(next.harmonics);
+  elements.speedInput.value = String(next.speed);
+  recompute(state);
+}
+
+function normalizePreset(value: string | undefined): FourierPreset | null {
+  const key = value?.toLowerCase().trim().replaceAll(" ", "-");
+  if (key === "quiet-lattice" || key === "golden-bloom" || key === "deep-spiral" || key === "edge-storm") return key;
+  return null;
 }
 
 function clear(state: State) {
@@ -336,6 +370,49 @@ function randomPath(): Complex[] {
       re: Math.cos(t) * r + 0.14 * Math.cos(2 * t + wobble),
       im: Math.sin(t) * r - 0.14 * Math.sin(3 * t - wobble),
     };
+  });
+  return resampleClosed(raw, SAMPLE_COUNT);
+}
+
+function flowerPath(lobes: number, radius: number, bloom: number, phase: number): Complex[] {
+  const raw = Array.from({ length: 420 }, (_unused, index) => {
+    const t = (index / 420) * Math.PI * 2;
+    const r = radius + bloom * Math.sin(lobes * t + phase) + 0.06 * Math.cos((lobes + 2) * t);
+    return { re: Math.cos(t) * r, im: Math.sin(t) * r };
+  });
+  return resampleClosed(raw, SAMPLE_COUNT);
+}
+
+function parametricPath(corners: number, radius: number, wobble: number, pinch: number): Complex[] {
+  const raw = Array.from({ length: 420 }, (_unused, index) => {
+    const t = (index / 420) * Math.PI * 2;
+    const r = radius + wobble * Math.cos(corners * t);
+    return {
+      re: Math.sign(Math.cos(t)) * Math.pow(Math.abs(Math.cos(t)), 0.58) * r + pinch * Math.cos((corners + 1) * t),
+      im: Math.sign(Math.sin(t)) * Math.pow(Math.abs(Math.sin(t)), 0.58) * r - pinch * Math.sin((corners - 1) * t),
+    };
+  });
+  return resampleClosed(raw, SAMPLE_COUNT);
+}
+
+function spiralPath(): Complex[] {
+  const raw = Array.from({ length: 520 }, (_unused, index) => {
+    const u = index / 519;
+    const t = u * Math.PI * 2;
+    const r = 0.2 + 0.46 * u;
+    return {
+      re: Math.cos(t) * r + 0.18 * Math.cos(3 * t),
+      im: Math.sin(t) * r - 0.18 * Math.sin(2 * t),
+    };
+  });
+  return resampleClosed(raw, SAMPLE_COUNT);
+}
+
+function jaggedPath(): Complex[] {
+  const raw = Array.from({ length: 360 }, (_unused, index) => {
+    const t = (index / 360) * Math.PI * 2;
+    const r = 0.5 + 0.16 * Math.sign(Math.sin(9 * t)) + 0.08 * Math.cos(13 * t);
+    return { re: Math.cos(t) * r + 0.08 * Math.cos(5 * t), im: Math.sin(t) * r - 0.08 * Math.sin(7 * t) };
   });
   return resampleClosed(raw, SAMPLE_COUNT);
 }
