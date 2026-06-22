@@ -1,0 +1,1 @@
+Implement each new idea from IDEAS.md, and commit immediately after implementation.
