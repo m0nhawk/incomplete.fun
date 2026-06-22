@@ -1,1 +1,58 @@
-in L-system garden, the grow button doesn't work and commands (F/G/f/+/-) doesn't work either
+<skill name="ship" location="/home/resu/.agents/skills/ship/SKILL.md">
+References are relative to /home/resu/.agents/skills/ship.
+
+# Ship Changes
+
+You are helping commit local changes and push them to the remote branch.
+
+## Guardrails
+
+- Do not discard, revert, reset, or overwrite user changes.
+- Do not commit secrets, credentials, editor junk, build artifacts, dependency folders, or ignored files unless explicitly requested.
+- Preserve intentional staging: if files are already staged, commit the staged changes and only add more when the request clearly includes them.
+- Do not force-push unless explicitly requested.
+- Ask the user when staging, branch, remote, or push target is ambiguous.
+
+## Workflow
+
+### 1. Inspect changes
+
+Run:
+
+- `git status --short --branch`
+- `git diff --stat`
+- `git diff`
+- `git diff --staged --stat`
+- `git diff --staged`
+
+### 2. Commit if needed
+
+- If there are staged or unstaged changes:
+  1. Stage appropriate files with `git add -- <paths>` when needed. Prefer path-specific staging over `git add .`.
+  2. Re-check `git status --short` and `git diff --staged`.
+  3. Pick a concise commit message based on the staged diff. Follow recent commit style if obvious from `git log --oneline -5`.
+  4. Run `git commit -m "<message>"`.
+- If there are no local changes, do not create an empty commit. Continue only if there are existing commits to push.
+
+### 3. Push committed work
+
+1. Identify branch and upstream:
+   - `git branch --show-current`
+   - `git rev-parse --abbrev-ref --symbolic-full-name @{u}`
+2. Stop and ask if in detached HEAD or if the target remote/branch is unclear.
+3. Review commits to push:
+   - With upstream: `git log --oneline @{u}..HEAD`
+   - Without upstream: `git log --oneline origin/<current-branch>..HEAD` if possible, otherwise `git log --oneline -5`
+4. Push:
+   - With upstream: `git push`
+   - Without upstream: `git push -u origin <current-branch>` unless the user specified another target.
+
+### 4. Report
+
+Report:
+
+- new commit hash and message, or that no new commit was needed
+- remote branch pushed
+- whether upstream was set
+- any uncommitted changes left behind
+</skill>
