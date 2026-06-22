@@ -172,9 +172,25 @@ code {
 .page-wide { --measure: 72rem; }
 
 .home-hero {
+  position: relative;
   display: grid;
   gap: 1rem;
   margin-bottom: calc(var(--space) * 1.3);
+  padding: min(8vw, 4rem) 0;
+}
+
+.landing-animation {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  opacity: .55;
+}
+
+.home-hero > :not(.landing-animation) {
+  position: relative;
+  z-index: 1;
 }
 
 .eyebrow,
