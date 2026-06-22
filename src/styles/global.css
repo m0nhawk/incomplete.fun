@@ -99,6 +99,19 @@ code {
   to { transform: translate3d(1rem, -4rem, 0) rotate(6deg); }
 }
 
+.control-panel {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  padding: .55rem var(--space);
+  border-bottom: 1px solid var(--line);
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: blur(10px);
+  flex-wrap: wrap;
+}
+
+.control-panel input[type="range"] { width: 8rem; }
+
 .topbar {
   display: flex;
   align-items: center;

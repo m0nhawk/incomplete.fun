@@ -19,10 +19,18 @@ const wallpaperGlyphs = [name, '∑', '∫', 'π', 'φ', 'λ', '∞', '⊕', '�
     <TopBar name={name} back>
       <slot name="toolbar" />
     </TopBar>
+    <section class="control-panel" data-control-panel aria-label="Shared experiment controls">
+      <button class="toolbar-button" type="button" data-control-action="pause">pause</button>
+      <button class="toolbar-button" type="button" data-control-action="reset">reset</button>
+      <button class="toolbar-button" type="button" data-control-action="randomize">randomize</button>
+      <label class="control-label">speed <input type="range" min="0" max="2" value="1" step="0.01" data-control-speed /></label>
+      <slot name="controls" />
+    </section>
     <slot />
   </div>
 </BaseLayout>
 
 <script>
   import '../scripts/equation-wallpaper.ts';
+  import '../scripts/unified-controls.ts';
 </script>
