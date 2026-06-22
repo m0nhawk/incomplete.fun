@@ -6,7 +6,7 @@ import PageLayout from '../layouts/PageLayout.astro';
   <p class="lsystem-intro">Rewrite symbols, then let a turtle walk the result. Tiny local grammar rules become curves, plants, and fractal silhouettes.</p>
 
   <section class="lsystem-grid" id="lsystem-app">
-    <form class="lsystem-card" id="lsystem-form">
+    <form class="lsystem-card lsystem-controls" id="lsystem-form">
       <h2>grammar</h2>
       <label>
         preset
@@ -29,7 +29,7 @@ import PageLayout from '../layouts/PageLayout.astro';
         <label>iterations <input id="lsystem-iterations" type="number" min="0" max="8" value="4" /></label>
         <label>angle <input id="lsystem-angle" type="number" min="1" max="180" value="60" /></label>
       </div>
-      <button class="toolbar-button" id="lsystem-grow" type="button">grow</button>
+      <button class="toolbar-button lsystem-grow" id="lsystem-grow" type="button">grow one generation</button>
       <div class="lsystem-output" id="lsystem-summary" aria-live="polite"></div>
     </form>
 
@@ -37,7 +37,7 @@ import PageLayout from '../layouts/PageLayout.astro';
       <div class="lsystem-head">
         <div>
           <h2>turtle path</h2>
-          <p class="lsystem-intro">Commands: <code>F/G</code> draw, <code>f</code> moves, <code>+/-</code> turns, <code>[ ]</code> branches. Use 0 iterations to draw the axiom as raw commands.</p>
+          <p class="lsystem-intro">Commands: <code>F/G/A/B</code> draw, <code>f</code> moves, <code>+/-</code> turns, <code>[ ]</code> branches. Use 0 iterations to draw the axiom as raw commands.</p>
         </div>
         <button class="toolbar-button" id="lsystem-download" type="button">copy svg</button>
       </div>
@@ -57,17 +57,23 @@ import PageLayout from '../layouts/PageLayout.astro';
     display: grid;
     grid-template-columns: minmax(17rem, 24rem) minmax(0, 1fr);
     gap: 1rem;
+    align-items: start;
   }
 
   .lsystem-card {
     border: 1px solid var(--line);
+    border-radius: 18px;
     padding: 1rem;
     display: grid;
     gap: .75rem;
     align-content: start;
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    box-shadow: 0 1rem 3rem color-mix(in srgb, var(--fg) 7%, transparent);
   }
 
-  .lsystem-wide { min-width: 0; }
+  .lsystem-controls { position: sticky; top: 1rem; }
+
+  .lsystem-wide { min-width: 0; gap: 1rem; }
 
   .lsystem-card h2 {
     font-size: 1rem;
@@ -89,6 +95,7 @@ import PageLayout from '../layouts/PageLayout.astro';
   .lsystem-card textarea {
     min-height: 7rem;
     resize: vertical;
+    line-height: 1.45;
   }
 
   .lsystem-two {
@@ -102,19 +109,26 @@ import PageLayout from '../layouts/PageLayout.astro';
     justify-content: space-between;
     align-items: start;
     gap: 1rem;
+    flex-wrap: wrap;
   }
 
   .lsystem-svg-wrap {
     border: 1px solid var(--line);
+    border-radius: 14px;
     background: var(--wash);
     overflow: auto;
+    background-image:
+      linear-gradient(color-mix(in srgb, var(--line) 60%, transparent) 1px, transparent 1px),
+      linear-gradient(90deg, color-mix(in srgb, var(--line) 60%, transparent) 1px, transparent 1px);
+    background-size: 1.5rem 1.5rem;
   }
 
   #lsystem-plot {
     display: block;
     width: 100%;
-    min-width: 38rem;
-    height: 38rem;
+    min-width: min(38rem, 100%);
+    height: clamp(22rem, 60vw, 38rem);
+    transition: opacity .2s ease;
   }
 
   .lsystem-output {
@@ -123,8 +137,13 @@ import PageLayout from '../layouts/PageLayout.astro';
     font-variant-numeric: tabular-nums;
   }
 
+  .lsystem-output p:last-child { margin-bottom: 0; }
+
+  .lsystem-grow { justify-self: start; }
+
   @media (max-width: 58rem) {
     .lsystem-grid { grid-template-columns: 1fr; }
+    .lsystem-controls { position: static; }
   }
 </style>
 
@@ -132,6 +151,8 @@ import PageLayout from '../layouts/PageLayout.astro';
   .lsystem-path { fill: none; stroke: var(--fg); stroke-linecap: round; stroke-linejoin: round; }
   .lsystem-frame { fill: none; stroke: var(--line); }
   .lsystem-label { fill: var(--muted); font-family: ui-monospace, monospace; }
+  #lsystem-plot.is-error { opacity: .32; }
+  .lsystem-error { color: var(--fg); }
 </style>
 
 <script>

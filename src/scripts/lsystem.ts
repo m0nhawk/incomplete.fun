@@ -41,6 +41,7 @@ interface Bounds {
 }
 
 const MAX_EXPANSION = 160_000;
+const DEFAULT_PRESET = "koch";
 const PRESETS: Record<string, Preset> = {
   koch: {
     axiom: "F--F--F",
@@ -106,7 +107,7 @@ function getElements(): Elements | null {
 }
 
 function init(elements: Elements) {
-  applyPreset(elements, "koch");
+  applyPreset(elements, DEFAULT_PRESET);
   elements.form.addEventListener("submit", (event) => {
     event.preventDefault();
     render(elements);
@@ -121,9 +122,13 @@ function init(elements: Elements) {
   });
   [elements.axiom, elements.rules, elements.iterations, elements.angle].forEach((input) => input.addEventListener("input", () => render(elements)));
   elements.download.addEventListener("click", async () => {
-    await navigator.clipboard?.writeText(elements.plot.outerHTML);
-    elements.download.textContent = "copied";
-    setTimeout(() => { elements.download.textContent = "copy svg"; }, 900);
+    const copied = await copyText(elements.plot.outerHTML);
+    elements.download.textContent = copied ? "copied" : "copy unavailable";
+    elements.download.disabled = true;
+    setTimeout(() => {
+      elements.download.textContent = "copy svg";
+      elements.download.disabled = false;
+    }, 900);
   });
   render(elements);
 }
@@ -149,19 +154,22 @@ function render(elements: Elements) {
     const expanded = expand(axiom, rules, iterations);
     const rendered = renderTurtle(expanded, angle, heading);
     draw(elements.plot, rendered, expanded.length, angle);
+    elements.plot.classList.remove("is-error");
     elements.summary.innerHTML = `
       <p><strong>${iterations}</strong> iterations · <strong>${expanded.length.toLocaleString()}</strong> symbols · <strong>${rendered.segments.toLocaleString()}</strong> drawn segments</p>
       <p>rules: ${[...rules.entries()].map(([key, value]) => `${escapeHtml(key)}→${escapeHtml(value)}`).join(", ") || "none"}</p>
     `;
   } catch (error) {
-    elements.summary.innerHTML = `<p>${escapeHtml(error instanceof Error ? error.message : String(error))}</p>`;
+    elements.plot.classList.add("is-error");
+    elements.summary.innerHTML = `<p class="lsystem-error">${escapeHtml(error instanceof Error ? error.message : String(error))}</p>`;
   }
 }
 
 function parseRules(text: string): Map<string, string> {
   const rules = new Map<string, string>();
   text.split("\n").map((line) => line.trim()).filter(Boolean).forEach((line) => {
-    const separator = line.includes("=") ? "=" : "→";
+    const separator = line.includes("=") ? "=" : line.includes("→") ? "→" : null;
+    if (!separator) throw new Error(`invalid rule: ${line} (use F=FF or F→FF)`);
     const [left, ...rest] = line.split(separator);
     const key = left?.trim();
     const value = rest.join(separator).trim();
@@ -174,12 +182,15 @@ function parseRules(text: string): Map<string, string> {
 function expand(axiom: string, rules: Map<string, string>, iterations: number): string {
   let current = axiom;
   for (let step = 0; step < iterations; step++) {
-    let next = "";
+    const next: string[] = [];
+    let length = 0;
     for (const symbol of current) {
-      next += rules.get(symbol) ?? symbol;
-      if (next.length > MAX_EXPANSION) throw new Error(`expansion stopped above ${MAX_EXPANSION.toLocaleString()} symbols`);
+      const replacement = rules.get(symbol) ?? symbol;
+      next.push(replacement);
+      length += replacement.length;
+      if (length > MAX_EXPANSION) throw new Error(`expansion stopped above ${MAX_EXPANSION.toLocaleString()} symbols`);
     }
-    current = next;
+    current = next.join("");
   }
   return current;
 }
@@ -227,10 +238,10 @@ function renderTurtle(commands: string, angleDegrees: number, headingDegrees: nu
 }
 
 function draw(plot: SVGSVGElement, rendered: RenderedPath, symbolCount: number, angle: number) {
-  const pad = 2;
+  const pad = Math.max(2, Math.max(rendered.bounds.maxX - rendered.bounds.minX, rendered.bounds.maxY - rendered.bounds.minY) * 0.025);
   const width = rendered.bounds.maxX - rendered.bounds.minX || 1;
   const height = rendered.bounds.maxY - rendered.bounds.minY || 1;
-  const lineWidth = Math.max(width, height) / 520;
+  const lineWidth = Math.max(Math.max(width, height) / 520, 0.018);
   const labelSize = Math.max(lineWidth * 10, 0.45);
   const frameX = rendered.bounds.minX - pad;
   const frameY = rendered.bounds.minY - pad;
@@ -241,6 +252,16 @@ function draw(plot: SVGSVGElement, rendered: RenderedPath, symbolCount: number, 
     ${svg("path", { class: "lsystem-path", d: rendered.path, "stroke-width": lineWidth })}
     ${svg("text", { class: "lsystem-label", x: frameX + labelSize * 0.75, y: frameY + labelSize * 1.35, "font-size": labelSize }, `${symbolCount.toLocaleString()} symbols · ${angle}°`)}
   `;
+}
+
+async function copyText(text: string): Promise<boolean> {
+  if (!navigator.clipboard) return false;
+  try {
+    await navigator.clipboard.writeText(text);
+    return true;
+  } catch {
+    return false;
+  }
 }
 
 function createBounds(x: number, y: number): Bounds {
