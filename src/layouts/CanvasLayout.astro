@@ -1,6 +1,7 @@
 ---
 import BaseLayout from './BaseLayout.astro';
 import TopBar from '../components/TopBar.astro';
+import { presetAtlas } from '../data/experiments';
 
 interface Props {
   name: string;
@@ -23,6 +24,12 @@ const wallpaperGlyphs = [name, '∑', '∫', 'π', 'φ', 'λ', '∞', '⊕', '�
       <button class="toolbar-button" type="button" data-control-action="pause">pause</button>
       <button class="toolbar-button" type="button" data-control-action="reset">reset</button>
       <button class="toolbar-button" type="button" data-control-action="randomize">randomize</button>
+      <label class="control-label">preset
+        <select data-preset-atlas>
+          <option value="">custom</option>
+          {presetAtlas.map((preset) => <option value={preset}>{preset}</option>)}
+        </select>
+      </label>
       <label class="control-label">speed <input type="range" min="0" max="2" value="1" step="0.01" data-control-speed /></label>
       <slot name="controls" />
     </section>
@@ -33,4 +40,5 @@ const wallpaperGlyphs = [name, '∑', '∫', 'π', 'φ', 'λ', '∞', '⊕', '�
 <script>
   import '../scripts/equation-wallpaper.ts';
   import '../scripts/unified-controls.ts';
+  import '../scripts/preset-atlas.ts';
 </script>

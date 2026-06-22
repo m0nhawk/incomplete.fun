@@ -2,7 +2,10 @@ export interface Experiment {
   href: string;
   title: string;
   summary: string;
+  presets?: string[];
 }
+
+export const presetAtlas = ['quiet lattice', 'golden bloom', 'deep spiral', 'edge storm'];
 
 export const experiments: Experiment[] = [
   { href: '/braid', title: 'braid group composer', summary: 'strand crossings, words, knot closures' },
