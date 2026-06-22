@@ -1,8 +1,9 @@
 ---
 import CanvasLayout from '../layouts/CanvasLayout.astro';
+import { presetAtlas } from '../data/experiments';
 ---
 
-<CanvasLayout name="Fourier epicycle sketcher" appId="fourier-app">
+<CanvasLayout name="Fourier epicycle sketcher" appId="fourier-app" presets={presetAtlas}>
   <Fragment slot="toolbar">
     <label class="control-label">
       harmonics

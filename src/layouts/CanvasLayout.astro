@@ -1,15 +1,15 @@
 ---
 import BaseLayout from './BaseLayout.astro';
 import TopBar from '../components/TopBar.astro';
-import { presetAtlas } from '../data/experiments';
 
 interface Props {
   name: string;
   description?: string;
   appId?: string;
+  presets?: string[];
 }
 
-const { name, description, appId } = Astro.props;
+const { name, description, appId, presets = [] } = Astro.props;
 const title = `${name} - incomplete.fun`;
 const wallpaperGlyphs = [name, '∑', '∫', 'π', 'φ', 'λ', '∞', '⊕', '∂', '≈'].join(',');
 ---
@@ -27,12 +27,14 @@ const wallpaperGlyphs = [name, '∑', '∫', 'π', 'φ', 'λ', '∞', '⊕', '�
       <button class="toolbar-button" type="button" data-export-png>save png</button>
       <button class="toolbar-button" type="button" data-copy-url>copy url</button>
       <button class="toolbar-button" type="button" data-darkroom>darkroom</button>
-      <label class="control-label">preset
-        <select data-preset-atlas>
-          <option value="">custom</option>
-          {presetAtlas.map((preset) => <option value={preset}>{preset}</option>)}
-        </select>
-      </label>
+      {presets.length > 0 && (
+        <label class="control-label">preset
+          <select data-preset-atlas>
+            <option value="">custom</option>
+            {presets.map((preset) => <option value={preset}>{preset}</option>)}
+          </select>
+        </label>
+      )}
       <label class="control-label">speed <input type="range" min="0" max="2" value="1" step="0.01" data-control-speed /></label>
       <slot name="controls" />
     </section>
