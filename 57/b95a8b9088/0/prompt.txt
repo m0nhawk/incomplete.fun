@@ -7,3 +7,7 @@ Analyze the project and update IDEAS.md (clean it first) with 10 ideas that woul
 ---
 
 Implement these ideas one by one, committing after each implementation.
+
+---
+
+Continue implementation and don't forget to commit after each idea.
