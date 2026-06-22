@@ -20,6 +20,7 @@ export const experiments: Experiment[] = [
   { href: '/padic', title: 'p-adics', summary: 'digits, inverses, hensel lifts' },
   { href: '/penrose', title: 'Penrose tiling studio', summary: 'inflation, matching rules, aperiodic tiles' },
   { href: '/reaction-diffusion', title: 'reaction-diffusion lab', summary: 'gray-scott patterns, feed/kill map' },
+  { href: '/spectral', title: 'spectral graph playground', summary: 'laplacian spectra, eigenmodes, layouts' },
   { href: '/surreal', title: 'surreal numbers', summary: 'cuts and finite birthdays' },
   { href: '/symmetry', title: 'symmetry', summary: 'rotational mirror drawing' },
   { href: '/tropical', title: 'tropical geometry', summary: 'min-plus arithmetic and envelopes' },
