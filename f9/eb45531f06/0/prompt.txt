@@ -39,7 +39,3 @@ You are helping create a git commit for the current repository.
    - commit message
    - any uncommitted changes left behind
 </skill>
-
----
-
-move from pnpm to bun (including the devenv.nix)
