@@ -1,0 +1,85 @@
+---
+import CanvasLayout from '../layouts/CanvasLayout.astro';
+---
+
+<CanvasLayout name="hyperbolic tessellation explorer" appId="hyperbolic-app">
+  <Fragment slot="toolbar">
+    <label class="control-label">
+      p
+      <input id="hyperbolic-p" type="number" min="3" max="9" value="5" />
+    </label>
+    <label class="control-label">
+      q
+      <input id="hyperbolic-q" type="number" min="3" max="12" value="4" />
+    </label>
+    <label class="control-label">
+      rings
+      <input id="hyperbolic-rings" type="range" min="1" max="9" value="6" />
+      <span id="hyperbolic-ring-value">6</span>
+    </label>
+    <label class="control-label hyperbolic-check">
+      <input id="hyperbolic-geodesics" type="checkbox" checked />
+      geodesics
+    </label>
+    <button class="toolbar-button" id="hyperbolic-reset" type="button">reset</button>
+    <span class="hyperbolic-help">hover a tile · p sides · q around each vertex</span>
+  </Fragment>
+
+  <div id="hyperbolic-readout" aria-live="polite">
+    <span id="hyperbolic-symbol">{'{5,4}'}</span>
+    <span id="hyperbolic-hover">hover the disk</span>
+  </div>
+
+  <div class="canvas-stage" id="hyperbolic-stage">
+    <canvas id="hyperbolic-canvas"></canvas>
+  </div>
+</CanvasLayout>
+
+<style>
+  #hyperbolic-p,
+  #hyperbolic-q { width: 3rem; }
+
+  #hyperbolic-rings { width: 5rem; }
+
+  #hyperbolic-ring-value {
+    color: var(--muted);
+    min-width: 1.5rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .hyperbolic-check { cursor: pointer; }
+
+  .hyperbolic-help {
+    margin-left: auto;
+    color: var(--muted);
+    font-size: .78rem;
+  }
+
+  #hyperbolic-readout {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: .35rem var(--space);
+    border-bottom: 1px solid var(--line);
+    color: var(--muted);
+    font-size: .78rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  #hyperbolic-symbol { color: var(--fg); }
+
+  #hyperbolic-stage {
+    cursor: crosshair;
+    touch-action: none;
+  }
+
+  #hyperbolic-canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+</style>
+
+<script>
+  import '../scripts/hyperbolic.ts';
+</script>

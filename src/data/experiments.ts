@@ -12,6 +12,7 @@ export const experiments: Experiment[] = [
   { href: '/dual', title: 'dual numbers', summary: 'nilpotents, tangents, automatic differentiation' },
   { href: '/fib/10', title: 'fibonacci', summary: 'static bigint sequence sample' },
   { href: '/groups', title: 'finite groups', summary: 'tables, classes, quotients' },
+  { href: '/hyperbolic', title: 'hyperbolic tessellation explorer', summary: 'poincaré disk, {p,q} tilings, geodesics' },
   { href: '/knot', title: 'knot diagrams', summary: 'crossings and polynomial sketches' },
   { href: '/padic', title: 'p-adics', summary: 'digits, inverses, hensel lifts' },
   { href: '/surreal', title: 'surreal numbers', summary: 'cuts and finite birthdays' },
