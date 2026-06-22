@@ -1,0 +1,92 @@
+---
+import CanvasLayout from '../layouts/CanvasLayout.astro';
+---
+
+<CanvasLayout name="reaction-diffusion lab" appId="reaction-app">
+  <Fragment slot="toolbar">
+    <label class="control-label">
+      preset
+      <select id="reaction-preset">
+        <option value="coral">coral</option>
+        <option value="mitosis">mitosis</option>
+        <option value="worms">worms</option>
+        <option value="maze">maze</option>
+      </select>
+    </label>
+    <label class="control-label">
+      feed
+      <input id="reaction-feed" type="range" min="10" max="80" value="54" />
+      <span id="reaction-feed-value">.054</span>
+    </label>
+    <label class="control-label">
+      kill
+      <input id="reaction-kill" type="range" min="35" max="75" value="62" />
+      <span id="reaction-kill-value">.062</span>
+    </label>
+    <label class="control-label">
+      brush
+      <input id="reaction-brush" type="range" min="2" max="18" value="7" />
+    </label>
+    <button class="toolbar-button" id="reaction-pause" type="button">pause</button>
+    <button class="toolbar-button" id="reaction-seed" type="button">seed</button>
+    <button class="toolbar-button" id="reaction-clear" type="button">clear</button>
+    <span class="reaction-help">paint chemistry · Gray-Scott u/v fields</span>
+  </Fragment>
+
+  <div id="reaction-readout" aria-live="polite">
+    <span id="reaction-status">running</span>
+    <span id="reaction-stats">0 steps</span>
+  </div>
+
+  <div class="canvas-stage" id="reaction-stage">
+    <canvas id="reaction-canvas"></canvas>
+  </div>
+</CanvasLayout>
+
+<style>
+  #reaction-feed,
+  #reaction-kill,
+  #reaction-brush { width: 5rem; }
+
+  #reaction-feed-value,
+  #reaction-kill-value {
+    min-width: 3rem;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .reaction-help {
+    margin-left: auto;
+    color: var(--muted);
+    font-size: .78rem;
+  }
+
+  #reaction-readout {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: .35rem var(--space);
+    border-bottom: 1px solid var(--line);
+    color: var(--muted);
+    font-size: .78rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  #reaction-status { color: var(--fg); }
+
+  #reaction-stage {
+    cursor: crosshair;
+    touch-action: none;
+  }
+
+  #reaction-canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    image-rendering: pixelated;
+  }
+</style>
+
+<script>
+  import '../scripts/reaction-diffusion.ts';
+</script>
