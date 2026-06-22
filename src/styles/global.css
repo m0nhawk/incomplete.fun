@@ -316,7 +316,10 @@ code {
   font-size: .8rem;
 }
 
-.canvas-app > .math-notebook { z-index: 3; }
+.canvas-app > .math-notebook {
+  position: fixed;
+  z-index: 3;
+}
 
 .math-notebook strong { color: var(--fg); }
 .math-notebook ul { margin-bottom: 0; }
