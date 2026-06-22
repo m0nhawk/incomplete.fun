@@ -211,12 +211,15 @@ function draw(plot: SVGSVGElement, rendered: RenderedPath, symbolCount: number, 
   const width = rendered.bounds.maxX - rendered.bounds.minX || 1;
   const height = rendered.bounds.maxY - rendered.bounds.minY || 1;
   const lineWidth = Math.max(width, height) / 520;
-  const viewBox = [rendered.bounds.minX - pad, rendered.bounds.minY - pad, width + pad * 2, height + pad * 2].map(format).join(" ");
+  const labelSize = Math.max(lineWidth * 10, 0.45);
+  const frameX = rendered.bounds.minX - pad;
+  const frameY = rendered.bounds.minY - pad;
+  const viewBox = [frameX, frameY, width + pad * 2, height + pad * 2].map(format).join(" ");
   plot.setAttribute("viewBox", viewBox);
   plot.innerHTML = `
-    ${svg("rect", { class: "lsystem-frame", x: rendered.bounds.minX - pad, y: rendered.bounds.minY - pad, width: width + pad * 2, height: height + pad * 2, "stroke-width": lineWidth })}
+    ${svg("rect", { class: "lsystem-frame", x: frameX, y: frameY, width: width + pad * 2, height: height + pad * 2, "stroke-width": lineWidth })}
     ${svg("path", { class: "lsystem-path", d: rendered.path, "stroke-width": lineWidth })}
-    ${svg("text", { class: "lsystem-label", x: rendered.bounds.minX, y: rendered.bounds.minY - pad * 0.65, "font-size": Math.max(lineWidth * 10, 0.45) }, `${symbolCount.toLocaleString()} symbols · ${angle}°`)}
+    ${svg("text", { class: "lsystem-label", x: frameX + labelSize * 0.75, y: frameY + labelSize * 1.35, "font-size": labelSize }, `${symbolCount.toLocaleString()} symbols · ${angle}°`)}
   `;
 }
 
