@@ -112,6 +112,33 @@ code {
 
 .control-panel input[type="range"] { width: 8rem; }
 
+.is-darkroom .canvas-app {
+  background: #020202;
+  color: #f5f2e8;
+}
+
+.is-darkroom .topbar,
+.is-darkroom .control-panel {
+  opacity: .08;
+  transition: opacity .6s ease;
+}
+
+.is-darkroom .topbar:hover,
+.is-darkroom .control-panel:hover { opacity: 1; }
+
+.is-darkroom .canvas-stage::after {
+  content: attr(id);
+  position: absolute;
+  left: var(--space);
+  bottom: var(--space);
+  color: currentColor;
+  opacity: .35;
+  animation: darkroom-label 3s ease both;
+  pointer-events: none;
+}
+
+@keyframes darkroom-label { from { opacity: 0; transform: translateY(.5rem); } }
+
 .topbar {
   display: flex;
   align-items: center;
