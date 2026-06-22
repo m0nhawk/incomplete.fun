@@ -1,0 +1,24 @@
+{
+  "cli_version": "0.7.7",
+  "checkpoint_id": "04ee29850901",
+  "session_id": "019ef0dc-a66e-767b-8a23-1d7b49517914",
+  "strategy": "manual-commit",
+  "created_at": "2026-06-22T20:10:00.587672448Z",
+  "branch": "master",
+  "checkpoints_count": 1,
+  "save_step_count": 1,
+  "files_touched": [],
+  "agent": "Pi",
+  "model": "sakana/fugu-ultra",
+  "turn_id": "9d71a98ab483",
+  "token_usage": {
+    "input_tokens": 480956,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 4156707,
+    "output_tokens": 73913,
+    "api_call_count": 73
+  },
+  "session_metrics": {
+    "turn_count": 6
+  }
+}
