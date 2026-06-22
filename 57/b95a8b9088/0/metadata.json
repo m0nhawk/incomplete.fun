@@ -1,0 +1,56 @@
+{
+  "cli_version": "0.7.7",
+  "checkpoint_id": "57b95a8b9088",
+  "session_id": "019ef0dc-a66e-767b-8a23-1d7b49517914",
+  "strategy": "manual-commit",
+  "created_at": "2026-06-22T20:06:52.082659337Z",
+  "branch": "master",
+  "checkpoints_count": 1,
+  "save_step_count": 2,
+  "files_touched": [
+    "src/data/experiments.ts",
+    "src/pages/spectral.astro",
+    "src/scripts/spectral.ts"
+  ],
+  "agent": "Pi",
+  "model": "sakana/fugu-ultra",
+  "turn_id": "9d71a98ab483",
+  "token_usage": {
+    "input_tokens": 462127,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 2955555,
+    "output_tokens": 65171,
+    "api_call_count": 63
+  },
+  "session_metrics": {
+    "turn_count": 6
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-06-22T20:06:52.072614685Z",
+    "agent_lines": 488,
+    "agent_removed": 0,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 488,
+    "total_lines_changed": 488,
+    "agent_percentage": 100,
+    "metric_version": 2
+  },
+  "prompt_attributions": [
+    {
+      "checkpoint_number": 2,
+      "user_lines_added": 0,
+      "user_lines_removed": 0,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0
+    },
+    {
+      "checkpoint_number": 3,
+      "user_lines_added": 0,
+      "user_lines_removed": 0,
+      "agent_lines_added": 548,
+      "agent_lines_removed": 0
+    }
+  ]
+}
