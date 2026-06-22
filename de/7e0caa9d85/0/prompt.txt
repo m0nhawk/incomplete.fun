@@ -1,0 +1,55 @@
+Analyze the project and update IDEAS.md (clean it first) with 10 ideas that would look great.
+
+---
+
+Analyze the project and update IDEAS.md (clean it first) with 10 ideas that would look great.
+
+---
+
+Implement these ideas one by one, committing after each implementation.
+
+---
+
+Continue implementation and don't forget to commit after each idea.
+
+---
+
+<skill name="push" location="/home/resu/.agents/skills/push/SKILL.md">
+References are relative to /home/resu/.agents/skills/push.
+
+# Push Committed Changes
+
+You are helping push existing commits from the current git branch.
+
+## Guardrails
+
+- Do not create commits, stage files, edit files, or discard changes.
+- Do not force-push unless the user explicitly asks for a force push.
+- If the working tree has uncommitted changes, mention them before pushing. If the user's wording suggests those changes should be included, ask whether to commit first instead of pushing.
+- Stop and ask if the repository is in a detached HEAD state or if the target remote/branch is unclear.
+
+## Workflow
+
+1. Inspect repository and branch state:
+   - `git status --short --branch`
+   - `git branch --show-current`
+   - `git remote -v`
+2. Identify the current branch and upstream:
+   - Use `git rev-parse --abbrev-ref --symbolic-full-name @{u}` to check for an upstream.
+   - If no upstream exists, plan to push to `origin/<current-branch>` unless the user specified another remote or branch.
+3. Review what will be pushed:
+   - With an upstream: `git log --oneline @{u}..HEAD`
+   - Without an upstream: `git log --oneline origin/<current-branch>..HEAD` if that remote branch exists; otherwise show recent commits with `git log --oneline -5`.
+4. If there are no commits ahead and an upstream exists, report that there is nothing to push and stop.
+5. Push:
+   - If upstream exists: `git push`
+   - If upstream is missing: `git push -u origin <current-branch>`
+6. Report:
+   - remote and branch pushed
+   - whether upstream was set
+   - any uncommitted local changes that remain
+</skill>
+
+---
+
+the braid group composer have weird bug with overlapping black part, probably caused by incorrect path closing, see image in bug.png
