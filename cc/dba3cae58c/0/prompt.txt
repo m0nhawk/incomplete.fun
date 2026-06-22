@@ -1,0 +1,45 @@
+<skill name="commit" location="/home/resu/.agents/skills/commit/SKILL.md">
+References are relative to /home/resu/.agents/skills/commit.
+
+# Commit Local Changes
+
+You are helping create a git commit for the current repository.
+
+## Guardrails
+
+- Do not push.
+- Do not discard, revert, reset, or overwrite user changes.
+- Do not commit secrets, credentials, editor junk, build artifacts, dependency folders, or ignored files unless the user explicitly requests it.
+- Preserve intentional staging: if files are already staged, commit the staged changes and only add more files when the user's request clearly includes them.
+- If staging is ambiguous, ask the user instead of guessing.
+
+## Workflow
+
+1. Inspect repository state:
+   - `git status --short --branch`
+   - `git diff --stat`
+   - `git diff`
+   - `git diff --staged --stat`
+   - `git diff --staged`
+2. If there are no staged or unstaged changes, report that there is nothing to commit and stop.
+3. Decide what to stage:
+   - If changes are already staged, keep the staged set unless the user asked to include additional files.
+   - If nothing is staged, stage the appropriate tracked and untracked files with `git add -- <paths>`.
+   - Prefer path-specific `git add -- <paths>` over broad `git add .`.
+4. Re-check exactly what will be committed:
+   - `git status --short`
+   - `git diff --staged --stat`
+   - `git diff --staged`
+5. Choose a concise commit message based on the staged diff:
+   - Follow the repository's existing style if obvious from recent commits (`git log --oneline -5`).
+   - Otherwise use a short imperative summary, optionally with a body for multi-area changes.
+6. Run `git commit -m "<message>"` (use additional `-m` lines for a body when useful).
+7. Report:
+   - commit hash (`git rev-parse --short HEAD`)
+   - commit message
+   - any uncommitted changes left behind
+</skill>
+
+---
+
+in the L-system garden experiment, there is an issue with some text not showing up
