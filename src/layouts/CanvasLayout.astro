@@ -36,6 +36,15 @@ const wallpaperGlyphs = [name, '∑', '∫', 'π', 'φ', 'λ', '∞', '⊕', '�
       <label class="control-label">speed <input type="range" min="0" max="2" value="1" step="0.01" data-control-speed /></label>
       <slot name="controls" />
     </section>
+    <aside class="math-notebook" aria-label="Math notebook">
+      <strong>{name}</strong>
+      <p>Definitions, examples, and nearby experiments live here as compact field notes while the canvas remains interactive.</p>
+      <ul>
+        <li><code>state</code>: current parameters and seed</li>
+        <li><code>orbit</code>: repeated application of a rule</li>
+        <li><a href="/">browse related experiments</a></li>
+      </ul>
+    </aside>
     <slot />
   </div>
 </BaseLayout>

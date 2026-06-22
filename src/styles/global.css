@@ -248,10 +248,34 @@ code {
   .home-link small { grid-column: 2; }
 }
 
+.math-notebook {
+  position: fixed;
+  right: var(--space);
+  top: 7.25rem;
+  z-index: 3;
+  width: min(18rem, calc(100vw - 2 * var(--space)));
+  max-height: calc(100dvh - 9rem);
+  overflow: auto;
+  padding: .9rem;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--bg) 90%, transparent);
+  backdrop-filter: blur(14px);
+  color: var(--muted);
+  font-size: .8rem;
+}
+
+.math-notebook strong { color: var(--fg); }
+.math-notebook ul { margin-bottom: 0; }
+
 .canvas-stage {
   position: relative;
   flex: 1;
   overflow: hidden;
+}
+
+@media (max-width: 58rem) {
+  .math-notebook { display: none; }
 }
 
 button, input {
