@@ -111,7 +111,10 @@ function init(elements: Elements) {
     event.preventDefault();
     render(elements);
   });
-  elements.grow.addEventListener("click", () => render(elements));
+  elements.grow.addEventListener("click", () => {
+    elements.iterations.value = String(incrementIterations(elements.iterations));
+    render(elements);
+  });
   elements.preset.addEventListener("change", () => {
     applyPreset(elements, elements.preset.value);
     render(elements);
@@ -255,6 +258,13 @@ function readInt(value: string, min: number, max: number, fallback: number): num
   const number = Number.parseInt(value, 10);
   if (!Number.isFinite(number)) return fallback;
   return Math.max(min, Math.min(max, number));
+}
+
+function incrementIterations(input: HTMLInputElement): number {
+  const min = Number.parseInt(input.min || "0", 10);
+  const max = Number.parseInt(input.max || "10", 10);
+  const current = readInt(input.value, min, max, min);
+  return Math.min(max, current + 1);
 }
 
 function readNumber(value: string, min: number, max: number, fallback: number): number {
