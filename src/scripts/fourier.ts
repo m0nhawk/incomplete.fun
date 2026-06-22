@@ -35,6 +35,8 @@ interface State {
   phase: number;
   harmonics: number;
   speed: number;
+  speedScale: number;
+  paused: boolean;
   lastTime: number;
 }
 
@@ -73,6 +75,8 @@ function init(elements: Elements) {
     phase: 0,
     harmonics: readInt(elements.harmonicsInput.value, 1, 80, 28),
     speed: readInt(elements.speedInput.value, 1, 120, 34),
+    speedScale: readFloat(document.querySelector<HTMLInputElement>('[data-control-speed]')?.value, 0, 2, 1),
+    paused: document.body.hasAttribute("data-paused"),
     lastTime: performance.now(),
   };
   recompute(state);
@@ -84,8 +88,8 @@ function init(elements: Elements) {
   const tick = (time: number) => {
     const delta = Math.min(80, time - state.lastTime);
     state.lastTime = time;
-    if (!state.drawing && state.coefficients.length > 0) {
-      state.phase = (state.phase + (delta * state.speed) / 42000) % 1;
+    if (!state.paused && !state.drawing && state.coefficients.length > 0) {
+      state.phase = (state.phase + (delta * state.speed * state.speedScale) / 42000) % 1;
     }
     draw(elements.canvas, context, elements, state);
     requestAnimationFrame(tick);
@@ -94,6 +98,8 @@ function init(elements: Elements) {
 }
 
 function bindControls(elements: Elements, state: State) {
+  const sharedSpeedInput = document.querySelector<HTMLInputElement>('[data-control-speed]');
+
   elements.harmonicsInput.addEventListener("input", () => {
     state.harmonics = readInt(elements.harmonicsInput.value, 1, 80, 28);
     recompute(state);
@@ -108,11 +114,35 @@ function bindControls(elements: Elements, state: State) {
     recompute(state);
   });
   elements.clearButton.addEventListener("click", () => {
-    state.draft = [];
-    state.samples = [];
-    state.coefficients = [];
-    state.phase = 0;
+    clear(state);
   });
+
+  sharedSpeedInput?.addEventListener("input", () => {
+    state.speedScale = readFloat(sharedSpeedInput.value, 0, 2, 1);
+  });
+
+  window.addEventListener("incomplete:pause", (event) => {
+    state.paused = Boolean((event as CustomEvent<{ paused?: boolean }>).detail?.paused);
+  });
+  window.addEventListener("incomplete:reset", () => {
+    state.draft = [];
+    state.samples = examplePath();
+    state.phase = 0;
+    recompute(state);
+  });
+  window.addEventListener("incomplete:randomize", () => {
+    state.draft = [];
+    state.samples = randomPath();
+    state.phase = 0;
+    recompute(state);
+  });
+}
+
+function clear(state: State) {
+  state.draft = [];
+  state.samples = [];
+  state.coefficients = [];
+  state.phase = 0;
 }
 
 function bindDrawing(canvas: HTMLCanvasElement, state: State) {
@@ -293,6 +323,23 @@ function examplePath(): Complex[] {
   return resampleClosed(raw, SAMPLE_COUNT);
 }
 
+function randomPath(): Complex[] {
+  const lobes = 3 + Math.floor(Math.random() * 6);
+  const wobble = Math.random() * Math.PI * 2;
+  const raw = Array.from({ length: 420 }, (_unused, index) => {
+    const t = (index / 420) * Math.PI * 2;
+    const r = 0.45
+      + 0.18 * Math.sin(lobes * t + wobble)
+      + 0.09 * Math.cos((lobes + 2) * t - wobble * 0.7)
+      + 0.05 * Math.sin((lobes * 2 + 1) * t);
+    return {
+      re: Math.cos(t) * r + 0.14 * Math.cos(2 * t + wobble),
+      im: Math.sin(t) * r - 0.14 * Math.sin(3 * t - wobble),
+    };
+  });
+  return resampleClosed(raw, SAMPLE_COUNT);
+}
+
 function resampleClosed(points: Complex[], count: number): Complex[] {
   const closed = [...points, points[0]];
   const lengths = [0];
@@ -359,6 +406,13 @@ function lerpComplex(a: Complex, b: Complex, t: number): Complex {
 
 function readInt(value: string, min: number, max: number, fallback: number): number {
   const parsed = Number.parseInt(value, 10);
+  if (!Number.isFinite(parsed)) return fallback;
+  return Math.max(min, Math.min(max, parsed));
+}
+
+function readFloat(value: string | undefined, min: number, max: number, fallback: number): number {
+  if (value === undefined) return fallback;
+  const parsed = Number.parseFloat(value);
   if (!Number.isFinite(parsed)) return fallback;
   return Math.max(min, Math.min(max, parsed));
 }
