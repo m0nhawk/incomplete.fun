@@ -1,0 +1,26 @@
+{
+  "cli_version": "0.7.7",
+  "checkpoint_id": "1d97272c5a77",
+  "strategy": "manual-commit",
+  "branch": "master",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "src/layouts/CanvasLayout.astro",
+    "src/scripts/snapshot-export.ts"
+  ],
+  "sessions": [
+    {
+      "metadata": "/1d/97272c5a77/0/metadata.json",
+      "transcript": "/1d/97272c5a77/0/full.jsonl",
+      "content_hash": "/1d/97272c5a77/0/content_hash.txt",
+      "prompt": ""
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 4198,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 76800,
+    "output_tokens": 634,
+    "api_call_count": 4
+  }
+}
