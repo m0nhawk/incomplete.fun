@@ -10,13 +10,19 @@ interface Props {
 
 const { name, description, appId } = Astro.props;
 const title = `${name} - incomplete.fun`;
+const wallpaperGlyphs = [name, '∑', '∫', 'π', 'φ', 'λ', '∞', '⊕', '∂', '≈'].join(',');
 ---
 
 <BaseLayout title={title} description={description}>
   <div class="canvas-app" id={appId}>
+    <div class="equation-wallpaper" data-equation-wallpaper data-formulas={wallpaperGlyphs} aria-hidden="true"></div>
     <TopBar name={name} back>
       <slot name="toolbar" />
     </TopBar>
     <slot />
   </div>
 </BaseLayout>
+
+<script>
+  import '../scripts/equation-wallpaper.ts';
+</script>

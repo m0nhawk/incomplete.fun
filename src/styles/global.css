@@ -67,7 +67,37 @@ code {
 }
 
 .app-shell { display: grid; grid-template-rows: auto 1fr; }
-.canvas-app { display: flex; flex-direction: column; }
+.canvas-app {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.equation-wallpaper {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  color: var(--fg);
+  opacity: .065;
+}
+
+.equation-wallpaper span {
+  position: absolute;
+  animation: equation-drift linear infinite;
+  white-space: nowrap;
+}
+
+.canvas-app > :not(.equation-wallpaper) {
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes equation-drift {
+  from { transform: translate3d(-1rem, 0, 0) rotate(-6deg); }
+  to { transform: translate3d(1rem, -4rem, 0) rotate(6deg); }
+}
 
 .topbar {
   display: flex;
