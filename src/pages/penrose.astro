@@ -1,0 +1,82 @@
+---
+import CanvasLayout from '../layouts/CanvasLayout.astro';
+---
+
+<CanvasLayout name="Penrose tiling studio" appId="penrose-app">
+  <Fragment slot="toolbar">
+    <label class="control-label">
+      preset
+      <select id="penrose-preset">
+        <option value="star">star wheel</option>
+        <option value="sun">sun wheel</option>
+        <option value="decagon">decagon patch</option>
+      </select>
+    </label>
+    <label class="control-label">
+      inflate
+      <input id="penrose-depth" type="range" min="0" max="7" value="5" />
+      <span id="penrose-depth-value">5</span>
+    </label>
+    <label class="control-label penrose-check">
+      <input id="penrose-rules" type="checkbox" checked />
+      matching marks
+    </label>
+    <button class="toolbar-button" id="penrose-reset" type="button">reset</button>
+    <span class="penrose-help">hover tiles · recursive kite/dart skeleton</span>
+  </Fragment>
+
+  <div id="penrose-readout" aria-live="polite">
+    <span id="penrose-count">0 tiles</span>
+    <span id="penrose-hover">hover the patch</span>
+  </div>
+
+  <div class="canvas-stage" id="penrose-stage">
+    <canvas id="penrose-canvas"></canvas>
+  </div>
+</CanvasLayout>
+
+<style>
+  #penrose-depth { width: 5rem; }
+
+  #penrose-depth-value {
+    min-width: 1.5rem;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .penrose-check { cursor: pointer; }
+
+  .penrose-help {
+    margin-left: auto;
+    color: var(--muted);
+    font-size: .78rem;
+  }
+
+  #penrose-readout {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: .35rem var(--space);
+    border-bottom: 1px solid var(--line);
+    color: var(--muted);
+    font-size: .78rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  #penrose-count { color: var(--fg); }
+
+  #penrose-stage {
+    cursor: crosshair;
+    touch-action: none;
+  }
+
+  #penrose-canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+</style>
+
+<script>
+  import '../scripts/penrose.ts';
+</script>

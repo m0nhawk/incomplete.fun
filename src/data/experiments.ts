@@ -15,6 +15,7 @@ export const experiments: Experiment[] = [
   { href: '/hyperbolic', title: 'hyperbolic tessellation explorer', summary: 'poincaré disk, {p,q} tilings, geodesics' },
   { href: '/knot', title: 'knot diagrams', summary: 'crossings and polynomial sketches' },
   { href: '/padic', title: 'p-adics', summary: 'digits, inverses, hensel lifts' },
+  { href: '/penrose', title: 'Penrose tiling studio', summary: 'inflation, matching rules, aperiodic tiles' },
   { href: '/surreal', title: 'surreal numbers', summary: 'cuts and finite birthdays' },
   { href: '/symmetry', title: 'symmetry', summary: 'rotational mirror drawing' },
   { href: '/tropical', title: 'tropical geometry', summary: 'min-plus arithmetic and envelopes' },
