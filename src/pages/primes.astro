@@ -1,0 +1,55 @@
+---
+import CanvasLayout from '../layouts/CanvasLayout.astro';
+---
+
+<CanvasLayout name="prime spiral observatory" appId="primes-app">
+  <Fragment slot="toolbar">
+    <label class="control-label">
+      range
+      <input id="primes-limit" type="range" min="500" max="30000" step="500" value="12000" />
+      <span id="primes-limit-value">12000</span>
+    </label>
+    <label class="control-label">
+      view
+      <select id="primes-view">
+        <option value="ulam">ulam</option>
+        <option value="polar">polar</option>
+      </select>
+    </label>
+    <label class="control-label">
+      mod
+      <input id="primes-mod" type="number" min="2" max="30" value="6" />
+    </label>
+    <label class="control-label">
+      residue
+      <input id="primes-residue" type="number" min="0" max="29" value="1" />
+    </label>
+    <label class="control-label primes-check"><input id="primes-composites" type="checkbox" /> composites</label>
+    <span class="primes-help">prime constellations · residue classes</span>
+  </Fragment>
+
+  <div id="primes-readout" aria-live="polite">
+    <span id="primes-status">0 primes</span>
+    <span id="primes-hover">hover a point</span>
+  </div>
+
+  <div class="canvas-stage" id="primes-stage">
+    <canvas id="primes-canvas"></canvas>
+  </div>
+</CanvasLayout>
+
+<style>
+  #primes-limit { width: 7rem; }
+  #primes-limit-value { color: var(--muted); min-width: 4rem; font-variant-numeric: tabular-nums; }
+  #primes-mod, #primes-residue { width: 3.5rem; }
+  .primes-check { cursor: pointer; }
+  .primes-help { margin-left: auto; color: var(--muted); font-size: .78rem; }
+  #primes-readout { display: flex; justify-content: space-between; gap: 1rem; padding: .35rem var(--space); border-bottom: 1px solid var(--line); color: var(--muted); font-size: .78rem; font-variant-numeric: tabular-nums; }
+  #primes-status { color: var(--fg); }
+  #primes-stage { cursor: crosshair; touch-action: none; }
+  #primes-canvas { display: block; width: 100%; height: 100%; }
+</style>
+
+<script>
+  import '../scripts/primes.ts';
+</script>

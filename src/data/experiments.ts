@@ -20,6 +20,7 @@ export const experiments: Experiment[] = [
   { href: '/modular', title: 'modular multiplication circles', summary: 'residue chords, primitive roots, cycles' },
   { href: '/padic', title: 'p-adics', summary: 'digits, inverses, hensel lifts' },
   { href: '/penrose', title: 'Penrose tiling studio', summary: 'inflation, matching rules, aperiodic tiles' },
+  { href: '/primes', title: 'prime spiral observatory', summary: 'ulam spiral, residue classes, progressions' },
   { href: '/reaction-diffusion', title: 'reaction-diffusion lab', summary: 'gray-scott patterns, feed/kill map' },
   { href: '/spectral', title: 'spectral graph playground', summary: 'laplacian spectra, eigenmodes, layouts' },
   { href: '/surreal', title: 'surreal numbers', summary: 'cuts and finite birthdays' },
