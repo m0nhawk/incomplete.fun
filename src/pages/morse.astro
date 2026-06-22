@@ -1,0 +1,65 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+---
+
+<PageLayout name="Morse landscape explorer" back wide>
+  <p class="morse-intro">Contour editable height fields, mark critical points, and follow gradient-flow traces toward peaks, pits, and saddles.</p>
+
+  <section class="morse-grid" id="morse-app">
+    <article class="morse-card morse-controls">
+      <label>
+        function
+        <select id="morse-function">
+          <option value="peaks">peaks</option>
+          <option value="monkey">monkey saddle</option>
+          <option value="ripples">ripples</option>
+          <option value="basins">basins</option>
+        </select>
+      </label>
+      <label>contours <input id="morse-contours" type="number" min="5" max="28" value="16" /></label>
+      <label>flow lines <input id="morse-flows" type="number" min="0" max="60" value="28" /></label>
+      <label class="morse-check"><input id="morse-critical" type="checkbox" checked /> critical points</label>
+    </article>
+
+    <article class="morse-card morse-wide">
+      <div class="morse-head">
+        <div>
+          <h2>height field</h2>
+          <p id="morse-summary" class="morse-muted" aria-live="polite"></p>
+        </div>
+      </div>
+      <div class="morse-svg-wrap">
+        <svg id="morse-plot" role="img" aria-label="Morse landscape contour plot"></svg>
+      </div>
+    </article>
+  </section>
+</PageLayout>
+
+<style>
+  .morse-intro,
+  .morse-muted,
+  .morse-controls label { color: var(--muted); }
+  .morse-grid { display: grid; gap: 1rem; }
+  .morse-card { border: 1px solid var(--line); padding: 1rem; min-width: 0; }
+  .morse-card h2 { font-size: 1rem; margin: 0 0 .5rem; }
+  .morse-controls { display: flex; flex-wrap: wrap; align-items: end; gap: .75rem 1rem; }
+  .morse-controls label { display: grid; gap: .25rem; }
+  .morse-controls input[type="number"] { width: 5rem; padding: .25rem .4rem; }
+  .morse-check { display: inline-flex !important; align-items: center; gap: .35rem; cursor: pointer; }
+  .morse-svg-wrap { border: 1px solid var(--line); background: var(--wash); overflow: auto; }
+  #morse-plot { display: block; width: 100%; min-width: 42rem; height: 36rem; }
+</style>
+
+<style is:global>
+  .morse-contour { fill: none; stroke: var(--fg); stroke-width: 1; }
+  .morse-flow { fill: none; stroke: var(--muted); stroke-width: 1.2; stroke-dasharray: 6 5; }
+  .morse-axis { stroke: var(--line); stroke-width: 1; }
+  .morse-critical-min { fill: var(--bg); stroke: var(--fg); stroke-width: 2; }
+  .morse-critical-max { fill: var(--fg); stroke: var(--fg); stroke-width: 2; }
+  .morse-critical-saddle { fill: var(--muted); stroke: var(--fg); stroke-width: 1.5; }
+  .morse-label { fill: var(--muted); font: 12px ui-monospace, monospace; }
+</style>
+
+<script>
+  import '../scripts/morse.ts';
+</script>

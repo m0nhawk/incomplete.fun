@@ -18,6 +18,7 @@ export const experiments: Experiment[] = [
   { href: '/knot', title: 'knot diagrams', summary: 'crossings and polynomial sketches' },
   { href: '/lsystem', title: 'L-system garden', summary: 'rewrite rules, turtle paths, fractal plants' },
   { href: '/modular', title: 'modular multiplication circles', summary: 'residue chords, primitive roots, cycles' },
+  { href: '/morse', title: 'Morse landscape explorer', summary: 'height fields, critical points, gradient flow' },
   { href: '/padic', title: 'p-adics', summary: 'digits, inverses, hensel lifts' },
   { href: '/penrose', title: 'Penrose tiling studio', summary: 'inflation, matching rules, aperiodic tiles' },
   { href: '/primes', title: 'prime spiral observatory', summary: 'ulam spiral, residue classes, progressions' },
