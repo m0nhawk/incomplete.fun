@@ -5,6 +5,7 @@ export interface Experiment {
 }
 
 export const experiments: Experiment[] = [
+  { href: '/braid', title: 'braid group composer', summary: 'strand crossings, words, knot closures' },
   { href: '/cellular', title: 'cellular automata lab', summary: 'local rules, seeds, histories' },
   { href: '/complex', title: 'complex dynamics', summary: 'mandelbrot, julia, orbit traces' },
   { href: '/continued-fractions', title: 'continued fractions', summary: 'expansions, convergents, errors' },
