@@ -18,6 +18,7 @@ interface Elements {
   summary: HTMLElement;
   plot: SVGSVGElement;
   download: HTMLButtonElement;
+  grow: HTMLButtonElement;
 }
 
 interface TurtleState {
@@ -71,8 +72,22 @@ const PRESETS: Record<string, Preset> = {
   },
 };
 
-const elements = getElements();
-if (elements) init(elements);
+initWhenReady();
+
+function initWhenReady() {
+  const elements = getElements();
+  if (elements) {
+    init(elements);
+    return;
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", () => {
+      const elements = getElements();
+      if (elements) init(elements);
+    }, { once: true });
+  }
+}
 
 function getElements(): Elements | null {
   const form = document.querySelector<HTMLFormElement>("#lsystem-form");
@@ -84,9 +99,10 @@ function getElements(): Elements | null {
   const summary = document.querySelector<HTMLElement>("#lsystem-summary");
   const plot = document.querySelector<SVGSVGElement>("#lsystem-plot");
   const download = document.querySelector<HTMLButtonElement>("#lsystem-download");
+  const grow = document.querySelector<HTMLButtonElement>("#lsystem-grow");
 
-  if (!form || !preset || !axiom || !rules || !iterations || !angle || !summary || !plot || !download) return null;
-  return { form, preset, axiom, rules, iterations, angle, summary, plot, download };
+  if (!form || !preset || !axiom || !rules || !iterations || !angle || !summary || !plot || !download || !grow) return null;
+  return { form, preset, axiom, rules, iterations, angle, summary, plot, download, grow };
 }
 
 function init(elements: Elements) {
@@ -95,6 +111,7 @@ function init(elements: Elements) {
     event.preventDefault();
     render(elements);
   });
+  elements.grow.addEventListener("click", () => render(elements));
   elements.preset.addEventListener("change", () => {
     applyPreset(elements, elements.preset.value);
     render(elements);
