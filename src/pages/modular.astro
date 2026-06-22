@@ -1,0 +1,137 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+---
+
+<PageLayout name="modular multiplication circles" back wide>
+  <p class="modular-intro">Place residues around a circle and draw the multiplication map <code>x → ax mod n</code>. Coprime multipliers form permutations; non-units collapse residues into smaller orbits.</p>
+
+  <section class="modular-panel" id="modular-app">
+    <article class="modular-card modular-controls">
+      <label>
+        modulus n
+        <input id="modular-n" type="number" min="2" max="120" value="48" />
+      </label>
+      <label>
+        multiplier a
+        <input id="modular-a" type="number" min="0" max="240" value="2" />
+      </label>
+      <label>
+        chord curve
+        <input id="modular-curve" type="range" min="0" max="100" value="54" />
+      </label>
+      <label class="modular-check">
+        <input id="modular-labels" type="checkbox" checked />
+        labels
+      </label>
+    </article>
+
+    <article class="modular-card modular-wide">
+      <div class="modular-head">
+        <div>
+          <h2>circle map</h2>
+          <p id="modular-summary" class="modular-muted" aria-live="polite"></p>
+        </div>
+        <button class="toolbar-button" id="modular-random" type="button">random unit</button>
+      </div>
+      <div class="modular-svg-wrap">
+        <svg id="modular-plot" role="img" aria-label="Modular multiplication circle"></svg>
+      </div>
+    </article>
+
+    <article class="modular-card modular-wide">
+      <h2>orbits</h2>
+      <div id="modular-orbits" class="modular-orbits" aria-live="polite"></div>
+    </article>
+  </section>
+</PageLayout>
+
+<style>
+  .modular-intro,
+  .modular-muted,
+  .modular-card label { color: var(--muted); }
+
+  .modular-panel {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .modular-card {
+    border: 1px solid var(--line);
+    padding: 1rem;
+  }
+
+  .modular-card h2 {
+    font-size: 1rem;
+    margin: 0 0 .35rem;
+  }
+
+  .modular-controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: end;
+    gap: .75rem 1rem;
+  }
+
+  .modular-controls label {
+    display: grid;
+    gap: .25rem;
+  }
+
+  .modular-controls input[type="number"] {
+    width: 5rem;
+    padding: .25rem .4rem;
+  }
+
+  .modular-controls input[type="range"] { width: 8rem; }
+
+  .modular-check {
+    display: inline-flex !important;
+    align-items: center;
+    gap: .35rem;
+    cursor: pointer;
+  }
+
+  .modular-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .modular-wide { min-width: 0; }
+
+  .modular-svg-wrap {
+    overflow: auto;
+    border: 1px solid var(--line);
+    background: var(--wash);
+  }
+
+  #modular-plot {
+    display: block;
+    width: 100%;
+    min-width: 38rem;
+    height: 38rem;
+  }
+
+  .modular-orbits {
+    display: grid;
+    gap: .35rem;
+    font-variant-numeric: tabular-nums;
+    overflow-x: auto;
+  }
+</style>
+
+<style is:global>
+  .modular-axis { stroke: var(--line); }
+  .modular-chord { fill: none; stroke: var(--fg); }
+  .modular-node { fill: var(--bg); stroke: var(--fg); }
+  .modular-node.is-fixed { fill: var(--fg); }
+  .modular-label { fill: var(--muted); font: 11px ui-monospace, monospace; }
+  .modular-orbit-row { border-top: 1px solid var(--line); padding-top: .35rem; white-space: nowrap; }
+  .modular-orbit-row strong { color: var(--fg); }
+</style>
+
+<script>
+  import '../scripts/modular.ts';
+</script>
