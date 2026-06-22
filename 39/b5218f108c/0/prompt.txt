@@ -1,0 +1,1 @@
+in L-system garden the grow button and commands (F/G, f, +/-, []) doesn't work
