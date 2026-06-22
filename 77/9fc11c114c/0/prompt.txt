@@ -56,7 +56,3 @@ Report:
 - whether upstream was set
 - any uncommitted changes left behind
 </skill>
-
----
-
-it's still off
