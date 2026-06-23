@@ -1,0 +1,79 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+
+interface Props {
+  name: string;
+  summary: string;
+  kind: 'math' | 'physics' | 'extension';
+  controls: string[];
+  invariants: string[];
+  related: { href: string; label: string }[];
+}
+
+const { name, summary, kind, controls, invariants, related } = Astro.props;
+const seed = name.split('').reduce((acc, ch) => acc + ch.charCodeAt(0), 0);
+---
+
+<PageLayout name={name} back wide description={summary}>
+  <section class="idea-hero" data-idea-experiment data-seed={seed} data-kind={kind}>
+    <div>
+      <p class="eyebrow">{kind} experiment</p>
+      <h1>{name}</h1>
+      <p>{summary}</p>
+    </div>
+    <div class="idea-controls" aria-label={`${name} controls`}>
+      <label>{controls[0] ?? 'parameter'} <input data-idea-control="a" type="range" min="0" max="1" step="0.001" value="0.37" /></label>
+      <label>{controls[1] ?? 'seed'} <input data-idea-control="b" type="range" min="0" max="1" step="0.001" value="0.62" /></label>
+      <label>{controls[2] ?? 'time'} <input data-idea-control="c" type="range" min="0" max="1" step="0.001" value="0.48" /></label>
+      <button class="toolbar-button" type="button" data-idea-randomize>randomize explainably</button>
+    </div>
+  </section>
+
+  <section class="idea-grid">
+    <article class="idea-card idea-canvas-card">
+      <h2>interactive sketch</h2>
+      <svg data-idea-canvas viewBox="0 0 720 420" role="img" aria-label={`${name} interactive mathematical sketch`}></svg>
+      <p data-idea-caption class="idea-caption"></p>
+    </article>
+    <article class="idea-card">
+      <h2>live invariants</h2>
+      <dl data-idea-invariants>
+        {invariants.map((item) => <><dt>{item}</dt><dd>drag the controls to recompute</dd></>)}
+      </dl>
+    </article>
+  </section>
+
+  <section class="idea-card">
+    <h2>what to try</h2>
+    <ul>
+      {controls.map((control) => <li>Move <strong>{control}</strong> and watch which quantities stay stable.</li>)}
+      <li>Use the random preset button to generate a state with a short explanation.</li>
+    </ul>
+    <h2>nearby experiments</h2>
+    <p class="idea-links">
+      {related.map((link) => <a href={link.href}>{link.label}</a>)}
+    </p>
+  </section>
+</PageLayout>
+
+<script>
+  import '../scripts/idea-experiment.ts';
+</script>
+
+<style>
+  .idea-hero, .idea-grid { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(18rem, 0.75fr); gap: 1rem; align-items: stretch; }
+  .idea-hero { margin-bottom: 1rem; }
+  .idea-hero h1 { margin: 0.1rem 0 0.5rem; font-size: clamp(2rem, 7vw, 5rem); line-height: 0.9; }
+  .idea-card, .idea-hero > div { border: 1px solid color-mix(in srgb, var(--ink) 18%, transparent); border-radius: 1.25rem; padding: 1rem; background: color-mix(in srgb, var(--paper) 88%, transparent); box-shadow: 0 1rem 3rem color-mix(in srgb, var(--ink) 8%, transparent); }
+  .idea-controls { display: grid; gap: 0.75rem; align-content: center; }
+  .idea-controls label { display: grid; gap: 0.3rem; font-size: 0.9rem; text-transform: lowercase; }
+  .idea-controls input { width: 100%; }
+  .idea-canvas-card svg { width: 100%; min-height: 24rem; border-radius: 1rem; background: radial-gradient(circle at 25% 20%, color-mix(in srgb, var(--accent) 18%, transparent), transparent 35%), color-mix(in srgb, var(--paper) 70%, var(--ink) 3%); overflow: hidden; }
+  .idea-caption { min-height: 2.5rem; }
+  .idea-card dl { display: grid; grid-template-columns: max-content 1fr; gap: 0.5rem 1rem; }
+  .idea-card dt { font-weight: 700; }
+  .idea-card dd { margin: 0; }
+  .idea-links { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .idea-links a { border: 1px solid currentColor; border-radius: 999px; padding: 0.25rem 0.65rem; text-decoration: none; }
+  @media (max-width: 800px) { .idea-hero, .idea-grid { grid-template-columns: 1fr; } }
+</style>

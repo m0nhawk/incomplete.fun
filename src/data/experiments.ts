@@ -2,10 +2,12 @@ export interface Experiment {
   href: string;
   title: string;
   summary: string;
-  presets?: string[];
+  presets?: string[  { href: '/billiards', title: 'Billiards on rational polygons', summary: 'Unfold trajectories in rectangles, triangles, and regular polygons; reveal periodic paths,' },
+];
 }
 
-export const presetAtlas = ['quiet lattice', 'golden bloom', 'deep spiral', 'edge storm'];
+export const presetAtlas = ['quiet lattice', 'golden bloom', 'deep spiral', 'edge storm'  { href: '/billiards', title: 'Billiards on rational polygons', summary: 'Unfold trajectories in rectangles, triangles, and regular polygons; reveal periodic paths,' },
+];
 
 export const experiments: Experiment[] = [
   { href: '/braid', title: 'braid group composer', summary: 'strand crossings, words, knot closures' },
@@ -31,4 +33,5 @@ export const experiments: Experiment[] = [
   { href: '/symmetry', title: 'symmetry', summary: 'rotational mirror drawing' },
   { href: '/tropical', title: 'tropical geometry', summary: 'min-plus arithmetic and envelopes' },
   { href: '/voronoi', title: 'voronoi', summary: 'distance fields with mixed metrics' },
+  { href: '/billiards', title: 'Billiards on rational polygons', summary: 'Unfold trajectories in rectangles, triangles, and regular polygons; reveal periodic paths,' },
 ];
