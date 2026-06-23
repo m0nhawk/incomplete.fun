@@ -34,6 +34,7 @@ export interface Experiment {
   { href: '/least-action', title: 'Least-action path finder', summary: 'Compare arbitrary paths with numerically optimized action-minimizing paths for falling, os' },
   { href: '/shared-preset-urls', title: 'Shared preset URLs', summary: 'Encode experiment parameters into bookmarkable links so compact canvas states can be saved' },
   { href: '/snapshot-metadata', title: 'Snapshot export metadata', summary: 'Embed title, parameters, seed, and short explanations beside saved SVG or PNG outputs.' },
+  { href: '/cross-links', title: 'Cross-links panel', summary: 'Connect related experiments such as Fourier to waves, spectral graphs to drums, and hyperb' },
 ];
 }
 
@@ -69,6 +70,7 @@ export const presetAtlas = ['quiet lattice', 'golden bloom', 'deep spiral', 'edg
   { href: '/least-action', title: 'Least-action path finder', summary: 'Compare arbitrary paths with numerically optimized action-minimizing paths for falling, os' },
   { href: '/shared-preset-urls', title: 'Shared preset URLs', summary: 'Encode experiment parameters into bookmarkable links so compact canvas states can be saved' },
   { href: '/snapshot-metadata', title: 'Snapshot export metadata', summary: 'Embed title, parameters, seed, and short explanations beside saved SVG or PNG outputs.' },
+  { href: '/cross-links', title: 'Cross-links panel', summary: 'Connect related experiments such as Fourier to waves, spectral graphs to drums, and hyperb' },
 ];
 
 export const experiments: Experiment[] = [
@@ -127,4 +129,5 @@ export const experiments: Experiment[] = [
   { href: '/least-action', title: 'Least-action path finder', summary: 'Compare arbitrary paths with numerically optimized action-minimizing paths for falling, os' },
   { href: '/shared-preset-urls', title: 'Shared preset URLs', summary: 'Encode experiment parameters into bookmarkable links so compact canvas states can be saved' },
   { href: '/snapshot-metadata', title: 'Snapshot export metadata', summary: 'Embed title, parameters, seed, and short explanations beside saved SVG or PNG outputs.' },
+  { href: '/cross-links', title: 'Cross-links panel', summary: 'Connect related experiments such as Fourier to waves, spectral graphs to drums, and hyperb' },
 ];
