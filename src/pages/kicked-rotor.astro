@@ -1,0 +1,23 @@
+---
+import CanvasLayout from '../layouts/CanvasLayout.astro';
+---
+
+<CanvasLayout name="kicked rotor map" appId="rotor-app">
+  <Fragment slot="toolbar">
+    <label class="control-label">kick <input id="rotor-kick" type="range" min="0" max="700" value="120" /></label>
+    <label class="control-label">orbits <input id="rotor-orbits" type="range" min="8" max="96" value="44" /></label>
+    <button class="toolbar-button" id="rotor-random" type="button">random dust</button>
+    <span id="rotor-readout">K = 1.20 · invariant curves</span>
+  </Fragment>
+  <div class="canvas-stage"><canvas id="rotor-canvas"></canvas></div>
+</CanvasLayout>
+
+<style>
+  #rotor-kick, #rotor-orbits { width: 6rem; }
+  #rotor-readout { margin-left: auto; color: var(--muted); font-size: .78rem; font-variant-numeric: tabular-nums; }
+  #rotor-canvas { display: block; width: 100%; height: 100%; background: #05060a; }
+</style>
+
+<script>
+  import '../scripts/kicked-rotor.ts';
+</script>
