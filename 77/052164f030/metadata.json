@@ -1,0 +1,27 @@
+{
+  "cli_version": "0.7.7",
+  "checkpoint_id": "77052164f030",
+  "strategy": "manual-commit",
+  "branch": "master",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "src/data/experiments.ts",
+    "src/pages/fourier-optics.astro",
+    "src/scripts/fourier-optics.ts"
+  ],
+  "sessions": [
+    {
+      "metadata": "/77/052164f030/0/metadata.json",
+      "transcript": "/77/052164f030/0/full.jsonl",
+      "content_hash": "/77/052164f030/0/content_hash.txt",
+      "prompt": ""
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 4658,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 35328,
+    "output_tokens": 1385,
+    "api_call_count": 1
+  }
+}
