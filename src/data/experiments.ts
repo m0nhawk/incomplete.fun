@@ -14,6 +14,7 @@ export interface Experiment {
   { href: '/integer-relations', title: 'Integer relation finder', summary: 'Search for PSLQ-style integer relations for typed or generated constants and show formulas' },
   { href: '/markov-numbers', title: 'Markov numbers and mutation tree', summary: 'Navigate triples satisfying x²+y²+z²=3xyz and connect mutation, Diophantine approximation,' },
   { href: '/young-tableaux', title: 'Young tableaux and growth diagrams', summary: 'Animate RSK insertion, partitions, hook lengths, growth diagrams, and limit-shape shadows.' },
+  { href: '/hyperbolic-automata', title: 'Non-Euclidean cellular automata', summary: 'Run Life-like rules on hyperbolic tilings and compare growth rates with square-grid cellul' },
 ];
 }
 
@@ -29,6 +30,7 @@ export const presetAtlas = ['quiet lattice', 'golden bloom', 'deep spiral', 'edg
   { href: '/integer-relations', title: 'Integer relation finder', summary: 'Search for PSLQ-style integer relations for typed or generated constants and show formulas' },
   { href: '/markov-numbers', title: 'Markov numbers and mutation tree', summary: 'Navigate triples satisfying x²+y²+z²=3xyz and connect mutation, Diophantine approximation,' },
   { href: '/young-tableaux', title: 'Young tableaux and growth diagrams', summary: 'Animate RSK insertion, partitions, hook lengths, growth diagrams, and limit-shape shadows.' },
+  { href: '/hyperbolic-automata', title: 'Non-Euclidean cellular automata', summary: 'Run Life-like rules on hyperbolic tilings and compare growth rates with square-grid cellul' },
 ];
 
 export const experiments: Experiment[] = [
@@ -67,4 +69,5 @@ export const experiments: Experiment[] = [
   { href: '/integer-relations', title: 'Integer relation finder', summary: 'Search for PSLQ-style integer relations for typed or generated constants and show formulas' },
   { href: '/markov-numbers', title: 'Markov numbers and mutation tree', summary: 'Navigate triples satisfying x²+y²+z²=3xyz and connect mutation, Diophantine approximation,' },
   { href: '/young-tableaux', title: 'Young tableaux and growth diagrams', summary: 'Animate RSK insertion, partitions, hook lengths, growth diagrams, and limit-shape shadows.' },
+  { href: '/hyperbolic-automata', title: 'Non-Euclidean cellular automata', summary: 'Run Life-like rules on hyperbolic tilings and compare growth rates with square-grid cellul' },
 ];
