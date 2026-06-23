@@ -1,0 +1,61 @@
+implement number 2 from IDEAS.md
+
+---
+
+why it's so slow to render?
+
+---
+
+make it fast
+
+---
+
+make it fast in the same way as Voronoi
+
+---
+
+with extreme zoom it's pixelated, why?
+
+---
+
+make sure that even with zoom it's being properly recalculated to be shown nicely on extreme zoom values
+
+---
+
+it's still pixelated
+
+---
+
+OK, implement the recalculation of visible part to improve the precision.
+
+---
+
+revert the changes
+
+---
+
+implement ideas 3 and 4 from IDEAS.md
+
+---
+
+in knot, R1 smooth and R2 simplify have nothing on canvas
+
+---
+
+make this more obvious on what it does
+
+---
+
+"click crossings to flip over/under" doesn't work and instead clears canvas
+
+---
+
+error plot in continued fractions looks weird
+
+---
+
+expand the continued fraction and provide explanation on different parts in nice way
+
+---
+
+make order of the tools alphabetical
