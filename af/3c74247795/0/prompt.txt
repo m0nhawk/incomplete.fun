@@ -1,0 +1,1 @@
+implement ideas from IDEAS.md one by one and commit after every idea
