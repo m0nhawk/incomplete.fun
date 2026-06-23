@@ -17,6 +17,7 @@ export const experiments: Experiment[] = [
   { href: '/dual', title: 'dual numbers', summary: 'nilpotents, tangents, automatic differentiation' },
   { href: '/fib/10', title: 'fibonacci', summary: 'static bigint sequence sample' },
   { href: '/fourier', title: 'Fourier epicycle sketcher', summary: 'draw, decompose, replay with epicycles' },
+  { href: '/fourier-optics', title: 'Fourier optics aperture bench', summary: 'apertures and diffraction fringes' },
   { href: '/groups', title: 'finite groups', summary: 'tables, classes, quotients' },
   { href: '/heat-flow', title: 'heat flow drawings', summary: 'painted diffusion and conserved heat' },
   { href: '/hyperbolic', title: 'hyperbolic tessellation explorer', summary: 'poincaré disk, {p,q} tilings, geodesics' },

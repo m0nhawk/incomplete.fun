@@ -1,0 +1,5 @@
+---
+import CanvasLayout from '../layouts/CanvasLayout.astro';
+---
+<CanvasLayout name="Fourier optics aperture bench" appId="optics-app"><Fragment slot="toolbar"><label class="control-label">slits <input id="optics-slits" type="range" min="1" max="8" value="2" /></label><label class="control-label">width <input id="optics-width" type="range" min="4" max="42" value="14" /></label><button class="toolbar-button" id="optics-draw" type="button">draw aperture</button><span id="optics-readout">far-field diffraction</span></Fragment><div class="canvas-stage"><canvas id="optics-canvas"></canvas></div></CanvasLayout>
+<style>#optics-slits,#optics-width{width:6rem}#optics-readout{margin-left:auto;color:var(--muted);font-size:.78rem}#optics-canvas{display:block;width:100%;height:100%;background:#03040a;cursor:crosshair}</style><script>import '../scripts/fourier-optics.ts';</script>
