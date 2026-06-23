@@ -20,6 +20,7 @@ export interface Experiment {
   { href: '/double-pendulum', title: 'Double pendulum phase portrait', summary: 'Explore initial conditions, energy coloring, Poincaré sections, and nearby trajectories th' },
   { href: '/hamiltonian-playground', title: 'Hamiltonian playground', summary: 'Edit a potential V(x,y), compare vector fields and energy contours, and watch symplectic E' },
   { href: '/wave-equation', title: 'Wave equation on strings and membranes', summary: 'Pluck a string or drum, decompose motion into spectral modes, and connect Fourier waves wi' },
+  { href: '/quantum-box', title: 'Quantum particle in a box', summary: 'Draw a potential well, solve low eigenstates numerically, animate phase and probability, a' },
 ];
 }
 
@@ -41,6 +42,7 @@ export const presetAtlas = ['quiet lattice', 'golden bloom', 'deep spiral', 'edg
   { href: '/double-pendulum', title: 'Double pendulum phase portrait', summary: 'Explore initial conditions, energy coloring, Poincaré sections, and nearby trajectories th' },
   { href: '/hamiltonian-playground', title: 'Hamiltonian playground', summary: 'Edit a potential V(x,y), compare vector fields and energy contours, and watch symplectic E' },
   { href: '/wave-equation', title: 'Wave equation on strings and membranes', summary: 'Pluck a string or drum, decompose motion into spectral modes, and connect Fourier waves wi' },
+  { href: '/quantum-box', title: 'Quantum particle in a box', summary: 'Draw a potential well, solve low eigenstates numerically, animate phase and probability, a' },
 ];
 
 export const experiments: Experiment[] = [
@@ -85,4 +87,5 @@ export const experiments: Experiment[] = [
   { href: '/double-pendulum', title: 'Double pendulum phase portrait', summary: 'Explore initial conditions, energy coloring, Poincaré sections, and nearby trajectories th' },
   { href: '/hamiltonian-playground', title: 'Hamiltonian playground', summary: 'Edit a potential V(x,y), compare vector fields and energy contours, and watch symplectic E' },
   { href: '/wave-equation', title: 'Wave equation on strings and membranes', summary: 'Pluck a string or drum, decompose motion into spectral modes, and connect Fourier waves wi' },
+  { href: '/quantum-box', title: 'Quantum particle in a box', summary: 'Draw a potential well, solve low eigenstates numerically, animate phase and probability, a' },
 ];
