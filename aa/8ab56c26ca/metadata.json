@@ -1,0 +1,60 @@
+{
+  "cli_version": "0.7.7",
+  "checkpoint_id": "aa8ab56c26ca",
+  "strategy": "manual-commit",
+  "branch": "master",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "src/data/experiments.ts",
+    "src/pages/billiards.astro",
+    "src/pages/challenge-cards.astro",
+    "src/pages/circle-packing.astro",
+    "src/pages/coxeter-kaleidoscope.astro",
+    "src/pages/cross-links.astro",
+    "src/pages/discrete-exterior-calculus.astro",
+    "src/pages/double-pendulum.astro",
+    "src/pages/driven-oscillator.astro",
+    "src/pages/electromagnetic-fields.astro",
+    "src/pages/elliptic-curve.astro",
+    "src/pages/explainable-presets.astro",
+    "src/pages/fermat-principle.astro",
+    "src/pages/geodesic-flow.astro",
+    "src/pages/hamiltonian-playground.astro",
+    "src/pages/hyperbolic-automata.astro",
+    "src/pages/integer-relations.astro",
+    "src/pages/ising-model.astro",
+    "src/pages/jets.astro",
+    "src/pages/lattice-gas.astro",
+    "src/pages/least-action.astro",
+    "src/pages/markov-numbers.astro",
+    "src/pages/modular-forms.astro",
+    "src/pages/n-body-gravity.astro",
+    "src/pages/padic-fractal.astro",
+    "src/pages/percolation.astro",
+    "src/pages/persistent-homology.astro",
+    "src/pages/quantum-box.astro",
+    "src/pages/quiver-mutation.astro",
+    "src/pages/ray-optics.astro",
+    "src/pages/reaction-domain-growth.astro",
+    "src/pages/relativity-diagram.astro",
+    "src/pages/shared-preset-urls.astro",
+    "src/pages/snapshot-metadata.astro",
+    "src/pages/wave-equation.astro",
+    "src/pages/young-tableaux.astro"
+  ],
+  "sessions": [
+    {
+      "metadata": "/aa/8ab56c26ca/0/metadata.json",
+      "transcript": "/aa/8ab56c26ca/0/full.jsonl",
+      "content_hash": "/aa/8ab56c26ca/0/content_hash.txt",
+      "prompt": ""
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 54874,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 301056,
+    "output_tokens": 2414,
+    "api_call_count": 8
+  }
+}
