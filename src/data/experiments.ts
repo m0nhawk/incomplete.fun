@@ -11,6 +11,7 @@ export const experiments: Experiment[] = [
   { href: '/braid', title: 'braid group composer', summary: 'strand crossings, words, knot closures' },
   { href: '/cellular', title: 'cellular automata lab', summary: 'local rules, seeds, histories' },
   { href: '/complex', title: 'complex dynamics', summary: 'mandelbrot, julia, orbit traces' },
+  { href: '/coupled-oscillators', title: 'coupled oscillator sync', summary: 'Kuramoto phases and order' },
   { href: '/continued-fractions', title: 'continued fractions', summary: 'expansions, convergents, errors' },
   { href: '/chu-spaces', title: 'Chu spaces', summary: 'dual tables, tests, morphisms' },
   { href: '/dual', title: 'dual numbers', summary: 'nilpotents, tangents, automatic differentiation' },

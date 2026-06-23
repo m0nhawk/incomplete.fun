@@ -1,0 +1,23 @@
+---
+import CanvasLayout from '../layouts/CanvasLayout.astro';
+---
+
+<CanvasLayout name="coupled oscillator sync" appId="oscillator-app">
+  <Fragment slot="toolbar">
+    <label class="control-label">coupling <input id="osc-coupling" type="range" min="0" max="120" value="38" /></label>
+    <label class="control-label">spread <input id="osc-spread" type="range" min="0" max="100" value="55" /></label>
+    <button class="toolbar-button" id="osc-reset" type="button">reset phases</button>
+    <span id="osc-readout">order r = 0.00</span>
+  </Fragment>
+  <div class="canvas-stage"><canvas id="osc-canvas"></canvas></div>
+</CanvasLayout>
+
+<style>
+  #osc-coupling, #osc-spread { width: 6rem; }
+  #osc-readout { margin-left: auto; color: var(--muted); font-size: .78rem; font-variant-numeric: tabular-nums; }
+  #osc-canvas { display: block; width: 100%; height: 100%; background: #060713; }
+</style>
+
+<script>
+  import '../scripts/coupled-oscillators.ts';
+</script>
