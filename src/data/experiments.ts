@@ -15,6 +15,7 @@ export interface Experiment {
   { href: '/markov-numbers', title: 'Markov numbers and mutation tree', summary: 'Navigate triples satisfying x²+y²+z²=3xyz and connect mutation, Diophantine approximation,' },
   { href: '/young-tableaux', title: 'Young tableaux and growth diagrams', summary: 'Animate RSK insertion, partitions, hook lengths, growth diagrams, and limit-shape shadows.' },
   { href: '/hyperbolic-automata', title: 'Non-Euclidean cellular automata', summary: 'Run Life-like rules on hyperbolic tilings and compare growth rates with square-grid cellul' },
+  { href: '/jets', title: 'Automatic differentiation jets', summary: 'Extend dual numbers to truncated polynomial jets R[ε]/(εⁿ), carrying higher derivatives th' },
 ];
 }
 
@@ -31,6 +32,7 @@ export const presetAtlas = ['quiet lattice', 'golden bloom', 'deep spiral', 'edg
   { href: '/markov-numbers', title: 'Markov numbers and mutation tree', summary: 'Navigate triples satisfying x²+y²+z²=3xyz and connect mutation, Diophantine approximation,' },
   { href: '/young-tableaux', title: 'Young tableaux and growth diagrams', summary: 'Animate RSK insertion, partitions, hook lengths, growth diagrams, and limit-shape shadows.' },
   { href: '/hyperbolic-automata', title: 'Non-Euclidean cellular automata', summary: 'Run Life-like rules on hyperbolic tilings and compare growth rates with square-grid cellul' },
+  { href: '/jets', title: 'Automatic differentiation jets', summary: 'Extend dual numbers to truncated polynomial jets R[ε]/(εⁿ), carrying higher derivatives th' },
 ];
 
 export const experiments: Experiment[] = [
@@ -70,4 +72,5 @@ export const experiments: Experiment[] = [
   { href: '/markov-numbers', title: 'Markov numbers and mutation tree', summary: 'Navigate triples satisfying x²+y²+z²=3xyz and connect mutation, Diophantine approximation,' },
   { href: '/young-tableaux', title: 'Young tableaux and growth diagrams', summary: 'Animate RSK insertion, partitions, hook lengths, growth diagrams, and limit-shape shadows.' },
   { href: '/hyperbolic-automata', title: 'Non-Euclidean cellular automata', summary: 'Run Life-like rules on hyperbolic tilings and compare growth rates with square-grid cellul' },
+  { href: '/jets', title: 'Automatic differentiation jets', summary: 'Extend dual numbers to truncated polynomial jets R[ε]/(εⁿ), carrying higher derivatives th' },
 ];

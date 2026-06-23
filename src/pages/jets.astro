@@ -1,0 +1,12 @@
+---
+import IdeaExperiment from '../components/IdeaExperiment.astro';
+---
+
+<IdeaExperiment
+  name='Automatic differentiation jets'
+  summary='Extend dual numbers to truncated polynomial jets R[ε]/(εⁿ), carrying higher derivatives through one pass.'
+  kind='math'
+  controls=['jet order', 'seed', 'function bend']
+  invariants=['value', 'first derivative', 'second derivative', 'truncation order']
+  related=[{ href: '/dual', label: 'dual numbers' }, { href: '/tropical', label: 'tropical' }]
+/>
