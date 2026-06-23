@@ -1,6 +1,10 @@
 ---
 import PageLayout from '../layouts/PageLayout.astro';
 import { experiments } from '../data/experiments';
+
+const mapColumns = 8;
+const mapRows = Math.ceil(experiments.length / mapColumns);
+const mapHeight = 10 + Math.max(0, mapRows - 1) * 11;
 ---
 
 <PageLayout name="incomplete.fun" description="Small mathematical experiments, intentionally incomplete.">
@@ -12,13 +16,13 @@ import { experiments } from '../data/experiments';
   </section>
 
   <section class="constellation-map" aria-label="Experiment map">
-    <svg viewBox="0 0 100 34" role="img">
+    <svg viewBox={`0 0 100 ${mapHeight}`} role="img">
       <title>Constellation map of experiments</title>
       {experiments.map((_, index) => {
-        const x = 8 + (index % 8) * 12;
-        const y = 6 + Math.floor(index / 8) * 11 + (index % 2) * 2;
-        const nx = 8 + ((index + 1) % 8) * 12;
-        const ny = 6 + Math.floor((index + 1) / 8) * 11 + ((index + 1) % 2) * 2;
+        const x = 8 + (index % mapColumns) * 12;
+        const y = 6 + Math.floor(index / mapColumns) * 11 + (index % 2) * 2;
+        const nx = 8 + ((index + 1) % mapColumns) * 12;
+        const ny = 6 + Math.floor((index + 1) / mapColumns) * 11 + ((index + 1) % 2) * 2;
         return <><line x1={x} y1={y} x2={nx} y2={ny} /><circle cx={x} cy={y} r="1.2" /></>;
       })}
     </svg>
