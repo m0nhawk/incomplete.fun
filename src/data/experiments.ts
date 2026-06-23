@@ -18,6 +18,7 @@ export interface Experiment {
   { href: '/jets', title: 'Automatic differentiation jets', summary: 'Extend dual numbers to truncated polynomial jets R[ε]/(εⁿ), carrying higher derivatives th' },
   { href: '/padic-fractal', title: 'p-adic fractal explorer', summary: 'Render p-adic balls as trees and circles, animate Hensel lifting paths, and compare p-adic' },
   { href: '/double-pendulum', title: 'Double pendulum phase portrait', summary: 'Explore initial conditions, energy coloring, Poincaré sections, and nearby trajectories th' },
+  { href: '/hamiltonian-playground', title: 'Hamiltonian playground', summary: 'Edit a potential V(x,y), compare vector fields and energy contours, and watch symplectic E' },
 ];
 }
 
@@ -37,6 +38,7 @@ export const presetAtlas = ['quiet lattice', 'golden bloom', 'deep spiral', 'edg
   { href: '/jets', title: 'Automatic differentiation jets', summary: 'Extend dual numbers to truncated polynomial jets R[ε]/(εⁿ), carrying higher derivatives th' },
   { href: '/padic-fractal', title: 'p-adic fractal explorer', summary: 'Render p-adic balls as trees and circles, animate Hensel lifting paths, and compare p-adic' },
   { href: '/double-pendulum', title: 'Double pendulum phase portrait', summary: 'Explore initial conditions, energy coloring, Poincaré sections, and nearby trajectories th' },
+  { href: '/hamiltonian-playground', title: 'Hamiltonian playground', summary: 'Edit a potential V(x,y), compare vector fields and energy contours, and watch symplectic E' },
 ];
 
 export const experiments: Experiment[] = [
@@ -79,4 +81,5 @@ export const experiments: Experiment[] = [
   { href: '/jets', title: 'Automatic differentiation jets', summary: 'Extend dual numbers to truncated polynomial jets R[ε]/(εⁿ), carrying higher derivatives th' },
   { href: '/padic-fractal', title: 'p-adic fractal explorer', summary: 'Render p-adic balls as trees and circles, animate Hensel lifting paths, and compare p-adic' },
   { href: '/double-pendulum', title: 'Double pendulum phase portrait', summary: 'Explore initial conditions, energy coloring, Poincaré sections, and nearby trajectories th' },
+  { href: '/hamiltonian-playground', title: 'Hamiltonian playground', summary: 'Edit a potential V(x,y), compare vector fields and energy contours, and watch symplectic E' },
 ];
