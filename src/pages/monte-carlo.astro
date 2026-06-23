@@ -1,0 +1,5 @@
+---
+import CanvasLayout from '../layouts/CanvasLayout.astro';
+---
+<CanvasLayout name="Monte Carlo integration casino" appId="casino-app"><Fragment slot="toolbar"><label class="control-label">method <select id="mc-method"><option>plain</option><option>stratified</option><option>quasi-random</option><option>importance</option></select></label><label class="control-label">speed <input id="mc-speed" type="range" min="1" max="80" value="24" /></label><button class="toolbar-button" id="mc-reset" type="button">new run</button><span id="mc-readout">π estimate</span></Fragment><div class="canvas-stage"><canvas id="mc-canvas"></canvas></div></CanvasLayout>
+<style>#mc-speed{width:6rem}#mc-readout{margin-left:auto;color:var(--muted);font-size:.78rem;font-variant-numeric:tabular-nums}#mc-canvas{display:block;width:100%;height:100%;background:#03040a}</style><script>import '../scripts/monte-carlo.ts';</script>

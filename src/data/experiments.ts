@@ -27,6 +27,7 @@ export const experiments: Experiment[] = [
   { href: '/lsystem', title: 'L-system garden', summary: 'rewrite rules, turtle paths, fractal plants' },
   { href: '/magnetic-pendulum', title: 'magnetic pendulum basins', summary: 'fractal attractors and traced falls' },
   { href: '/modular', title: 'modular multiplication circles', summary: 'residue chords, primitive roots, cycles' },
+  { href: '/monte-carlo', title: 'Monte Carlo integration casino', summary: 'π estimates and convergence curves' },
   { href: '/morse', title: 'Morse landscape explorer', summary: 'height fields, critical points, gradient flow' },
   { href: '/padic', title: 'p-adics', summary: 'digits, inverses, hensel lifts' },
   { href: '/penrose', title: 'Penrose tiling studio', summary: 'inflation, matching rules, aperiodic tiles' },
