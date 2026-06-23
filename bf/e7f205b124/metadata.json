@@ -1,0 +1,30 @@
+{
+  "cli_version": "0.7.7",
+  "checkpoint_id": "bfe7f205b124",
+  "strategy": "manual-commit",
+  "branch": "master",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "src/scripts/celestial-resonance.ts",
+    "src/scripts/fourier-optics.ts",
+    "src/scripts/monte-carlo.ts",
+    "src/scripts/random-walk.ts",
+    "src/scripts/soap-film.ts",
+    "src/scripts/tensor-field.ts"
+  ],
+  "sessions": [
+    {
+      "metadata": "/bf/e7f205b124/0/metadata.json",
+      "transcript": "/bf/e7f205b124/0/full.jsonl",
+      "content_hash": "/bf/e7f205b124/0/content_hash.txt",
+      "prompt": "/bf/e7f205b124/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 115259,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 383488,
+    "output_tokens": 6255,
+    "api_call_count": 24
+  }
+}

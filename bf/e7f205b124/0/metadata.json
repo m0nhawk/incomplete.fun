@@ -1,0 +1,59 @@
+{
+  "cli_version": "0.7.7",
+  "checkpoint_id": "bfe7f205b124",
+  "session_id": "019ef233-115a-798c-a049-8c8db320da16",
+  "strategy": "manual-commit",
+  "created_at": "2026-06-23T02:01:17.498908195Z",
+  "branch": "master",
+  "checkpoints_count": 1,
+  "save_step_count": 1,
+  "files_touched": [
+    "src/scripts/celestial-resonance.ts",
+    "src/scripts/fourier-optics.ts",
+    "src/scripts/monte-carlo.ts",
+    "src/scripts/random-walk.ts",
+    "src/scripts/soap-film.ts",
+    "src/scripts/tensor-field.ts"
+  ],
+  "agent": "Pi",
+  "model": "gpt-5.5",
+  "turn_id": "77f6ec087d67",
+  "token_usage": {
+    "input_tokens": 115259,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 383488,
+    "output_tokens": 6255,
+    "api_call_count": 24
+  },
+  "session_metrics": {
+    "turn_count": 1
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-06-23T02:01:17.493995103Z",
+    "agent_lines": 10,
+    "agent_removed": 8,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 10,
+    "total_lines_changed": 18,
+    "agent_percentage": 100,
+    "metric_version": 2
+  },
+  "prompt_attributions": [
+    {
+      "checkpoint_number": 1,
+      "user_lines_added": 0,
+      "user_lines_removed": 0,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0
+    },
+    {
+      "checkpoint_number": 2,
+      "user_lines_added": 0,
+      "user_lines_removed": 0,
+      "agent_lines_added": 10,
+      "agent_lines_removed": 8
+    }
+  ]
+}
