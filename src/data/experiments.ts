@@ -8,6 +8,7 @@ export interface Experiment {
   { href: '/modular-forms', title: 'Modular forms fundamental domain viewer', summary: 'Act by SL(2,Z) on the upper half-plane and color the fundamental domain with theta-like he' },
   { href: '/quiver-mutation', title: 'Quiver mutation playground', summary: 'Edit directed graphs with Fomin-Zelevinsky mutation and watch finite-type examples and per' },
   { href: '/coxeter-kaleidoscope', title: 'Coxeter reflection kaleidoscope', summary: 'Generate Euclidean, spherical, and hyperbolic reflection groups from Coxeter diagrams with' },
+  { href: '/discrete-exterior-calculus', title: 'Discrete exterior calculus on meshes', summary: 'Paint scalar fields on triangulations, then compute gradient, curl, divergence, and graph ' },
 ];
 }
 
@@ -17,6 +18,7 @@ export const presetAtlas = ['quiet lattice', 'golden bloom', 'deep spiral', 'edg
   { href: '/modular-forms', title: 'Modular forms fundamental domain viewer', summary: 'Act by SL(2,Z) on the upper half-plane and color the fundamental domain with theta-like he' },
   { href: '/quiver-mutation', title: 'Quiver mutation playground', summary: 'Edit directed graphs with Fomin-Zelevinsky mutation and watch finite-type examples and per' },
   { href: '/coxeter-kaleidoscope', title: 'Coxeter reflection kaleidoscope', summary: 'Generate Euclidean, spherical, and hyperbolic reflection groups from Coxeter diagrams with' },
+  { href: '/discrete-exterior-calculus', title: 'Discrete exterior calculus on meshes', summary: 'Paint scalar fields on triangulations, then compute gradient, curl, divergence, and graph ' },
 ];
 
 export const experiments: Experiment[] = [
@@ -49,4 +51,5 @@ export const experiments: Experiment[] = [
   { href: '/modular-forms', title: 'Modular forms fundamental domain viewer', summary: 'Act by SL(2,Z) on the upper half-plane and color the fundamental domain with theta-like he' },
   { href: '/quiver-mutation', title: 'Quiver mutation playground', summary: 'Edit directed graphs with Fomin-Zelevinsky mutation and watch finite-type examples and per' },
   { href: '/coxeter-kaleidoscope', title: 'Coxeter reflection kaleidoscope', summary: 'Generate Euclidean, spherical, and hyperbolic reflection groups from Coxeter diagrams with' },
+  { href: '/discrete-exterior-calculus', title: 'Discrete exterior calculus on meshes', summary: 'Paint scalar fields on triangulations, then compute gradient, curl, divergence, and graph ' },
 ];

@@ -1,0 +1,12 @@
+---
+import IdeaExperiment from '../components/IdeaExperiment.astro';
+---
+
+<IdeaExperiment
+  name='Discrete exterior calculus on meshes'
+  summary='Paint scalar fields on triangulations, then compute gradient, curl, divergence, and graph Laplacian structure.'
+  kind='math'
+  controls=['field brush', 'mesh skew', 'operator blend']
+  invariants=['gradient norm', 'curl sum', 'divergence flux', 'Laplacian energy']
+  related=[{ href: '/spectral', label: 'spectral' }, { href: '/voronoi', label: 'voronoi' }]
+/>
