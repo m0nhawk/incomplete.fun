@@ -27,6 +27,7 @@ export interface Experiment {
   { href: '/ray-optics', title: 'Ray optics and caustics', summary: 'Move mirrors and lenses, emit ray bundles, and reveal caustic envelopes, focal points, and' },
   { href: '/fermat-principle', title: 'Fermat principle shortest-time paths', summary: 'Vary refractive-index fields and watch rays bend, connecting Snell law with geodesics and ' },
   { href: '/reaction-domain-growth', title: 'Reaction-diffusion domain growth', summary: 'Extend Gray-Scott patterns with growing domains, anisotropic diffusion, and feed-kill phas' },
+  { href: '/lattice-gas', title: 'Lattice gas Boltzmann toy fluid', summary: 'Let grid particles collide and stream while vortices, pressure, diffusion, and continuum b' },
 ];
 }
 
@@ -55,6 +56,7 @@ export const presetAtlas = ['quiet lattice', 'golden bloom', 'deep spiral', 'edg
   { href: '/ray-optics', title: 'Ray optics and caustics', summary: 'Move mirrors and lenses, emit ray bundles, and reveal caustic envelopes, focal points, and' },
   { href: '/fermat-principle', title: 'Fermat principle shortest-time paths', summary: 'Vary refractive-index fields and watch rays bend, connecting Snell law with geodesics and ' },
   { href: '/reaction-domain-growth', title: 'Reaction-diffusion domain growth', summary: 'Extend Gray-Scott patterns with growing domains, anisotropic diffusion, and feed-kill phas' },
+  { href: '/lattice-gas', title: 'Lattice gas Boltzmann toy fluid', summary: 'Let grid particles collide and stream while vortices, pressure, diffusion, and continuum b' },
 ];
 
 export const experiments: Experiment[] = [
@@ -106,4 +108,5 @@ export const experiments: Experiment[] = [
   { href: '/ray-optics', title: 'Ray optics and caustics', summary: 'Move mirrors and lenses, emit ray bundles, and reveal caustic envelopes, focal points, and' },
   { href: '/fermat-principle', title: 'Fermat principle shortest-time paths', summary: 'Vary refractive-index fields and watch rays bend, connecting Snell law with geodesics and ' },
   { href: '/reaction-domain-growth', title: 'Reaction-diffusion domain growth', summary: 'Extend Gray-Scott patterns with growing domains, anisotropic diffusion, and feed-kill phas' },
+  { href: '/lattice-gas', title: 'Lattice gas Boltzmann toy fluid', summary: 'Let grid particles collide and stream while vortices, pressure, diffusion, and continuum b' },
 ];
