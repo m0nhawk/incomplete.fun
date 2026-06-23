@@ -13,6 +13,7 @@ export interface Experiment {
   { href: '/circle-packing', title: 'Circle packing conformal maps', summary: 'Iteratively pack circles in planar graphs, expose angle defects and boundary shapes, and c' },
   { href: '/integer-relations', title: 'Integer relation finder', summary: 'Search for PSLQ-style integer relations for typed or generated constants and show formulas' },
   { href: '/markov-numbers', title: 'Markov numbers and mutation tree', summary: 'Navigate triples satisfying x²+y²+z²=3xyz and connect mutation, Diophantine approximation,' },
+  { href: '/young-tableaux', title: 'Young tableaux and growth diagrams', summary: 'Animate RSK insertion, partitions, hook lengths, growth diagrams, and limit-shape shadows.' },
 ];
 }
 
@@ -27,6 +28,7 @@ export const presetAtlas = ['quiet lattice', 'golden bloom', 'deep spiral', 'edg
   { href: '/circle-packing', title: 'Circle packing conformal maps', summary: 'Iteratively pack circles in planar graphs, expose angle defects and boundary shapes, and c' },
   { href: '/integer-relations', title: 'Integer relation finder', summary: 'Search for PSLQ-style integer relations for typed or generated constants and show formulas' },
   { href: '/markov-numbers', title: 'Markov numbers and mutation tree', summary: 'Navigate triples satisfying x²+y²+z²=3xyz and connect mutation, Diophantine approximation,' },
+  { href: '/young-tableaux', title: 'Young tableaux and growth diagrams', summary: 'Animate RSK insertion, partitions, hook lengths, growth diagrams, and limit-shape shadows.' },
 ];
 
 export const experiments: Experiment[] = [
@@ -64,4 +66,5 @@ export const experiments: Experiment[] = [
   { href: '/circle-packing', title: 'Circle packing conformal maps', summary: 'Iteratively pack circles in planar graphs, expose angle defects and boundary shapes, and c' },
   { href: '/integer-relations', title: 'Integer relation finder', summary: 'Search for PSLQ-style integer relations for typed or generated constants and show formulas' },
   { href: '/markov-numbers', title: 'Markov numbers and mutation tree', summary: 'Navigate triples satisfying x²+y²+z²=3xyz and connect mutation, Diophantine approximation,' },
+  { href: '/young-tableaux', title: 'Young tableaux and growth diagrams', summary: 'Animate RSK insertion, partitions, hook lengths, growth diagrams, and limit-shape shadows.' },
 ];
