@@ -1,0 +1,27 @@
+{
+  "cli_version": "0.7.7",
+  "checkpoint_id": "d2ea2499a169",
+  "strategy": "manual-commit",
+  "branch": "master",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "src/data/experiments.ts",
+    "src/pages/soap-film.astro",
+    "src/scripts/soap-film.ts"
+  ],
+  "sessions": [
+    {
+      "metadata": "/d2/ea2499a169/0/metadata.json",
+      "transcript": "/d2/ea2499a169/0/full.jsonl",
+      "content_hash": "/d2/ea2499a169/0/content_hash.txt",
+      "prompt": ""
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 3234,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 28160,
+    "output_tokens": 1575,
+    "api_call_count": 1
+  }
+}
