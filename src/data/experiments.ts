@@ -5,12 +5,14 @@ export interface Experiment {
   presets?: string[  { href: '/billiards', title: 'Billiards on rational polygons', summary: 'Unfold trajectories in rectangles, triangles, and regular polygons; reveal periodic paths,' },
   { href: '/geodesic-flow', title: 'Geodesic flow on surfaces', summary: 'Compare flat torus, sphere, and hyperbolic disk geodesics while nearby tangent vectors div' },
   { href: '/elliptic-curve', title: 'Elliptic curve group law', summary: 'Draw a real cubic, pick points, animate chord-and-tangent addition, repeated sums, torsion' },
+  { href: '/modular-forms', title: 'Modular forms fundamental domain viewer', summary: 'Act by SL(2,Z) on the upper half-plane and color the fundamental domain with theta-like he' },
 ];
 }
 
 export const presetAtlas = ['quiet lattice', 'golden bloom', 'deep spiral', 'edge storm'  { href: '/billiards', title: 'Billiards on rational polygons', summary: 'Unfold trajectories in rectangles, triangles, and regular polygons; reveal periodic paths,' },
   { href: '/geodesic-flow', title: 'Geodesic flow on surfaces', summary: 'Compare flat torus, sphere, and hyperbolic disk geodesics while nearby tangent vectors div' },
   { href: '/elliptic-curve', title: 'Elliptic curve group law', summary: 'Draw a real cubic, pick points, animate chord-and-tangent addition, repeated sums, torsion' },
+  { href: '/modular-forms', title: 'Modular forms fundamental domain viewer', summary: 'Act by SL(2,Z) on the upper half-plane and color the fundamental domain with theta-like he' },
 ];
 
 export const experiments: Experiment[] = [
@@ -40,4 +42,5 @@ export const experiments: Experiment[] = [
   { href: '/billiards', title: 'Billiards on rational polygons', summary: 'Unfold trajectories in rectangles, triangles, and regular polygons; reveal periodic paths,' },
   { href: '/geodesic-flow', title: 'Geodesic flow on surfaces', summary: 'Compare flat torus, sphere, and hyperbolic disk geodesics while nearby tangent vectors div' },
   { href: '/elliptic-curve', title: 'Elliptic curve group law', summary: 'Draw a real cubic, pick points, animate chord-and-tangent addition, repeated sums, torsion' },
+  { href: '/modular-forms', title: 'Modular forms fundamental domain viewer', summary: 'Act by SL(2,Z) on the upper half-plane and color the fundamental domain with theta-like he' },
 ];
