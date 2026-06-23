@@ -1,0 +1,5 @@
+---
+import CanvasLayout from '../layouts/CanvasLayout.astro';
+---
+<CanvasLayout name="random walk limit lab" appId="walk-app"><Fragment slot="toolbar"><label class="control-label">walkers <input id="walk-count" type="range" min="50" max="1000" value="420" /></label><label class="control-label">domain <select id="walk-domain"><option>square</option><option>hex</option><option>triangle</option></select></label><button class="toolbar-button" id="walk-reset" type="button">restart</button><span id="walk-readout">cover time heatmap</span></Fragment><div class="canvas-stage"><canvas id="walk-canvas"></canvas></div></CanvasLayout>
+<style>#walk-count{width:6rem}#walk-readout{margin-left:auto;color:var(--muted);font-size:.78rem;font-variant-numeric:tabular-nums}#walk-canvas{display:block;width:100%;height:100%;image-rendering:pixelated;background:#03050a}</style><script>import '../scripts/random-walk.ts';</script>

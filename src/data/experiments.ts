@@ -29,6 +29,7 @@ export const experiments: Experiment[] = [
   { href: '/padic', title: 'p-adics', summary: 'digits, inverses, hensel lifts' },
   { href: '/penrose', title: 'Penrose tiling studio', summary: 'inflation, matching rules, aperiodic tiles' },
   { href: '/primes', title: 'prime spiral observatory', summary: 'ulam spiral, residue classes, progressions' },
+  { href: '/random-walk', title: 'random walk limit lab', summary: 'cover times and Brownian scaling' },
   { href: '/reaction-diffusion', title: 'reaction-diffusion lab', summary: 'gray-scott patterns, feed/kill map' },
   { href: '/soap-film', title: 'soap-film minimal surface', summary: 'relaxed mesh and area descent' },
   { href: '/spectral', title: 'spectral graph playground', summary: 'laplacian spectra, eigenmodes, layouts' },
