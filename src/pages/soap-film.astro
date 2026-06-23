@@ -1,0 +1,15 @@
+---
+import CanvasLayout from '../layouts/CanvasLayout.astro';
+---
+
+<CanvasLayout name="soap-film minimal surface" appId="soap-app">
+  <Fragment slot="toolbar">
+    <label class="control-label">relax <input id="soap-relax" type="range" min="5" max="80" value="32" /></label>
+    <label class="control-label">twist <input id="soap-twist" type="range" min="0" max="180" value="52" /></label>
+    <button class="toolbar-button" id="soap-reset" type="button">new boundary</button>
+    <span id="soap-readout">area descent · mean curvature</span>
+  </Fragment>
+  <div class="canvas-stage"><canvas id="soap-canvas"></canvas></div>
+</CanvasLayout>
+<style>#soap-relax,#soap-twist{width:6rem}#soap-readout{margin-left:auto;color:var(--muted);font-size:.78rem;font-variant-numeric:tabular-nums}#soap-canvas{display:block;width:100%;height:100%;background:#05060b}</style>
+<script>import '../scripts/soap-film.ts';</script>
