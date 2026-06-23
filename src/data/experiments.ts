@@ -10,6 +10,7 @@ export interface Experiment {
   { href: '/coxeter-kaleidoscope', title: 'Coxeter reflection kaleidoscope', summary: 'Generate Euclidean, spherical, and hyperbolic reflection groups from Coxeter diagrams with' },
   { href: '/discrete-exterior-calculus', title: 'Discrete exterior calculus on meshes', summary: 'Paint scalar fields on triangulations, then compute gradient, curl, divergence, and graph ' },
   { href: '/persistent-homology', title: 'Persistent homology sandbox', summary: 'Drop points, grow balls, and plot Betti numbers and barcode intervals as components merge ' },
+  { href: '/circle-packing', title: 'Circle packing conformal maps', summary: 'Iteratively pack circles in planar graphs, expose angle defects and boundary shapes, and c' },
 ];
 }
 
@@ -21,6 +22,7 @@ export const presetAtlas = ['quiet lattice', 'golden bloom', 'deep spiral', 'edg
   { href: '/coxeter-kaleidoscope', title: 'Coxeter reflection kaleidoscope', summary: 'Generate Euclidean, spherical, and hyperbolic reflection groups from Coxeter diagrams with' },
   { href: '/discrete-exterior-calculus', title: 'Discrete exterior calculus on meshes', summary: 'Paint scalar fields on triangulations, then compute gradient, curl, divergence, and graph ' },
   { href: '/persistent-homology', title: 'Persistent homology sandbox', summary: 'Drop points, grow balls, and plot Betti numbers and barcode intervals as components merge ' },
+  { href: '/circle-packing', title: 'Circle packing conformal maps', summary: 'Iteratively pack circles in planar graphs, expose angle defects and boundary shapes, and c' },
 ];
 
 export const experiments: Experiment[] = [
@@ -55,4 +57,5 @@ export const experiments: Experiment[] = [
   { href: '/coxeter-kaleidoscope', title: 'Coxeter reflection kaleidoscope', summary: 'Generate Euclidean, spherical, and hyperbolic reflection groups from Coxeter diagrams with' },
   { href: '/discrete-exterior-calculus', title: 'Discrete exterior calculus on meshes', summary: 'Paint scalar fields on triangulations, then compute gradient, curl, divergence, and graph ' },
   { href: '/persistent-homology', title: 'Persistent homology sandbox', summary: 'Drop points, grow balls, and plot Betti numbers and barcode intervals as components merge ' },
+  { href: '/circle-packing', title: 'Circle packing conformal maps', summary: 'Iteratively pack circles in planar graphs, expose angle defects and boundary shapes, and c' },
 ];
