@@ -3,10 +3,12 @@ export interface Experiment {
   title: string;
   summary: string;
   presets?: string[  { href: '/billiards', title: 'Billiards on rational polygons', summary: 'Unfold trajectories in rectangles, triangles, and regular polygons; reveal periodic paths,' },
+  { href: '/geodesic-flow', title: 'Geodesic flow on surfaces', summary: 'Compare flat torus, sphere, and hyperbolic disk geodesics while nearby tangent vectors div' },
 ];
 }
 
 export const presetAtlas = ['quiet lattice', 'golden bloom', 'deep spiral', 'edge storm'  { href: '/billiards', title: 'Billiards on rational polygons', summary: 'Unfold trajectories in rectangles, triangles, and regular polygons; reveal periodic paths,' },
+  { href: '/geodesic-flow', title: 'Geodesic flow on surfaces', summary: 'Compare flat torus, sphere, and hyperbolic disk geodesics while nearby tangent vectors div' },
 ];
 
 export const experiments: Experiment[] = [
@@ -34,4 +36,5 @@ export const experiments: Experiment[] = [
   { href: '/tropical', title: 'tropical geometry', summary: 'min-plus arithmetic and envelopes' },
   { href: '/voronoi', title: 'voronoi', summary: 'distance fields with mixed metrics' },
   { href: '/billiards', title: 'Billiards on rational polygons', summary: 'Unfold trajectories in rectangles, triangles, and regular polygons; reveal periodic paths,' },
+  { href: '/geodesic-flow', title: 'Geodesic flow on surfaces', summary: 'Compare flat torus, sphere, and hyperbolic disk geodesics while nearby tangent vectors div' },
 ];

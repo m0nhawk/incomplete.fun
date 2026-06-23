@@ -1,0 +1,12 @@
+---
+import IdeaExperiment from '../components/IdeaExperiment.astro';
+---
+
+<IdeaExperiment
+  name='Geodesic flow on surfaces'
+  summary='Compare flat torus, sphere, and hyperbolic disk geodesics while nearby tangent vectors diverge or refocus.'
+  kind='math'
+  controls=['initial angle', 'curvature', 'separation']
+  invariants=['curvature', 'Jacobi growth', 'return time', 'speed']
+  related=[{ href: '/hyperbolic', label: 'hyperbolic' }, { href: '/morse', label: 'gradient flow' }]
+/>
