@@ -21,6 +21,7 @@ export interface Experiment {
   { href: '/hamiltonian-playground', title: 'Hamiltonian playground', summary: 'Edit a potential V(x,y), compare vector fields and energy contours, and watch symplectic E' },
   { href: '/wave-equation', title: 'Wave equation on strings and membranes', summary: 'Pluck a string or drum, decompose motion into spectral modes, and connect Fourier waves wi' },
   { href: '/quantum-box', title: 'Quantum particle in a box', summary: 'Draw a potential well, solve low eigenstates numerically, animate phase and probability, a' },
+  { href: '/ising-model', title: 'Ising model phase transition lab', summary: 'Flip a 2D spin lattice with temperature control and show magnetization, clusters, correlat' },
 ];
 }
 
@@ -43,6 +44,7 @@ export const presetAtlas = ['quiet lattice', 'golden bloom', 'deep spiral', 'edg
   { href: '/hamiltonian-playground', title: 'Hamiltonian playground', summary: 'Edit a potential V(x,y), compare vector fields and energy contours, and watch symplectic E' },
   { href: '/wave-equation', title: 'Wave equation on strings and membranes', summary: 'Pluck a string or drum, decompose motion into spectral modes, and connect Fourier waves wi' },
   { href: '/quantum-box', title: 'Quantum particle in a box', summary: 'Draw a potential well, solve low eigenstates numerically, animate phase and probability, a' },
+  { href: '/ising-model', title: 'Ising model phase transition lab', summary: 'Flip a 2D spin lattice with temperature control and show magnetization, clusters, correlat' },
 ];
 
 export const experiments: Experiment[] = [
@@ -88,4 +90,5 @@ export const experiments: Experiment[] = [
   { href: '/hamiltonian-playground', title: 'Hamiltonian playground', summary: 'Edit a potential V(x,y), compare vector fields and energy contours, and watch symplectic E' },
   { href: '/wave-equation', title: 'Wave equation on strings and membranes', summary: 'Pluck a string or drum, decompose motion into spectral modes, and connect Fourier waves wi' },
   { href: '/quantum-box', title: 'Quantum particle in a box', summary: 'Draw a potential well, solve low eigenstates numerically, animate phase and probability, a' },
+  { href: '/ising-model', title: 'Ising model phase transition lab', summary: 'Flip a 2D spin lattice with temperature control and show magnetization, clusters, correlat' },
 ];
