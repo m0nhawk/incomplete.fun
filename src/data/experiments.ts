@@ -24,6 +24,7 @@ export interface Experiment {
   { href: '/ising-model', title: 'Ising model phase transition lab', summary: 'Flip a 2D spin lattice with temperature control and show magnetization, clusters, correlat' },
   { href: '/percolation', title: 'Percolation threshold explorer', summary: 'Compare site and bond percolation on square, triangular, and Voronoi graphs with crossing ' },
   { href: '/n-body-gravity', title: 'N-body gravity sketcher', summary: 'Drag masses and velocities, compare stable orbits, slingshots, Lagrange points, and conser' },
+  { href: '/ray-optics', title: 'Ray optics and caustics', summary: 'Move mirrors and lenses, emit ray bundles, and reveal caustic envelopes, focal points, and' },
 ];
 }
 
@@ -49,6 +50,7 @@ export const presetAtlas = ['quiet lattice', 'golden bloom', 'deep spiral', 'edg
   { href: '/ising-model', title: 'Ising model phase transition lab', summary: 'Flip a 2D spin lattice with temperature control and show magnetization, clusters, correlat' },
   { href: '/percolation', title: 'Percolation threshold explorer', summary: 'Compare site and bond percolation on square, triangular, and Voronoi graphs with crossing ' },
   { href: '/n-body-gravity', title: 'N-body gravity sketcher', summary: 'Drag masses and velocities, compare stable orbits, slingshots, Lagrange points, and conser' },
+  { href: '/ray-optics', title: 'Ray optics and caustics', summary: 'Move mirrors and lenses, emit ray bundles, and reveal caustic envelopes, focal points, and' },
 ];
 
 export const experiments: Experiment[] = [
@@ -97,4 +99,5 @@ export const experiments: Experiment[] = [
   { href: '/ising-model', title: 'Ising model phase transition lab', summary: 'Flip a 2D spin lattice with temperature control and show magnetization, clusters, correlat' },
   { href: '/percolation', title: 'Percolation threshold explorer', summary: 'Compare site and bond percolation on square, triangular, and Voronoi graphs with crossing ' },
   { href: '/n-body-gravity', title: 'N-body gravity sketcher', summary: 'Drag masses and velocities, compare stable orbits, slingshots, Lagrange points, and conser' },
+  { href: '/ray-optics', title: 'Ray optics and caustics', summary: 'Move mirrors and lenses, emit ray bundles, and reveal caustic envelopes, focal points, and' },
 ];
