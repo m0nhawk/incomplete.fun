@@ -1,0 +1,28 @@
+{
+  "cli_version": "0.7.7",
+  "checkpoint_id": "2b51fe62cebd",
+  "strategy": "manual-commit",
+  "branch": "master",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "src/components/IdeaExperiment.astro",
+    "src/data/experiments.ts",
+    "src/pages/billiards.astro",
+    "src/scripts/idea-experiment.ts"
+  ],
+  "sessions": [
+    {
+      "metadata": "/2b/51fe62cebd/0/metadata.json",
+      "transcript": "/2b/51fe62cebd/0/full.jsonl",
+      "content_hash": "/2b/51fe62cebd/0/content_hash.txt",
+      "prompt": "/2b/51fe62cebd/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 57324,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 134144,
+    "output_tokens": 9256,
+    "api_call_count": 14
+  }
+}

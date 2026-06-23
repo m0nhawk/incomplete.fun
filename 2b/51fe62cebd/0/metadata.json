@@ -1,0 +1,49 @@
+{
+  "cli_version": "0.7.7",
+  "checkpoint_id": "2b51fe62cebd",
+  "session_id": "019ef208-d978-7d9e-b834-116c54c14726",
+  "strategy": "manual-commit",
+  "created_at": "2026-06-23T01:15:31.77745238Z",
+  "branch": "master",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "src/components/IdeaExperiment.astro",
+    "src/data/experiments.ts",
+    "src/pages/billiards.astro",
+    "src/scripts/idea-experiment.ts"
+  ],
+  "agent": "Pi",
+  "model": "gpt-5.5",
+  "turn_id": "dc4e6cbc8c8c",
+  "token_usage": {
+    "input_tokens": 57324,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 134144,
+    "output_tokens": 9256,
+    "api_call_count": 14
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-06-23T01:15:31.774302447Z",
+    "agent_lines": 0,
+    "agent_removed": 0,
+    "human_added": 198,
+    "human_modified": 2,
+    "human_removed": 0,
+    "total_committed": 198,
+    "total_lines_changed": 200,
+    "agent_percentage": 0,
+    "metric_version": 2
+  },
+  "prompt_attributions": [
+    {
+      "checkpoint_number": 1,
+      "user_lines_added": 47,
+      "user_lines_removed": 0,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0,
+      "user_added_per_file": {
+        "IDEAS.md": 47
+      }
+    }
+  ]
+}
