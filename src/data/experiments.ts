@@ -33,6 +33,7 @@ export interface Experiment {
   { href: '/electromagnetic-fields', title: 'Electromagnetic field lines', summary: 'Place charges and currents, trace field lines and equipotentials, and show Gauss-law flux ' },
   { href: '/least-action', title: 'Least-action path finder', summary: 'Compare arbitrary paths with numerically optimized action-minimizing paths for falling, os' },
   { href: '/shared-preset-urls', title: 'Shared preset URLs', summary: 'Encode experiment parameters into bookmarkable links so compact canvas states can be saved' },
+  { href: '/snapshot-metadata', title: 'Snapshot export metadata', summary: 'Embed title, parameters, seed, and short explanations beside saved SVG or PNG outputs.' },
 ];
 }
 
@@ -67,6 +68,7 @@ export const presetAtlas = ['quiet lattice', 'golden bloom', 'deep spiral', 'edg
   { href: '/electromagnetic-fields', title: 'Electromagnetic field lines', summary: 'Place charges and currents, trace field lines and equipotentials, and show Gauss-law flux ' },
   { href: '/least-action', title: 'Least-action path finder', summary: 'Compare arbitrary paths with numerically optimized action-minimizing paths for falling, os' },
   { href: '/shared-preset-urls', title: 'Shared preset URLs', summary: 'Encode experiment parameters into bookmarkable links so compact canvas states can be saved' },
+  { href: '/snapshot-metadata', title: 'Snapshot export metadata', summary: 'Embed title, parameters, seed, and short explanations beside saved SVG or PNG outputs.' },
 ];
 
 export const experiments: Experiment[] = [
@@ -124,4 +126,5 @@ export const experiments: Experiment[] = [
   { href: '/electromagnetic-fields', title: 'Electromagnetic field lines', summary: 'Place charges and currents, trace field lines and equipotentials, and show Gauss-law flux ' },
   { href: '/least-action', title: 'Least-action path finder', summary: 'Compare arbitrary paths with numerically optimized action-minimizing paths for falling, os' },
   { href: '/shared-preset-urls', title: 'Shared preset URLs', summary: 'Encode experiment parameters into bookmarkable links so compact canvas states can be saved' },
+  { href: '/snapshot-metadata', title: 'Snapshot export metadata', summary: 'Embed title, parameters, seed, and short explanations beside saved SVG or PNG outputs.' },
 ];

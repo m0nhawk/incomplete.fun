@@ -1,0 +1,12 @@
+---
+import IdeaExperiment from '../components/IdeaExperiment.astro';
+---
+
+<IdeaExperiment
+  name='Snapshot export metadata'
+  summary='Embed title, parameters, seed, and short explanations beside saved SVG or PNG outputs.'
+  kind='extension'
+  controls=['title', 'seed', 'annotation']
+  invariants=['metadata fields', 'export size', 'caption length', 'parameter count']
+  related=[{ href: '/', label: 'gallery' }, { href: '/fourier', label: 'Fourier' }]
+/>
