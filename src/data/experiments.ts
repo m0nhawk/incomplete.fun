@@ -25,6 +25,7 @@ export interface Experiment {
   { href: '/percolation', title: 'Percolation threshold explorer', summary: 'Compare site and bond percolation on square, triangular, and Voronoi graphs with crossing ' },
   { href: '/n-body-gravity', title: 'N-body gravity sketcher', summary: 'Drag masses and velocities, compare stable orbits, slingshots, Lagrange points, and conser' },
   { href: '/ray-optics', title: 'Ray optics and caustics', summary: 'Move mirrors and lenses, emit ray bundles, and reveal caustic envelopes, focal points, and' },
+  { href: '/fermat-principle', title: 'Fermat principle shortest-time paths', summary: 'Vary refractive-index fields and watch rays bend, connecting Snell law with geodesics and ' },
 ];
 }
 
@@ -51,6 +52,7 @@ export const presetAtlas = ['quiet lattice', 'golden bloom', 'deep spiral', 'edg
   { href: '/percolation', title: 'Percolation threshold explorer', summary: 'Compare site and bond percolation on square, triangular, and Voronoi graphs with crossing ' },
   { href: '/n-body-gravity', title: 'N-body gravity sketcher', summary: 'Drag masses and velocities, compare stable orbits, slingshots, Lagrange points, and conser' },
   { href: '/ray-optics', title: 'Ray optics and caustics', summary: 'Move mirrors and lenses, emit ray bundles, and reveal caustic envelopes, focal points, and' },
+  { href: '/fermat-principle', title: 'Fermat principle shortest-time paths', summary: 'Vary refractive-index fields and watch rays bend, connecting Snell law with geodesics and ' },
 ];
 
 export const experiments: Experiment[] = [
@@ -100,4 +102,5 @@ export const experiments: Experiment[] = [
   { href: '/percolation', title: 'Percolation threshold explorer', summary: 'Compare site and bond percolation on square, triangular, and Voronoi graphs with crossing ' },
   { href: '/n-body-gravity', title: 'N-body gravity sketcher', summary: 'Drag masses and velocities, compare stable orbits, slingshots, Lagrange points, and conser' },
   { href: '/ray-optics', title: 'Ray optics and caustics', summary: 'Move mirrors and lenses, emit ray bundles, and reveal caustic envelopes, focal points, and' },
+  { href: '/fermat-principle', title: 'Fermat principle shortest-time paths', summary: 'Vary refractive-index fields and watch rays bend, connecting Snell law with geodesics and ' },
 ];
