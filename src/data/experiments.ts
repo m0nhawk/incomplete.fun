@@ -31,6 +31,7 @@ export interface Experiment {
   { href: '/driven-oscillator', title: 'Driven oscillator resonance', summary: 'Sweep a mass-spring-damper drive and plot amplitude, phase lag, and resonance curves.' },
   { href: '/relativity-diagram', title: 'Special relativity spacetime diagram', summary: 'Drag events and worldlines, apply Lorentz transforms, and compare light cones, simultaneit' },
   { href: '/electromagnetic-fields', title: 'Electromagnetic field lines', summary: 'Place charges and currents, trace field lines and equipotentials, and show Gauss-law flux ' },
+  { href: '/least-action', title: 'Least-action path finder', summary: 'Compare arbitrary paths with numerically optimized action-minimizing paths for falling, os' },
 ];
 }
 
@@ -63,6 +64,7 @@ export const presetAtlas = ['quiet lattice', 'golden bloom', 'deep spiral', 'edg
   { href: '/driven-oscillator', title: 'Driven oscillator resonance', summary: 'Sweep a mass-spring-damper drive and plot amplitude, phase lag, and resonance curves.' },
   { href: '/relativity-diagram', title: 'Special relativity spacetime diagram', summary: 'Drag events and worldlines, apply Lorentz transforms, and compare light cones, simultaneit' },
   { href: '/electromagnetic-fields', title: 'Electromagnetic field lines', summary: 'Place charges and currents, trace field lines and equipotentials, and show Gauss-law flux ' },
+  { href: '/least-action', title: 'Least-action path finder', summary: 'Compare arbitrary paths with numerically optimized action-minimizing paths for falling, os' },
 ];
 
 export const experiments: Experiment[] = [
@@ -118,4 +120,5 @@ export const experiments: Experiment[] = [
   { href: '/driven-oscillator', title: 'Driven oscillator resonance', summary: 'Sweep a mass-spring-damper drive and plot amplitude, phase lag, and resonance curves.' },
   { href: '/relativity-diagram', title: 'Special relativity spacetime diagram', summary: 'Drag events and worldlines, apply Lorentz transforms, and compare light cones, simultaneit' },
   { href: '/electromagnetic-fields', title: 'Electromagnetic field lines', summary: 'Place charges and currents, trace field lines and equipotentials, and show Gauss-law flux ' },
+  { href: '/least-action', title: 'Least-action path finder', summary: 'Compare arbitrary paths with numerically optimized action-minimizing paths for falling, os' },
 ];
