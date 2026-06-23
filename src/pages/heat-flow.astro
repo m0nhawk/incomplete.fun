@@ -1,0 +1,23 @@
+---
+import CanvasLayout from '../layouts/CanvasLayout.astro';
+---
+
+<CanvasLayout name="heat flow drawings" appId="heat-app">
+  <Fragment slot="toolbar">
+    <label class="control-label">diffusion <input id="heat-diffusion" type="range" min="0" max="100" value="42" /></label>
+    <label class="control-label">brush <input id="heat-brush" type="range" min="2" max="18" value="9" /></label>
+    <button class="toolbar-button" id="heat-cool" type="button">cool boundary</button>
+    <span id="heat-readout">paint heat · total conserved</span>
+  </Fragment>
+  <div class="canvas-stage"><canvas id="heat-canvas"></canvas></div>
+</CanvasLayout>
+
+<style>
+  #heat-diffusion, #heat-brush { width: 6rem; }
+  #heat-readout { margin-left: auto; color: var(--muted); font-size: .78rem; font-variant-numeric: tabular-nums; }
+  #heat-canvas { display: block; width: 100%; height: 100%; image-rendering: pixelated; background: #030407; cursor: crosshair; }
+</style>
+
+<script>
+  import '../scripts/heat-flow.ts';
+</script>

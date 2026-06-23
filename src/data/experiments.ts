@@ -18,6 +18,7 @@ export const experiments: Experiment[] = [
   { href: '/fib/10', title: 'fibonacci', summary: 'static bigint sequence sample' },
   { href: '/fourier', title: 'Fourier epicycle sketcher', summary: 'draw, decompose, replay with epicycles' },
   { href: '/groups', title: 'finite groups', summary: 'tables, classes, quotients' },
+  { href: '/heat-flow', title: 'heat flow drawings', summary: 'painted diffusion and conserved heat' },
   { href: '/hyperbolic', title: 'hyperbolic tessellation explorer', summary: 'poincaré disk, {p,q} tilings, geodesics' },
   { href: '/kicked-rotor', title: 'kicked rotor map', summary: 'standard-map islands and chaos' },
   { href: '/knot', title: 'knot diagrams', summary: 'crossings and polynomial sketches' },
