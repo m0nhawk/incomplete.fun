@@ -36,6 +36,7 @@ export interface Experiment {
   { href: '/snapshot-metadata', title: 'Snapshot export metadata', summary: 'Embed title, parameters, seed, and short explanations beside saved SVG or PNG outputs.' },
   { href: '/cross-links', title: 'Cross-links panel', summary: 'Connect related experiments such as Fourier to waves, spectral graphs to drums, and hyperb' },
   { href: '/challenge-cards', title: 'Challenge cards', summary: 'Add compact prompts to each page: find roots, gliders, saddles, invariants, or low-complex' },
+  { href: '/explainable-presets', title: 'Random explainable presets', summary: 'Generate interesting random states and list the properties that make each generated config' },
 ];
 }
 
@@ -73,6 +74,7 @@ export const presetAtlas = ['quiet lattice', 'golden bloom', 'deep spiral', 'edg
   { href: '/snapshot-metadata', title: 'Snapshot export metadata', summary: 'Embed title, parameters, seed, and short explanations beside saved SVG or PNG outputs.' },
   { href: '/cross-links', title: 'Cross-links panel', summary: 'Connect related experiments such as Fourier to waves, spectral graphs to drums, and hyperb' },
   { href: '/challenge-cards', title: 'Challenge cards', summary: 'Add compact prompts to each page: find roots, gliders, saddles, invariants, or low-complex' },
+  { href: '/explainable-presets', title: 'Random explainable presets', summary: 'Generate interesting random states and list the properties that make each generated config' },
 ];
 
 export const experiments: Experiment[] = [
@@ -133,4 +135,5 @@ export const experiments: Experiment[] = [
   { href: '/snapshot-metadata', title: 'Snapshot export metadata', summary: 'Embed title, parameters, seed, and short explanations beside saved SVG or PNG outputs.' },
   { href: '/cross-links', title: 'Cross-links panel', summary: 'Connect related experiments such as Fourier to waves, spectral graphs to drums, and hyperb' },
   { href: '/challenge-cards', title: 'Challenge cards', summary: 'Add compact prompts to each page: find roots, gliders, saddles, invariants, or low-complex' },
+  { href: '/explainable-presets', title: 'Random explainable presets', summary: 'Generate interesting random states and list the properties that make each generated config' },
 ];
