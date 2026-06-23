@@ -35,6 +35,7 @@ export interface Experiment {
   { href: '/shared-preset-urls', title: 'Shared preset URLs', summary: 'Encode experiment parameters into bookmarkable links so compact canvas states can be saved' },
   { href: '/snapshot-metadata', title: 'Snapshot export metadata', summary: 'Embed title, parameters, seed, and short explanations beside saved SVG or PNG outputs.' },
   { href: '/cross-links', title: 'Cross-links panel', summary: 'Connect related experiments such as Fourier to waves, spectral graphs to drums, and hyperb' },
+  { href: '/challenge-cards', title: 'Challenge cards', summary: 'Add compact prompts to each page: find roots, gliders, saddles, invariants, or low-complex' },
 ];
 }
 
@@ -71,6 +72,7 @@ export const presetAtlas = ['quiet lattice', 'golden bloom', 'deep spiral', 'edg
   { href: '/shared-preset-urls', title: 'Shared preset URLs', summary: 'Encode experiment parameters into bookmarkable links so compact canvas states can be saved' },
   { href: '/snapshot-metadata', title: 'Snapshot export metadata', summary: 'Embed title, parameters, seed, and short explanations beside saved SVG or PNG outputs.' },
   { href: '/cross-links', title: 'Cross-links panel', summary: 'Connect related experiments such as Fourier to waves, spectral graphs to drums, and hyperb' },
+  { href: '/challenge-cards', title: 'Challenge cards', summary: 'Add compact prompts to each page: find roots, gliders, saddles, invariants, or low-complex' },
 ];
 
 export const experiments: Experiment[] = [
@@ -130,4 +132,5 @@ export const experiments: Experiment[] = [
   { href: '/shared-preset-urls', title: 'Shared preset URLs', summary: 'Encode experiment parameters into bookmarkable links so compact canvas states can be saved' },
   { href: '/snapshot-metadata', title: 'Snapshot export metadata', summary: 'Embed title, parameters, seed, and short explanations beside saved SVG or PNG outputs.' },
   { href: '/cross-links', title: 'Cross-links panel', summary: 'Connect related experiments such as Fourier to waves, spectral graphs to drums, and hyperb' },
+  { href: '/challenge-cards', title: 'Challenge cards', summary: 'Add compact prompts to each page: find roots, gliders, saddles, invariants, or low-complex' },
 ];
