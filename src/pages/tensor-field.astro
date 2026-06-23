@@ -1,0 +1,5 @@
+---
+import CanvasLayout from '../layouts/CanvasLayout.astro';
+---
+<CanvasLayout name="tensor field line explorer" appId="tensor-app"><Fragment slot="toolbar"><label class="control-label">anisotropy <input id="tensor-aniso" type="range" min="0" max="100" value="58" /></label><label class="control-label">source <input id="tensor-source" type="range" min="0" max="100" value="45" /></label><button class="toolbar-button" id="tensor-random" type="button">move saddles</button><span id="tensor-readout">principal directions</span></Fragment><div class="canvas-stage"><canvas id="tensor-canvas"></canvas></div></CanvasLayout>
+<style>#tensor-aniso,#tensor-source{width:6rem}#tensor-readout{margin-left:auto;color:var(--muted);font-size:.78rem}#tensor-canvas{display:block;width:100%;height:100%;background:#03040a;cursor:crosshair}</style><script>import '../scripts/tensor-field.ts';</script>

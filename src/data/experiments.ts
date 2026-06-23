@@ -37,6 +37,7 @@ export const experiments: Experiment[] = [
   { href: '/spectral', title: 'spectral graph playground', summary: 'laplacian spectra, eigenmodes, layouts' },
   { href: '/surreal', title: 'surreal numbers', summary: 'cuts and finite birthdays' },
   { href: '/symmetry', title: 'symmetry', summary: 'rotational mirror drawing' },
+  { href: '/tensor-field', title: 'tensor field line explorer', summary: 'principal directions and separatrices' },
   { href: '/tropical', title: 'tropical geometry', summary: 'min-plus arithmetic and envelopes' },
   { href: '/voronoi', title: 'voronoi', summary: 'distance fields with mixed metrics' },
 ];
