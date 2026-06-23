@@ -1,0 +1,12 @@
+---
+import IdeaExperiment from '../components/IdeaExperiment.astro';
+---
+
+<IdeaExperiment
+  name='Percolation threshold explorer'
+  summary='Compare site and bond percolation on square, triangular, and Voronoi graphs with crossing probability curves.'
+  kind='physics'
+  controls=['occupation p', 'lattice type', 'seed']
+  invariants=['largest cluster', 'crossing', 'threshold gap', 'component count']
+  related=[{ href: '/voronoi', label: 'voronoi' }, { href: '/cellular', label: 'cellular' }]
+/>
