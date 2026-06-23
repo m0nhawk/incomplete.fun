@@ -26,6 +26,7 @@ export interface Experiment {
   { href: '/n-body-gravity', title: 'N-body gravity sketcher', summary: 'Drag masses and velocities, compare stable orbits, slingshots, Lagrange points, and conser' },
   { href: '/ray-optics', title: 'Ray optics and caustics', summary: 'Move mirrors and lenses, emit ray bundles, and reveal caustic envelopes, focal points, and' },
   { href: '/fermat-principle', title: 'Fermat principle shortest-time paths', summary: 'Vary refractive-index fields and watch rays bend, connecting Snell law with geodesics and ' },
+  { href: '/reaction-domain-growth', title: 'Reaction-diffusion domain growth', summary: 'Extend Gray-Scott patterns with growing domains, anisotropic diffusion, and feed-kill phas' },
 ];
 }
 
@@ -53,6 +54,7 @@ export const presetAtlas = ['quiet lattice', 'golden bloom', 'deep spiral', 'edg
   { href: '/n-body-gravity', title: 'N-body gravity sketcher', summary: 'Drag masses and velocities, compare stable orbits, slingshots, Lagrange points, and conser' },
   { href: '/ray-optics', title: 'Ray optics and caustics', summary: 'Move mirrors and lenses, emit ray bundles, and reveal caustic envelopes, focal points, and' },
   { href: '/fermat-principle', title: 'Fermat principle shortest-time paths', summary: 'Vary refractive-index fields and watch rays bend, connecting Snell law with geodesics and ' },
+  { href: '/reaction-domain-growth', title: 'Reaction-diffusion domain growth', summary: 'Extend Gray-Scott patterns with growing domains, anisotropic diffusion, and feed-kill phas' },
 ];
 
 export const experiments: Experiment[] = [
@@ -103,4 +105,5 @@ export const experiments: Experiment[] = [
   { href: '/n-body-gravity', title: 'N-body gravity sketcher', summary: 'Drag masses and velocities, compare stable orbits, slingshots, Lagrange points, and conser' },
   { href: '/ray-optics', title: 'Ray optics and caustics', summary: 'Move mirrors and lenses, emit ray bundles, and reveal caustic envelopes, focal points, and' },
   { href: '/fermat-principle', title: 'Fermat principle shortest-time paths', summary: 'Vary refractive-index fields and watch rays bend, connecting Snell law with geodesics and ' },
+  { href: '/reaction-domain-growth', title: 'Reaction-diffusion domain growth', summary: 'Extend Gray-Scott patterns with growing domains, anisotropic diffusion, and feed-kill phas' },
 ];
