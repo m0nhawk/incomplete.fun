@@ -1,0 +1,27 @@
+{
+  "cli_version": "0.7.7",
+  "checkpoint_id": "d6e792806f85",
+  "strategy": "manual-commit",
+  "branch": "master",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "src/data/experiments.ts",
+    "src/pages/heat-flow.astro",
+    "src/scripts/heat-flow.ts"
+  ],
+  "sessions": [
+    {
+      "metadata": "/d6/e792806f85/0/metadata.json",
+      "transcript": "/d6/e792806f85/0/full.jsonl",
+      "content_hash": "/d6/e792806f85/0/content_hash.txt",
+      "prompt": ""
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 6042,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 84992,
+    "output_tokens": 1861,
+    "api_call_count": 4
+  }
+}

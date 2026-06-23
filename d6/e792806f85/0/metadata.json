@@ -1,0 +1,38 @@
+{
+  "cli_version": "0.7.7",
+  "checkpoint_id": "d6e792806f85",
+  "session_id": "019ef22a-1b05-70cc-8032-de3d235ade96",
+  "strategy": "manual-commit",
+  "created_at": "2026-06-23T01:51:18.424092142Z",
+  "branch": "master",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "src/pages/heat-flow.astro",
+    "src/scripts/heat-flow.ts",
+    "src/data/experiments.ts"
+  ],
+  "agent": "Pi",
+  "model": "gpt-5.5",
+  "turn_id": "708fa85113d8",
+  "checkpoint_transcript_start": 37,
+  "transcript_lines_at_start": 37,
+  "token_usage": {
+    "input_tokens": 6042,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 84992,
+    "output_tokens": 1861,
+    "api_call_count": 4
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-06-23T01:51:18.420447103Z",
+    "agent_lines": 108,
+    "agent_removed": 0,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 108,
+    "total_lines_changed": 108,
+    "agent_percentage": 100,
+    "metric_version": 2
+  }
+}
