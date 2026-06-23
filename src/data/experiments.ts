@@ -29,6 +29,7 @@ export interface Experiment {
   { href: '/reaction-domain-growth', title: 'Reaction-diffusion domain growth', summary: 'Extend Gray-Scott patterns with growing domains, anisotropic diffusion, and feed-kill phas' },
   { href: '/lattice-gas', title: 'Lattice gas Boltzmann toy fluid', summary: 'Let grid particles collide and stream while vortices, pressure, diffusion, and continuum b' },
   { href: '/driven-oscillator', title: 'Driven oscillator resonance', summary: 'Sweep a mass-spring-damper drive and plot amplitude, phase lag, and resonance curves.' },
+  { href: '/relativity-diagram', title: 'Special relativity spacetime diagram', summary: 'Drag events and worldlines, apply Lorentz transforms, and compare light cones, simultaneit' },
 ];
 }
 
@@ -59,6 +60,7 @@ export const presetAtlas = ['quiet lattice', 'golden bloom', 'deep spiral', 'edg
   { href: '/reaction-domain-growth', title: 'Reaction-diffusion domain growth', summary: 'Extend Gray-Scott patterns with growing domains, anisotropic diffusion, and feed-kill phas' },
   { href: '/lattice-gas', title: 'Lattice gas Boltzmann toy fluid', summary: 'Let grid particles collide and stream while vortices, pressure, diffusion, and continuum b' },
   { href: '/driven-oscillator', title: 'Driven oscillator resonance', summary: 'Sweep a mass-spring-damper drive and plot amplitude, phase lag, and resonance curves.' },
+  { href: '/relativity-diagram', title: 'Special relativity spacetime diagram', summary: 'Drag events and worldlines, apply Lorentz transforms, and compare light cones, simultaneit' },
 ];
 
 export const experiments: Experiment[] = [
@@ -112,4 +114,5 @@ export const experiments: Experiment[] = [
   { href: '/reaction-domain-growth', title: 'Reaction-diffusion domain growth', summary: 'Extend Gray-Scott patterns with growing domains, anisotropic diffusion, and feed-kill phas' },
   { href: '/lattice-gas', title: 'Lattice gas Boltzmann toy fluid', summary: 'Let grid particles collide and stream while vortices, pressure, diffusion, and continuum b' },
   { href: '/driven-oscillator', title: 'Driven oscillator resonance', summary: 'Sweep a mass-spring-damper drive and plot amplitude, phase lag, and resonance curves.' },
+  { href: '/relativity-diagram', title: 'Special relativity spacetime diagram', summary: 'Drag events and worldlines, apply Lorentz transforms, and compare light cones, simultaneit' },
 ];
