@@ -1,0 +1,23 @@
+---
+import CanvasLayout from '../layouts/CanvasLayout.astro';
+---
+
+<CanvasLayout name="magnetic pendulum basins" appId="magnetic-app">
+  <Fragment slot="toolbar">
+    <label class="control-label">damping <input id="mag-damping" type="range" min="2" max="25" value="9" /></label>
+    <label class="control-label">grid <input id="mag-grid" type="range" min="36" max="120" value="76" /></label>
+    <button class="toolbar-button" id="mag-render" type="button">render basins</button>
+    <span id="mag-readout">three attractors · fractal boundaries</span>
+  </Fragment>
+  <div class="canvas-stage"><canvas id="mag-canvas"></canvas></div>
+</CanvasLayout>
+
+<style>
+  #mag-damping, #mag-grid { width: 6rem; }
+  #mag-readout { margin-left: auto; color: var(--muted); font-size: .78rem; }
+  #mag-canvas { display: block; width: 100%; height: 100%; image-rendering: pixelated; background: #05050b; cursor: crosshair; }
+</style>
+
+<script>
+  import '../scripts/magnetic-pendulum.ts';
+</script>
