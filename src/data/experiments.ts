@@ -7,6 +7,7 @@ export interface Experiment {
   { href: '/elliptic-curve', title: 'Elliptic curve group law', summary: 'Draw a real cubic, pick points, animate chord-and-tangent addition, repeated sums, torsion' },
   { href: '/modular-forms', title: 'Modular forms fundamental domain viewer', summary: 'Act by SL(2,Z) on the upper half-plane and color the fundamental domain with theta-like he' },
   { href: '/quiver-mutation', title: 'Quiver mutation playground', summary: 'Edit directed graphs with Fomin-Zelevinsky mutation and watch finite-type examples and per' },
+  { href: '/coxeter-kaleidoscope', title: 'Coxeter reflection kaleidoscope', summary: 'Generate Euclidean, spherical, and hyperbolic reflection groups from Coxeter diagrams with' },
 ];
 }
 
@@ -15,6 +16,7 @@ export const presetAtlas = ['quiet lattice', 'golden bloom', 'deep spiral', 'edg
   { href: '/elliptic-curve', title: 'Elliptic curve group law', summary: 'Draw a real cubic, pick points, animate chord-and-tangent addition, repeated sums, torsion' },
   { href: '/modular-forms', title: 'Modular forms fundamental domain viewer', summary: 'Act by SL(2,Z) on the upper half-plane and color the fundamental domain with theta-like he' },
   { href: '/quiver-mutation', title: 'Quiver mutation playground', summary: 'Edit directed graphs with Fomin-Zelevinsky mutation and watch finite-type examples and per' },
+  { href: '/coxeter-kaleidoscope', title: 'Coxeter reflection kaleidoscope', summary: 'Generate Euclidean, spherical, and hyperbolic reflection groups from Coxeter diagrams with' },
 ];
 
 export const experiments: Experiment[] = [
@@ -46,4 +48,5 @@ export const experiments: Experiment[] = [
   { href: '/elliptic-curve', title: 'Elliptic curve group law', summary: 'Draw a real cubic, pick points, animate chord-and-tangent addition, repeated sums, torsion' },
   { href: '/modular-forms', title: 'Modular forms fundamental domain viewer', summary: 'Act by SL(2,Z) on the upper half-plane and color the fundamental domain with theta-like he' },
   { href: '/quiver-mutation', title: 'Quiver mutation playground', summary: 'Edit directed graphs with Fomin-Zelevinsky mutation and watch finite-type examples and per' },
+  { href: '/coxeter-kaleidoscope', title: 'Coxeter reflection kaleidoscope', summary: 'Generate Euclidean, spherical, and hyperbolic reflection groups from Coxeter diagrams with' },
 ];
