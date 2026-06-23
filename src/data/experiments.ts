@@ -17,6 +17,7 @@ export interface Experiment {
   { href: '/hyperbolic-automata', title: 'Non-Euclidean cellular automata', summary: 'Run Life-like rules on hyperbolic tilings and compare growth rates with square-grid cellul' },
   { href: '/jets', title: 'Automatic differentiation jets', summary: 'Extend dual numbers to truncated polynomial jets R[ε]/(εⁿ), carrying higher derivatives th' },
   { href: '/padic-fractal', title: 'p-adic fractal explorer', summary: 'Render p-adic balls as trees and circles, animate Hensel lifting paths, and compare p-adic' },
+  { href: '/double-pendulum', title: 'Double pendulum phase portrait', summary: 'Explore initial conditions, energy coloring, Poincaré sections, and nearby trajectories th' },
 ];
 }
 
@@ -35,6 +36,7 @@ export const presetAtlas = ['quiet lattice', 'golden bloom', 'deep spiral', 'edg
   { href: '/hyperbolic-automata', title: 'Non-Euclidean cellular automata', summary: 'Run Life-like rules on hyperbolic tilings and compare growth rates with square-grid cellul' },
   { href: '/jets', title: 'Automatic differentiation jets', summary: 'Extend dual numbers to truncated polynomial jets R[ε]/(εⁿ), carrying higher derivatives th' },
   { href: '/padic-fractal', title: 'p-adic fractal explorer', summary: 'Render p-adic balls as trees and circles, animate Hensel lifting paths, and compare p-adic' },
+  { href: '/double-pendulum', title: 'Double pendulum phase portrait', summary: 'Explore initial conditions, energy coloring, Poincaré sections, and nearby trajectories th' },
 ];
 
 export const experiments: Experiment[] = [
@@ -76,4 +78,5 @@ export const experiments: Experiment[] = [
   { href: '/hyperbolic-automata', title: 'Non-Euclidean cellular automata', summary: 'Run Life-like rules on hyperbolic tilings and compare growth rates with square-grid cellul' },
   { href: '/jets', title: 'Automatic differentiation jets', summary: 'Extend dual numbers to truncated polynomial jets R[ε]/(εⁿ), carrying higher derivatives th' },
   { href: '/padic-fractal', title: 'p-adic fractal explorer', summary: 'Render p-adic balls as trees and circles, animate Hensel lifting paths, and compare p-adic' },
+  { href: '/double-pendulum', title: 'Double pendulum phase portrait', summary: 'Explore initial conditions, energy coloring, Poincaré sections, and nearby trajectories th' },
 ];
