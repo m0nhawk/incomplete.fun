@@ -1,0 +1,12 @@
+---
+import IdeaExperiment from '../components/IdeaExperiment.astro';
+---
+
+<IdeaExperiment
+  name='Markov numbers and mutation tree'
+  summary='Navigate triples satisfying x²+y²+z²=3xyz and connect mutation, Diophantine approximation, and continued fractions.'
+  kind='math'
+  controls=['tree depth', 'branch choice', 'mutation speed']
+  invariants=['Markov triple', 'largest entry', 'mutation path', 'approximation hint']
+  related=[{ href: '/continued-fractions', label: 'continued fractions' }, { href: '/modular', label: 'modular' }]
+/>

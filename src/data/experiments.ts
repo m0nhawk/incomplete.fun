@@ -12,6 +12,7 @@ export interface Experiment {
   { href: '/persistent-homology', title: 'Persistent homology sandbox', summary: 'Drop points, grow balls, and plot Betti numbers and barcode intervals as components merge ' },
   { href: '/circle-packing', title: 'Circle packing conformal maps', summary: 'Iteratively pack circles in planar graphs, expose angle defects and boundary shapes, and c' },
   { href: '/integer-relations', title: 'Integer relation finder', summary: 'Search for PSLQ-style integer relations for typed or generated constants and show formulas' },
+  { href: '/markov-numbers', title: 'Markov numbers and mutation tree', summary: 'Navigate triples satisfying x²+y²+z²=3xyz and connect mutation, Diophantine approximation,' },
 ];
 }
 
@@ -25,6 +26,7 @@ export const presetAtlas = ['quiet lattice', 'golden bloom', 'deep spiral', 'edg
   { href: '/persistent-homology', title: 'Persistent homology sandbox', summary: 'Drop points, grow balls, and plot Betti numbers and barcode intervals as components merge ' },
   { href: '/circle-packing', title: 'Circle packing conformal maps', summary: 'Iteratively pack circles in planar graphs, expose angle defects and boundary shapes, and c' },
   { href: '/integer-relations', title: 'Integer relation finder', summary: 'Search for PSLQ-style integer relations for typed or generated constants and show formulas' },
+  { href: '/markov-numbers', title: 'Markov numbers and mutation tree', summary: 'Navigate triples satisfying x²+y²+z²=3xyz and connect mutation, Diophantine approximation,' },
 ];
 
 export const experiments: Experiment[] = [
@@ -61,4 +63,5 @@ export const experiments: Experiment[] = [
   { href: '/persistent-homology', title: 'Persistent homology sandbox', summary: 'Drop points, grow balls, and plot Betti numbers and barcode intervals as components merge ' },
   { href: '/circle-packing', title: 'Circle packing conformal maps', summary: 'Iteratively pack circles in planar graphs, expose angle defects and boundary shapes, and c' },
   { href: '/integer-relations', title: 'Integer relation finder', summary: 'Search for PSLQ-style integer relations for typed or generated constants and show formulas' },
+  { href: '/markov-numbers', title: 'Markov numbers and mutation tree', summary: 'Navigate triples satisfying x²+y²+z²=3xyz and connect mutation, Diophantine approximation,' },
 ];
