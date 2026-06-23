@@ -11,6 +11,7 @@ export interface Experiment {
   { href: '/discrete-exterior-calculus', title: 'Discrete exterior calculus on meshes', summary: 'Paint scalar fields on triangulations, then compute gradient, curl, divergence, and graph ' },
   { href: '/persistent-homology', title: 'Persistent homology sandbox', summary: 'Drop points, grow balls, and plot Betti numbers and barcode intervals as components merge ' },
   { href: '/circle-packing', title: 'Circle packing conformal maps', summary: 'Iteratively pack circles in planar graphs, expose angle defects and boundary shapes, and c' },
+  { href: '/integer-relations', title: 'Integer relation finder', summary: 'Search for PSLQ-style integer relations for typed or generated constants and show formulas' },
 ];
 }
 
@@ -23,6 +24,7 @@ export const presetAtlas = ['quiet lattice', 'golden bloom', 'deep spiral', 'edg
   { href: '/discrete-exterior-calculus', title: 'Discrete exterior calculus on meshes', summary: 'Paint scalar fields on triangulations, then compute gradient, curl, divergence, and graph ' },
   { href: '/persistent-homology', title: 'Persistent homology sandbox', summary: 'Drop points, grow balls, and plot Betti numbers and barcode intervals as components merge ' },
   { href: '/circle-packing', title: 'Circle packing conformal maps', summary: 'Iteratively pack circles in planar graphs, expose angle defects and boundary shapes, and c' },
+  { href: '/integer-relations', title: 'Integer relation finder', summary: 'Search for PSLQ-style integer relations for typed or generated constants and show formulas' },
 ];
 
 export const experiments: Experiment[] = [
@@ -58,4 +60,5 @@ export const experiments: Experiment[] = [
   { href: '/discrete-exterior-calculus', title: 'Discrete exterior calculus on meshes', summary: 'Paint scalar fields on triangulations, then compute gradient, curl, divergence, and graph ' },
   { href: '/persistent-homology', title: 'Persistent homology sandbox', summary: 'Drop points, grow balls, and plot Betti numbers and barcode intervals as components merge ' },
   { href: '/circle-packing', title: 'Circle packing conformal maps', summary: 'Iteratively pack circles in planar graphs, expose angle defects and boundary shapes, and c' },
+  { href: '/integer-relations', title: 'Integer relation finder', summary: 'Search for PSLQ-style integer relations for typed or generated constants and show formulas' },
 ];

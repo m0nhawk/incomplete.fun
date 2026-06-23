@@ -1,0 +1,12 @@
+---
+import IdeaExperiment from '../components/IdeaExperiment.astro';
+---
+
+<IdeaExperiment
+  name='Integer relation finder'
+  summary='Search for PSLQ-style integer relations for typed or generated constants and show formulas as short lattice vectors.'
+  kind='math'
+  controls=['decimal value', 'coefficient bound', 'basis tilt']
+  invariants=['residual', 'vector length', 'height', 'confidence']
+  related=[{ href: '/continued-fractions', label: 'continued fractions' }, { href: '/primes', label: 'primes' }]
+/>
