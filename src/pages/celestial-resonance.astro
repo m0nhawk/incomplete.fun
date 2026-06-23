@@ -1,0 +1,5 @@
+---
+import CanvasLayout from '../layouts/CanvasLayout.astro';
+---
+<CanvasLayout name="celestial mechanics resonance map" appId="celestial-app"><Fragment slot="toolbar"><label class="control-label">ratio <input id="cel-ratio" type="range" min="120" max="420" value="200" /></label><label class="control-label">eccentricity <input id="cel-ecc" type="range" min="0" max="80" value="22" /></label><button class="toolbar-button" id="cel-clear" type="button">clear section</button><span id="cel-readout">2:1 resonance</span></Fragment><div class="canvas-stage"><canvas id="cel-canvas"></canvas></div></CanvasLayout>
+<style>#cel-ratio,#cel-ecc{width:6rem}#cel-readout{margin-left:auto;color:var(--muted);font-size:.78rem}#cel-canvas{display:block;width:100%;height:100%;background:#03040a}</style><script>import '../scripts/celestial-resonance.ts';</script>

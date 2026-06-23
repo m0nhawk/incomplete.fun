@@ -10,6 +10,7 @@ export const presetAtlas = ['quiet lattice', 'golden bloom', 'deep spiral', 'edg
 export const experiments: Experiment[] = [
   { href: '/braid', title: 'braid group composer', summary: 'strand crossings, words, knot closures' },
   { href: '/cellular', title: 'cellular automata lab', summary: 'local rules, seeds, histories' },
+  { href: '/celestial-resonance', title: 'celestial resonance map', summary: 'mean-motion tongues and sections' },
   { href: '/complex', title: 'complex dynamics', summary: 'mandelbrot, julia, orbit traces' },
   { href: '/coupled-oscillators', title: 'coupled oscillator sync', summary: 'Kuramoto phases and order' },
   { href: '/continued-fractions', title: 'continued fractions', summary: 'expansions, convergents, errors' },
