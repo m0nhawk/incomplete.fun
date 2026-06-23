@@ -32,6 +32,7 @@ export interface Experiment {
   { href: '/relativity-diagram', title: 'Special relativity spacetime diagram', summary: 'Drag events and worldlines, apply Lorentz transforms, and compare light cones, simultaneit' },
   { href: '/electromagnetic-fields', title: 'Electromagnetic field lines', summary: 'Place charges and currents, trace field lines and equipotentials, and show Gauss-law flux ' },
   { href: '/least-action', title: 'Least-action path finder', summary: 'Compare arbitrary paths with numerically optimized action-minimizing paths for falling, os' },
+  { href: '/shared-preset-urls', title: 'Shared preset URLs', summary: 'Encode experiment parameters into bookmarkable links so compact canvas states can be saved' },
 ];
 }
 
@@ -65,6 +66,7 @@ export const presetAtlas = ['quiet lattice', 'golden bloom', 'deep spiral', 'edg
   { href: '/relativity-diagram', title: 'Special relativity spacetime diagram', summary: 'Drag events and worldlines, apply Lorentz transforms, and compare light cones, simultaneit' },
   { href: '/electromagnetic-fields', title: 'Electromagnetic field lines', summary: 'Place charges and currents, trace field lines and equipotentials, and show Gauss-law flux ' },
   { href: '/least-action', title: 'Least-action path finder', summary: 'Compare arbitrary paths with numerically optimized action-minimizing paths for falling, os' },
+  { href: '/shared-preset-urls', title: 'Shared preset URLs', summary: 'Encode experiment parameters into bookmarkable links so compact canvas states can be saved' },
 ];
 
 export const experiments: Experiment[] = [
@@ -121,4 +123,5 @@ export const experiments: Experiment[] = [
   { href: '/relativity-diagram', title: 'Special relativity spacetime diagram', summary: 'Drag events and worldlines, apply Lorentz transforms, and compare light cones, simultaneit' },
   { href: '/electromagnetic-fields', title: 'Electromagnetic field lines', summary: 'Place charges and currents, trace field lines and equipotentials, and show Gauss-law flux ' },
   { href: '/least-action', title: 'Least-action path finder', summary: 'Compare arbitrary paths with numerically optimized action-minimizing paths for falling, os' },
+  { href: '/shared-preset-urls', title: 'Shared preset URLs', summary: 'Encode experiment parameters into bookmarkable links so compact canvas states can be saved' },
 ];
