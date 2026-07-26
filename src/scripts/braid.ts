@@ -1,6 +1,6 @@
 export {};
 
-import { escapeHtml, svg } from "./utils/markup";
+import { svg } from "./utils/markup";
 
 interface Crossing { index: number; sign: 1 | -1 }
 interface Elements {
@@ -164,4 +164,3 @@ function readInt(value: string, min: number, max: number, fallback: number): num
   if (!Number.isFinite(parsed)) return fallback;
   return Math.max(min, Math.min(max, parsed));
 }
-

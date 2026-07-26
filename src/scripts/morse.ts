@@ -1,6 +1,6 @@
 export {};
 
-import { escapeHtml, svg } from "./utils/markup";
+import { svg } from "./utils/markup";
 
 interface Elements {
   functionSelect: HTMLSelectElement;
