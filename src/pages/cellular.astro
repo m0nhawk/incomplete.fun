@@ -6,7 +6,7 @@ import PageLayout from '../layouts/PageLayout.astro';
   <p class="cellular-intro">Explore simple local rules by editing seed states, stepping time forward, and watching compact histories accumulate.</p>
 
   <section class="cellular-lab" id="cellular-app">
-    <article class="cellular-card">
+    <article class="tool-card">
       <div class="cellular-card-head">
         <div>
           <h2>1D elementary rules</h2>
@@ -29,7 +29,7 @@ import PageLayout from '../layouts/PageLayout.astro';
       <p class="cellular-hint">Click the top row to toggle cells and restart the visible history from that edited seed.</p>
     </article>
 
-    <article class="cellular-card">
+    <article class="tool-card">
       <div class="cellular-card-head">
         <div>
           <h2>2D outer-totalistic rules</h2>
@@ -73,14 +73,12 @@ import PageLayout from '../layouts/PageLayout.astro';
 <style>
   .cellular-intro,
   .cellular-hint,
-  .cellular-card p,
+  .tool-card p,
   .cellular-stats { color: var(--muted); }
 
   .cellular-lab { display: grid; gap: 1rem; }
 
-  .cellular-card {
-    border: 1px solid var(--line);
-    padding: 1rem;
+  .tool-card {
     display: grid;
     gap: 1rem;
   }
@@ -92,8 +90,7 @@ import PageLayout from '../layouts/PageLayout.astro';
     align-items: start;
   }
 
-  .cellular-card h2,
-  .cellular-card h3 { font-size: 1rem; margin-bottom: 0.25rem; }
+  .tool-card h3 { font-size: 1rem; margin-bottom: 0.25rem; }
 
   .cellular-toolbar {
     display: flex;
