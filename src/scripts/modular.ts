@@ -1,5 +1,7 @@
 export {};
 
+import { escapeHtml, svg } from "./utils/markup";
+
 interface Elements {
   nInput: HTMLInputElement;
   aInput: HTMLInputElement;
@@ -216,11 +218,3 @@ function readInt(value: string, min: number, max: number, fallback: number): num
   return Math.max(min, Math.min(max, parsed));
 }
 
-function svg(tag: string, attrs: Record<string, string | number>, children = ""): string {
-  const attrText = Object.entries(attrs).map(([key, value]) => `${key}="${escapeHtml(String(value))}"`).join(" ");
-  return `<${tag} ${attrText}>${children}</${tag}>`;
-}
-
-function escapeHtml(text: string): string {
-  return text.replace(/[&<>"]/g, (character) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[character]!);
-}

@@ -1,5 +1,7 @@
 export {};
 
+import { escapeHtml } from "./utils/markup";
+
 interface Rational {
   num: bigint;
   den: bigint;
@@ -186,10 +188,6 @@ function expansionFormula(expansion: Expansion, p: number): string {
 
 function renderError(container: HTMLElement, error: unknown) {
   container.innerHTML = `<p class="padic-error">${escapeHtml(error instanceof Error ? error.message : String(error))}</p>`;
-}
-
-function escapeHtml(text: string): string {
-  return text.replace(/[&<>"]/g, (ch) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;" })[ch]!);
 }
 
 function renderExpansion() {

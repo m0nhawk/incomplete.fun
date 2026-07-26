@@ -1,5 +1,7 @@
 export {};
 
+import { escapeHtml } from "./utils/markup";
+
 interface ChuSpace {
   id: string;
   name: string;
@@ -70,10 +72,6 @@ const profileOutput = document.querySelector<HTMLDivElement>("#chu-profile");
 const sourceSelect = document.querySelector<HTMLSelectElement>("#chu-source-select");
 const targetSelect = document.querySelector<HTMLSelectElement>("#chu-target-select");
 const morphismOutput = document.querySelector<HTMLDivElement>("#chu-morphism-output");
-
-function escapeHtml(text: string): string {
-  return text.replace(/[&<>"]/g, (ch) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;" })[ch]!);
-}
 
 function currentSpace(select: HTMLSelectElement | null): ChuSpace {
   return byId.get(select?.value ?? "") ?? spaces[0];

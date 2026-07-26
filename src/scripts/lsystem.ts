@@ -1,5 +1,7 @@
 export {};
 
+import { escapeHtml, svg } from "./utils/markup";
+
 interface Preset {
   axiom: string;
   rules: string;
@@ -298,11 +300,3 @@ function format(value: number): string {
   return value.toFixed(3).replace(/0+$/, "").replace(/\.$/, "");
 }
 
-function svg(tag: string, attrs: Record<string, string | number>, children = ""): string {
-  const attrText = Object.entries(attrs).map(([key, value]) => `${key}="${escapeHtml(String(value))}"`).join(" ");
-  return `<${tag} ${attrText}>${children}</${tag}>`;
-}
-
-function escapeHtml(text: string): string {
-  return text.replace(/[&<>"]/g, (character) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[character]!);
-}
