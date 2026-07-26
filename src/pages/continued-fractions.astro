@@ -5,8 +5,8 @@ import PageLayout from '../layouts/PageLayout.astro';
 <PageLayout name="continued fraction calculator" back wide>
   <p class="cf-intro">Expand rationals and quadratic irrationals into continued fractions. The page shows the term list, a nested fraction preview, convergents, approximation errors, and the geometry behind the approximation.</p>
 
-  <section class="cf-grid" id="cf-app">
-    <form class="cf-card" id="cf-form">
+  <section class="tool-grid" id="cf-app">
+    <form class="tool-card" id="cf-form">
       <h2>number</h2>
       <label>kind
         <select id="cf-kind">
@@ -26,10 +26,10 @@ import PageLayout from '../layouts/PageLayout.astro';
       </div>
       <label>terms <input id="cf-terms" type="number" min="1" max="80" value="24" /></label>
       <button class="toolbar-button" type="submit">expand</button>
-      <div class="cf-output" id="cf-summary"></div>
+      <div class="tool-output" id="cf-summary"></div>
     </form>
 
-    <article class="cf-card">
+    <article class="tool-card">
       <h2>how to read it</h2>
       <div class="cf-explain">
         <p><strong>continued fraction:</strong> <code>[a₀; a₁, a₂, …]</code> means <code>a₀ + 1/(a₁ + 1/(a₂ + …))</code>.</p>
@@ -38,24 +38,24 @@ import PageLayout from '../layouts/PageLayout.astro';
       </div>
     </article>
 
-    <article class="cf-card cf-wide">
+    <article class="tool-card tool-wide">
       <h2>expanded form</h2>
-      <div class="cf-output cf-expanded" id="cf-expanded"></div>
+      <div class="tool-output cf-expanded" id="cf-expanded"></div>
     </article>
 
-    <article class="cf-card cf-wide">
+    <article class="tool-card tool-wide">
       <h2>convergents</h2>
       <p class="cf-intro">Each row truncates the continued fraction one term later. Watch the denominator grow and the error usually drop sharply.</p>
       <div class="cf-table-wrap"><table id="cf-table"></table></div>
     </article>
 
-    <article class="cf-card cf-wide">
+    <article class="tool-card tool-wide">
       <h2>error plot</h2>
       <p class="cf-intro">A rising point means the convergent gained decimal accuracy. Flat or low points are normal for early terms.</p>
       <svg id="cf-error-plot" viewBox="0 0 900 220" role="img" aria-label="Convergent error plot"></svg>
     </article>
 
-    <article class="cf-card cf-wide">
+    <article class="tool-card tool-wide">
       <h2>geometric intervals</h2>
       <p class="cf-intro">Even and odd convergents approach from opposite sides. Each line spans two consecutive convergents; the target is trapped inside the shrinking intervals.</p>
       <svg id="cf-intervals" viewBox="0 0 900 260" role="img" aria-label="Continued fraction nested intervals"></svg>
@@ -65,14 +65,8 @@ import PageLayout from '../layouts/PageLayout.astro';
 
 <style>
   .cf-intro { color: var(--muted); }
-  .cf-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 24rem), 1fr)); gap: 1rem; }
-  .cf-wide { grid-column: 1 / -1; }
-  .cf-card { border: 1px solid var(--line); padding: 1rem; display: grid; gap: .75rem; }
-  .cf-card h2 { font-size: 1rem; margin: 0; }
-  .cf-card label, .cf-rational-fields, .cf-quadratic-fields { display: grid; gap: .3rem; color: var(--muted); }
-  .cf-rational-fields, .cf-quadratic-fields { grid-template-columns: repeat(auto-fit, minmax(5rem, 1fr)); }
-  .cf-card input, .cf-card select { width: 100%; background: transparent; color: var(--fg); border: 1px solid var(--line); border-radius: 4px; padding: .35rem .45rem; font: inherit; }
-  .cf-output, .cf-table-wrap { overflow-x: auto; }
+  .cf-rational-fields, .cf-quadratic-fields { display: grid; gap: .3rem; grid-template-columns: repeat(auto-fit, minmax(5rem, 1fr)); color: var(--muted); }
+  .cf-table-wrap { overflow-x: auto; }
   .cf-explain { display: grid; gap: .6rem; color: var(--muted); }
   .cf-explain p { margin: 0; }
   .cf-expanded { font-size: 1.05rem; line-height: 2; }
