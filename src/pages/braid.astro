@@ -5,8 +5,8 @@ import PageLayout from '../layouts/PageLayout.astro';
 <PageLayout name="braid group composer" back wide>
   <p class="braid-intro">Compose braid words from adjacent strand crossings. The diagram shows the braid, a simple closure, and the induced permutation.</p>
 
-  <section class="braid-grid" id="braid-app">
-    <article class="braid-card braid-controls">
+  <section class="tool-grid" id="braid-app">
+    <article class="tool-card braid-controls">
       <label>strands <input id="braid-strands" type="number" min="2" max="8" value="4" /></label>
       <label>crossing <select id="braid-generator"></select></label>
       <button class="toolbar-button" id="braid-add-positive" type="button">add σ</button>
@@ -15,7 +15,7 @@ import PageLayout from '../layouts/PageLayout.astro';
       <button class="toolbar-button" id="braid-clear" type="button">clear</button>
     </article>
 
-    <article class="braid-card braid-wide">
+    <article class="tool-card tool-wide">
       <div class="braid-head">
         <div>
           <h2>braid diagram</h2>
@@ -28,14 +28,14 @@ import PageLayout from '../layouts/PageLayout.astro';
       </div>
     </article>
 
-    <article class="braid-card">
+    <article class="tool-card">
       <h2>permutation</h2>
-      <div id="braid-permutation" class="braid-output"></div>
+      <div id="braid-permutation" class="tool-output"></div>
     </article>
 
-    <article class="braid-card">
+    <article class="tool-card">
       <h2>closure sketch</h2>
-      <div id="braid-closure" class="braid-output"></div>
+      <div id="braid-closure" class="tool-output"></div>
     </article>
   </section>
 </PageLayout>
@@ -43,14 +43,8 @@ import PageLayout from '../layouts/PageLayout.astro';
 <style>
   .braid-intro,
   .braid-muted,
-  .braid-controls label,
-  .braid-output,
   .braid-word { color: var(--muted); }
 
-  .braid-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr)); gap: 1rem; }
-  .braid-wide { grid-column: 1 / -1; }
-  .braid-card { border: 1px solid var(--line); padding: 1rem; min-width: 0; }
-  .braid-card h2 { font-size: 1rem; margin: 0 0 .5rem; }
   .braid-controls { display: flex; flex-wrap: wrap; align-items: end; gap: .75rem; }
   .braid-controls label { display: grid; gap: .25rem; }
   .braid-controls input[type="number"] { width: 4rem; padding: .25rem .4rem; }
@@ -58,7 +52,6 @@ import PageLayout from '../layouts/PageLayout.astro';
   .braid-word { max-width: 38rem; overflow-wrap: anywhere; font-variant-numeric: tabular-nums; text-align: right; }
   .braid-svg-wrap { border: 1px solid var(--line); background: var(--wash); overflow: auto; }
   #braid-plot { display: block; width: 100%; min-width: 38rem; height: 34rem; }
-  .braid-output { display: grid; gap: .4rem; font-variant-numeric: tabular-nums; }
 </style>
 
 <style is:global>

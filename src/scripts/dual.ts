@@ -1,5 +1,7 @@
 export {};
 
+import { escapeHtml } from "./utils/markup";
+
 interface Dual {
   real: number;
   eps: number;
@@ -102,10 +104,6 @@ function setHtml(el: HTMLElement | null, html: string): void {
 function showError(el: HTMLElement | null, error: unknown): void {
   const message = error instanceof Error ? error.message : String(error);
   setHtml(el, `<p class="dual-error">${escapeHtml(message)}</p>`);
-}
-
-function escapeHtml(text: string): string {
-  return text.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;");
 }
 
 function updatePowerVisibility(): void {

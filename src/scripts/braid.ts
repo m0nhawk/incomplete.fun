@@ -1,5 +1,7 @@
 export {};
 
+import { svg } from "./utils/markup";
+
 interface Crossing { index: number; sign: 1 | -1 }
 interface Elements {
   strandsInput: HTMLInputElement;
@@ -161,13 +163,4 @@ function readInt(value: string, min: number, max: number, fallback: number): num
   const parsed = Number.parseInt(value, 10);
   if (!Number.isFinite(parsed)) return fallback;
   return Math.max(min, Math.min(max, parsed));
-}
-
-function svg(tag: string, attrs: Record<string, string | number>, children = ""): string {
-  const attrText = Object.entries(attrs).map(([key, value]) => `${key}="${escapeHtml(String(value))}"`).join(" ");
-  return `<${tag} ${attrText}>${children}</${tag}>`;
-}
-
-function escapeHtml(text: string): string {
-  return text.replace(/[&<>"]/g, (character) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[character]!);
 }

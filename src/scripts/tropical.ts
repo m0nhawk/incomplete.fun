@@ -1,5 +1,7 @@
 export {};
 
+import { escapeHtml, svg } from "./utils/markup";
+
 const arithmeticForm = document.querySelector<HTMLFormElement>("#tropical-arithmetic-form");
 const aInput = document.querySelector<HTMLInputElement>("#tropical-a");
 const bInput = document.querySelector<HTMLInputElement>("#tropical-b");
@@ -23,10 +25,6 @@ interface TermValue {
 interface Root {
   x: number;
   terms: number[];
-}
-
-function escapeHtml(text: string): string {
-  return text.replace(/[&<>"]/g, (ch) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;" })[ch]!);
 }
 
 function readNumber(input: HTMLInputElement, name: string): number {
@@ -126,11 +124,6 @@ function renderPolynomial() {
   } catch (error) {
     polyOutput.innerHTML = `<p>${escapeHtml(error instanceof Error ? error.message : String(error))}</p>`;
   }
-}
-
-function svg(tag: string, attrs: Record<string, string | number>, children = ""): string {
-  const attrText = Object.entries(attrs).map(([key, value]) => `${key}="${escapeHtml(String(value))}"`).join(" ");
-  return `<${tag} ${attrText}>${children}</${tag}>`;
 }
 
 function renderPlot(coefficients: number[], xMin: number, xMax: number) {

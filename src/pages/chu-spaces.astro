@@ -15,7 +15,7 @@ import PageLayout from '../layouts/PageLayout.astro';
   </section>
 
   <section class="chu-panel" id="chu-app">
-    <div class="chu-controls">
+    <div class="tool-controls">
       <label>
         space
         <select id="chu-space-select">
@@ -34,20 +34,20 @@ import PageLayout from '../layouts/PageLayout.astro';
       </label>
     </div>
 
-    <div class="chu-summary" id="chu-summary"></div>
+    <div class="tool-output" id="chu-summary"></div>
 
-    <div class="chu-grid">
-      <article class="chu-card chu-wide">
+    <div class="tool-grid">
+      <article class="tool-card tool-wide">
         <h2>evaluation matrix</h2>
         <div class="chu-table-wrap" id="chu-matrix"></div>
       </article>
 
-      <article class="chu-card">
+      <article class="tool-card">
         <h2>separation diagnostics</h2>
         <div id="chu-diagnostics"></div>
       </article>
 
-      <article class="chu-card">
+      <article class="tool-card">
         <h2>orthogonality profile</h2>
         <div id="chu-profile"></div>
       </article>
@@ -61,7 +61,7 @@ import PageLayout from '../layouts/PageLayout.astro';
       backwards state map <code>g: Y → X</code>. The adjointness condition is
       <code>s(f(a), y) = r(a, g(y))</code> for every point <code>a</code> and state <code>y</code>.
     </p>
-    <div class="chu-controls">
+    <div class="tool-controls">
       <label>
         source C
         <select id="chu-source-select"></select>
@@ -71,11 +71,11 @@ import PageLayout from '../layouts/PageLayout.astro';
         <select id="chu-target-select"></select>
       </label>
     </div>
-    <div class="chu-morphism-output" id="chu-morphism-output"></div>
+    <div class="tool-output" id="chu-morphism-output"></div>
   </section>
 
-  <section class="chu-columns">
-    <article>
+  <section class="tool-grid">
+    <article class="tool-card">
       <h2>definition</h2>
       <p>
         Fix a set <code>K</code> of truth values, colors, scores, or observations. A Chu space over <code>K</code>
@@ -84,7 +84,7 @@ import PageLayout from '../layouts/PageLayout.astro';
       </p>
       <p class="chu-formula"><code>a ⊥ x = r(a,x)</code></p>
     </article>
-    <article>
+    <article class="tool-card">
       <h2>dual</h2>
       <p>
         The dual space swaps rows and columns: <code>(A,r,X)* = (X, rᵀ, A)</code>. In the dual, old states
@@ -93,8 +93,8 @@ import PageLayout from '../layouts/PageLayout.astro';
     </article>
   </section>
 
-  <section class="chu-columns">
-    <article>
+  <section class="tool-grid">
+    <article class="tool-card">
       <h2>separated and extensional</h2>
       <ul>
         <li><strong>Separated:</strong> no two points have the same row.</li>
@@ -102,7 +102,7 @@ import PageLayout from '../layouts/PageLayout.astro';
         <li><strong>Biextensional collapse:</strong> identify equal rows and equal columns to remove observational duplicates.</li>
       </ul>
     </article>
-    <article>
+    <article class="tool-card">
       <h2>why they matter</h2>
       <p>
         Chu spaces give a symmetric language for objects and predicates. They appear in categorical logic,
@@ -116,18 +116,10 @@ import PageLayout from '../layouts/PageLayout.astro';
 <style>
   .chu-hero { margin-bottom: calc(var(--space) * 1.2); }
   .chu-hero h1 { max-width: none; }
-  .chu-hero p:not(.eyebrow), .chu-muted, .chu-card li, .chu-card p, .chu-columns p, .chu-columns li { color: var(--muted); }
+  .chu-hero p:not(.eyebrow), .chu-muted { color: var(--muted); }
   .chu-hero p:not(.eyebrow) { max-width: 58rem; }
-  .chu-panel, .chu-card, .chu-columns article { border: 1px solid var(--line); padding: 1rem; margin-bottom: 1.5rem; }
-  .chu-panel { display: grid; gap: 1rem; }
-  .chu-controls { display: flex; flex-wrap: wrap; gap: 1rem; align-items: end; }
-  .chu-controls label { display: grid; gap: .25rem; color: var(--muted); }
-  .chu-controls select { min-width: 16rem; background: var(--bg); color: var(--fg); border: 1px solid var(--line); border-radius: 4px; padding: .35rem .45rem; font: inherit; }
-  .chu-summary, .chu-morphism-output { border: 1px solid var(--line); padding: 1rem; color: var(--muted); }
-  .chu-grid, .chu-columns { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr)); gap: 1rem; }
-  .chu-wide { grid-column: 1 / -1; }
-  .chu-card { margin-bottom: 0; }
-  .chu-card h2, .chu-panel h2, .chu-columns h2 { font-size: 1rem; margin-bottom: .6rem; }
+  .chu-panel { display: grid; gap: 1rem; border: 1px solid var(--line); padding: 1rem; margin-bottom: 1.5rem; }
+  .chu-panel h2 { font-size: 1rem; margin-bottom: .6rem; }
   .chu-table-wrap { overflow-x: auto; }
   .chu-table { width: 100%; border-collapse: collapse; min-width: max-content; font-variant-numeric: tabular-nums; }
   .chu-table th, .chu-table td { border: 1px solid var(--line); padding: .4rem .55rem; text-align: center; }

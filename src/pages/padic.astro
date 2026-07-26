@@ -5,8 +5,8 @@ import PageLayout from '../layouts/PageLayout.astro';
 <PageLayout name="p-adic calculator" back wide>
   <p class="padic-intro">Explore rational numbers by their base-p digits extending to the left.</p>
 
-  <section class="padic-grid" id="padic-app">
-      <form class="padic-card" id="padic-expansion-form">
+  <section class="tool-grid" id="padic-app">
+      <form class="tool-card" id="padic-expansion-form">
         <h2>rational expansion</h2>
         <label>
           prime p
@@ -24,7 +24,7 @@ import PageLayout from '../layouts/PageLayout.astro';
         <div class="padic-output" id="padic-expansion-output" aria-live="polite"></div>
       </form>
 
-      <form class="padic-card" id="padic-inverse-form">
+      <form class="tool-card" id="padic-inverse-form">
         <h2>modular inverse</h2>
         <label>
           a
@@ -41,7 +41,7 @@ import PageLayout from '../layouts/PageLayout.astro';
         <div class="padic-output" id="padic-inverse-output" aria-live="polite"></div>
       </form>
 
-      <form class="padic-card padic-wide" id="padic-hensel-form">
+      <form class="tool-card tool-wide" id="padic-hensel-form">
         <h2>hensel lift</h2>
         <p class="padic-note">Enter polynomial coefficients low to high. Example: <code>-2,0,1</code> is x² − 2.</p>
         <label>
@@ -69,45 +69,6 @@ import PageLayout from '../layouts/PageLayout.astro';
   .padic-intro,
   .padic-note {
     color: var(--muted);
-  }
-
-  .padic-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
-    gap: 1rem;
-  }
-
-  .padic-card {
-    border: 1px solid var(--line);
-    padding: 1rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-  }
-
-  .padic-wide {
-    grid-column: 1 / -1;
-  }
-
-  .padic-card h2 {
-    font-size: 1rem;
-    margin-bottom: 0.25rem;
-  }
-
-  .padic-card label {
-    display: grid;
-    gap: 0.25rem;
-    color: var(--muted);
-  }
-
-  .padic-card input {
-    width: 100%;
-    background: transparent;
-    color: var(--fg);
-    border: 1px solid var(--line);
-    border-radius: 4px;
-    padding: 0.35rem 0.45rem;
-    font-family: var(--mono);
   }
 
   .padic-inline-inputs {

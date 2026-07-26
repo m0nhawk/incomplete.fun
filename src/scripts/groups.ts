@@ -1,5 +1,7 @@
 export {};
 
+import { escapeHtml } from "./utils/markup";
+
 interface Group {
   name: string;
   description: string;
@@ -16,10 +18,6 @@ const centerOutput = document.querySelector<HTMLDivElement>("#center-output");
 const conjugacyOutput = document.querySelector<HTMLDivElement>("#conjugacy-output");
 const subgroupsOutput = document.querySelector<HTMLDivElement>("#subgroups-output");
 const quotientOutput = document.querySelector<HTMLDivElement>("#quotient-output");
-
-function escapeHtml(text: string): string {
-  return text.replace(/[&<>"]/g, (ch) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;" })[ch]!);
-}
 
 function superscript(n: number): string {
   const digits: Record<string, string> = { "0": "⁰", "1": "¹", "2": "²", "3": "³", "4": "⁴", "5": "⁵", "6": "⁶", "7": "⁷", "8": "⁸", "9": "⁹" };

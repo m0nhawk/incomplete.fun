@@ -1,122 +1,97 @@
 ---
-import PageLayout from '../layouts/PageLayout.astro';
+import CanvasLayout from '../layouts/CanvasLayout.astro';
 ---
 
-<PageLayout name="L-system garden" back wide>
-  <p class="lsystem-intro">Rewrite symbols, then let a turtle walk the result. Tiny local grammar rules become curves, plants, and fractal silhouettes.</p>
+<CanvasLayout name="L-system garden" appId="lsystem-app" description="Rewrite symbols, then let a turtle walk the result. Tiny local grammar rules become curves, plants, and fractal silhouettes.">
+  <Fragment slot="toolbar">
+    <label class="control-label">
+      preset
+      <select id="lsystem-preset">
+        <option value="koch">koch snowflake edge</option>
+        <option value="dragon">dragon curve</option>
+        <option value="sierpinski">sierpinski arrowhead</option>
+        <option value="plant">fractal plant</option>
+      </select>
+    </label>
+    <label class="control-label">
+      axiom
+      <input id="lsystem-axiom" type="text" value="F" />
+    </label>
+    <label class="control-label">
+      iterations
+      <input id="lsystem-iterations" type="number" min="0" max="8" value="4" />
+    </label>
+    <label class="control-label">
+      angle
+      <input id="lsystem-angle" type="number" min="1" max="180" value="60" />
+    </label>
+    <button class="toolbar-button" id="lsystem-grow" type="button">grow one generation</button>
+    <button class="toolbar-button" id="lsystem-download" type="button">copy svg</button>
+  </Fragment>
 
-  <section class="lsystem-grid" id="lsystem-app">
-    <form class="lsystem-card lsystem-controls" id="lsystem-form">
-      <h2>grammar</h2>
-      <label>
-        preset
-        <select id="lsystem-preset">
-          <option value="koch">koch snowflake edge</option>
-          <option value="dragon">dragon curve</option>
-          <option value="sierpinski">sierpinski arrowhead</option>
-          <option value="plant">fractal plant</option>
-        </select>
-      </label>
-      <label>
-        axiom
-        <input id="lsystem-axiom" type="text" value="F" />
-      </label>
-      <label>
-        rules, one per line
-        <textarea id="lsystem-rules" rows="5">F=F+F--F+F</textarea>
-      </label>
-      <div class="lsystem-two">
-        <label>iterations <input id="lsystem-iterations" type="number" min="0" max="8" value="4" /></label>
-        <label>angle <input id="lsystem-angle" type="number" min="1" max="180" value="60" /></label>
-      </div>
-      <button class="toolbar-button lsystem-grow" id="lsystem-grow" type="button">grow one generation</button>
-      <div class="lsystem-output" id="lsystem-summary" aria-live="polite"></div>
-    </form>
+  <form id="lsystem-form" class="lsystem-rules-form">
+    <label class="control-label lsystem-rules-label">
+      rules, one per line
+      <textarea id="lsystem-rules" rows="2">F=F+F--F+F</textarea>
+    </label>
+  </form>
 
-    <article class="lsystem-card lsystem-wide">
-      <div class="lsystem-head">
-        <div>
-          <h2>turtle path</h2>
-          <p class="lsystem-intro">Commands: <code>F/G/A/B</code> draw, <code>f</code> moves, <code>+/-</code> turns, <code>[ ]</code> branches. Use 0 iterations to draw the axiom as raw commands.</p>
-        </div>
-        <button class="toolbar-button" id="lsystem-download" type="button">copy svg</button>
-      </div>
-      <div class="lsystem-svg-wrap">
-        <svg id="lsystem-plot" role="img" aria-label="L-system turtle drawing"></svg>
-      </div>
-    </article>
-  </section>
-</PageLayout>
+  <div id="lsystem-readout" aria-live="polite">
+    <span class="lsystem-help">F/G/A/B draw · f moves · +/- turns · [ ] branches</span>
+  </div>
+
+  <div class="canvas-stage" id="lsystem-stage">
+    <svg id="lsystem-plot" role="img" aria-label="L-system turtle drawing"></svg>
+  </div>
+
+  <div id="lsystem-summary" class="lsystem-summary" aria-live="polite"></div>
+</CanvasLayout>
 
 <style>
-  .lsystem-intro,
-  .lsystem-card label,
-  .lsystem-output { color: var(--muted); }
+  #lsystem-axiom { width: 4rem; }
+  #lsystem-iterations, #lsystem-angle { width: 4rem; }
 
-  .lsystem-grid {
-    display: grid;
-    grid-template-columns: minmax(17rem, 24rem) minmax(0, 1fr);
-    gap: 1rem;
+  .lsystem-rules-form {
+    padding: .55rem var(--space);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .lsystem-rules-label {
     align-items: start;
-  }
-
-  .lsystem-card {
-    border: 1px solid var(--line);
-    border-radius: 18px;
-    padding: 1rem;
-    display: grid;
-    gap: .75rem;
-    align-content: start;
-    background: color-mix(in srgb, var(--bg) 88%, transparent);
-    box-shadow: 0 1rem 3rem color-mix(in srgb, var(--fg) 7%, transparent);
-  }
-
-  .lsystem-controls { position: sticky; top: 1rem; }
-
-  .lsystem-wide { min-width: 0; gap: 1rem; }
-
-  .lsystem-card h2 {
-    font-size: 1rem;
-    margin: 0;
-  }
-
-  .lsystem-card label {
-    display: grid;
-    gap: .25rem;
-  }
-
-  .lsystem-card input,
-  .lsystem-card select,
-  .lsystem-card textarea {
     width: 100%;
+  }
+
+  #lsystem-rules {
+    flex: 1;
+    min-height: 2.4rem;
+    resize: vertical;
+    line-height: 1.45;
     padding: .35rem .45rem;
   }
 
-  .lsystem-card textarea {
-    min-height: 7rem;
-    resize: vertical;
-    line-height: 1.45;
-  }
-
-  .lsystem-two {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: .75rem;
-  }
-
-  .lsystem-head {
+  #lsystem-readout {
     display: flex;
     justify-content: space-between;
-    align-items: start;
     gap: 1rem;
-    flex-wrap: wrap;
+    padding: .35rem var(--space);
+    border-bottom: 1px solid var(--line);
+    color: var(--muted);
+    font-size: .78rem;
   }
 
-  .lsystem-svg-wrap {
-    border: 1px solid var(--line);
-    border-radius: 14px;
-    background: var(--wash);
-    overflow: auto;
+  .lsystem-help { margin-left: auto; }
+
+  .lsystem-summary {
+    padding: .55rem var(--space);
+    border-top: 1px solid var(--line);
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .lsystem-summary :global(p) { margin: 0 0 .35rem; }
+  .lsystem-summary :global(p:last-child) { margin-bottom: 0; }
+
+  .canvas-stage {
     background-image:
       linear-gradient(color-mix(in srgb, var(--line) 60%, transparent) 1px, transparent 1px),
       linear-gradient(90deg, color-mix(in srgb, var(--line) 60%, transparent) 1px, transparent 1px);
@@ -126,24 +101,8 @@ import PageLayout from '../layouts/PageLayout.astro';
   #lsystem-plot {
     display: block;
     width: 100%;
-    min-width: min(38rem, 100%);
-    height: clamp(22rem, 60vw, 38rem);
+    height: 100%;
     transition: opacity .2s ease;
-  }
-
-  .lsystem-output {
-    border-top: 1px solid var(--line);
-    padding-top: .75rem;
-    font-variant-numeric: tabular-nums;
-  }
-
-  .lsystem-output p:last-child { margin-bottom: 0; }
-
-  .lsystem-grow { justify-self: start; }
-
-  @media (max-width: 58rem) {
-    .lsystem-grid { grid-template-columns: 1fr; }
-    .lsystem-controls { position: static; }
   }
 </style>
 

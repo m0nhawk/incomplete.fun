@@ -5,14 +5,14 @@ import PageLayout from '../layouts/PageLayout.astro';
 <PageLayout name="surreal number playground" back wide>
   <p class="surreal-intro">Surreal numbers are born from cuts <code>{'{ left | right }'}</code>. Every left option must be smaller than every right option; the number created is the <em>simplest</em> value between them.</p>
 
-  <section class="surreal-panel" id="surreal-app">
-    <article class="surreal-card surreal-wide">
+  <section class="tool-grid" id="surreal-app">
+    <article class="tool-card tool-wide">
       <h2>birthdays</h2>
       <p class="surreal-note">Start at day 0 with <code>0 = {'{ | }'}</code>. Each new day inserts the simplest missing dyadic fractions between older numbers.</p>
       <div class="surreal-days" id="surreal-days" aria-live="polite"></div>
     </article>
 
-    <form class="surreal-card" id="surreal-cut-form">
+    <form class="tool-card" id="surreal-cut-form">
       <h2>make a cut</h2>
       <p class="surreal-note">Pick older values. The playground finds the simplest surreal number between the two sides.</p>
       <label>
@@ -27,7 +27,7 @@ import PageLayout from '../layouts/PageLayout.astro';
       <div class="surreal-output" id="surreal-cut-output" aria-live="polite"></div>
     </form>
 
-    <article class="surreal-card">
+    <article class="tool-card">
       <h2>try these</h2>
       <div class="surreal-examples">
         <button class="toolbar-button" type="button" data-left="" data-right="">{'{ | }'} = 0</button>
@@ -38,7 +38,7 @@ import PageLayout from '../layouts/PageLayout.astro';
       </div>
     </article>
 
-    <article class="surreal-card surreal-wide">
+    <article class="tool-card tool-wide">
       <h2>why it is nice</h2>
       <p>With one recursive rule, surreals contain integers, fractions, real numbers, infinities like <code>ω = {'{ 0, 1, 2, ... | }'}</code>, and infinitesimals like <code>1/ω</code>. The finite part shown here is already a tiny universe: numbers appear when there is room for them to be the simplest choice.</p>
     </article>
@@ -50,42 +50,6 @@ import PageLayout from '../layouts/PageLayout.astro';
   .surreal-note,
   :global(.surreal-muted) {
     color: var(--muted);
-  }
-
-  .surreal-panel {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
-    gap: 1rem;
-  }
-
-  .surreal-wide {
-    grid-column: 1 / -1;
-  }
-
-  .surreal-card {
-    border: 1px solid var(--line);
-    padding: 1rem;
-    min-width: 0;
-  }
-
-  .surreal-card h2 {
-    font-size: 1rem;
-  }
-
-  .surreal-card label {
-    display: grid;
-    gap: 0.25rem;
-    margin-bottom: 0.75rem;
-    color: var(--muted);
-  }
-
-  .surreal-card input {
-    width: 100%;
-    background: transparent;
-    color: var(--fg);
-    border: 1px solid var(--line);
-    border-radius: 4px;
-    padding: 0.35rem 0.45rem;
   }
 
   .surreal-days {

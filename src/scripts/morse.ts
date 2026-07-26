@@ -1,5 +1,7 @@
 export {};
 
+import { svg } from "./utils/markup";
+
 interface Elements {
   functionSelect: HTMLSelectElement;
   contoursInput: HTMLInputElement;
@@ -10,6 +12,7 @@ interface Elements {
 }
 interface Point { x: number; y: number }
 interface Sample { value: number; grad: Point }
+
 type FunctionKind = "peaks" | "monkey" | "ripples" | "basins";
 
 const GRID = 72;
@@ -159,5 +162,3 @@ function clamp(value: number, min: number, max: number): number { return Math.ma
 function readKind(value: string): FunctionKind { return value === "monkey" || value === "ripples" || value === "basins" ? value : "peaks"; }
 function readInt(value: string, min: number, max: number, fallback: number): number { const parsed = Number.parseInt(value, 10); return Number.isFinite(parsed) ? Math.max(min, Math.min(max, parsed)) : fallback; }
 function format(value: number): string { return value.toFixed(3).replace(/0+$/, "").replace(/\.$/, ""); }
-function svg(tag: string, attrs: Record<string, string | number>, children = ""): string { return `<${tag} ${Object.entries(attrs).map(([k, v]) => `${k}="${escapeHtml(String(v))}"`).join(" ")}>${children}</${tag}>`; }
-function escapeHtml(text: string): string { return text.replace(/[&<>"]/g, (ch) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[ch]!); }

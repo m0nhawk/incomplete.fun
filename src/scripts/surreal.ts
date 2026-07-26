@@ -1,5 +1,7 @@
 export {};
 
+import { escapeHtml } from "./utils/markup";
+
 const daysEl = document.querySelector<HTMLDivElement>("#surreal-days");
 const form = document.querySelector<HTMLFormElement>("#surreal-cut-form");
 const leftInput = document.querySelector<HTMLInputElement>("#surreal-left");
@@ -36,10 +38,6 @@ function compare(a: Rational, b: Rational): number {
 
 function format(q: Rational): string {
   return q.denominator === 1 ? String(q.numerator) : `${q.numerator}/${q.denominator}`;
-}
-
-function escapeHtml(text: string): string {
-  return text.replace(/[&<>"]/g, (ch) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;" })[ch]!);
 }
 
 function parseRational(text: string): Rational {

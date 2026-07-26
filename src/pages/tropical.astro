@@ -5,9 +5,8 @@ import PageLayout from '../layouts/PageLayout.astro';
 <PageLayout name="tropical geometry calculator" back wide>
   <p class="tropical-intro">Work in min-plus tropical arithmetic: <code>a ⊕ b = min(a,b)</code> and <code>a ⊗ b = a + b</code>. Tropical polynomials become lower envelopes of lines.</p>
 
-  <section class="tropical-panel" id="tropical-app">
-    <div class="tropical-grid">
-      <form class="tropical-card" id="tropical-arithmetic-form">
+  <section class="tool-grid" id="tropical-app">
+      <form class="tool-card" id="tropical-arithmetic-form">
         <h2>arithmetic</h2>
         <label>
           a
@@ -18,10 +17,10 @@ import PageLayout from '../layouts/PageLayout.astro';
           <input id="tropical-b" type="number" step="any" value="5" />
         </label>
         <button class="toolbar-button" type="submit">compute</button>
-        <div class="tropical-output" id="tropical-arithmetic-output" aria-live="polite"></div>
+        <div class="tool-output" id="tropical-arithmetic-output" aria-live="polite"></div>
       </form>
 
-      <form class="tropical-card" id="tropical-poly-form">
+      <form class="tool-card" id="tropical-poly-form">
         <h2>polynomial</h2>
         <p class="tropical-note">Coefficients low to high. Example <code>0,3,1</code> means <code>0 ⊕ 3x ⊕ 1x²</code>.</p>
         <label>
@@ -33,10 +32,10 @@ import PageLayout from '../layouts/PageLayout.astro';
           <input id="tropical-x" type="number" step="any" value="2" />
         </label>
         <button class="toolbar-button" type="submit">evaluate</button>
-        <div class="tropical-output" id="tropical-poly-output" aria-live="polite"></div>
+        <div class="tool-output" id="tropical-poly-output" aria-live="polite"></div>
       </form>
 
-      <article class="tropical-card tropical-wide">
+      <article class="tool-card tool-wide tropical-curve-card">
         <h2>curve</h2>
         <div class="tropical-controls">
           <label>
@@ -51,9 +50,8 @@ import PageLayout from '../layouts/PageLayout.astro';
         <div class="tropical-svg-wrap">
           <svg id="tropical-plot" role="img" aria-label="Tropical polynomial plot"></svg>
         </div>
-        <div class="tropical-output" id="tropical-roots-output" aria-live="polite"></div>
+        <div class="tool-output" id="tropical-roots-output" aria-live="polite"></div>
       </article>
-    </div>
   </section>
 </PageLayout>
 
@@ -64,48 +62,10 @@ import PageLayout from '../layouts/PageLayout.astro';
     color: var(--muted);
   }
 
-  .tropical-panel {
-    display: grid;
-    gap: 1rem;
-  }
-
-  .tropical-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
-    gap: 1rem;
-  }
-
-  .tropical-wide {
-    grid-column: 1 / -1;
-  }
-
-  .tropical-card {
-    border: 1px solid var(--line);
-    padding: 1rem;
+  .tropical-curve-card {
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
-  }
-
-  .tropical-card h2 {
-    font-size: 1rem;
-    margin-bottom: 0.25rem;
-  }
-
-  .tropical-card label {
-    display: grid;
-    gap: 0.25rem;
-    color: var(--muted);
-  }
-
-  .tropical-card input {
-    width: 100%;
-    background: transparent;
-    color: var(--fg);
-    border: 1px solid var(--line);
-    border-radius: 4px;
-    padding: 0.35rem 0.45rem;
-    font: inherit;
   }
 
   .tropical-controls {
@@ -114,9 +74,7 @@ import PageLayout from '../layouts/PageLayout.astro';
     gap: 0.75rem;
   }
 
-  .tropical-output {
-    border-top: 1px solid var(--line);
-    padding-top: 0.75rem;
+  .tool-output {
     overflow-x: auto;
   }
 
