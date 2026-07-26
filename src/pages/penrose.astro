@@ -35,48 +35,6 @@ import CanvasLayout from '../layouts/CanvasLayout.astro';
   </div>
 </CanvasLayout>
 
-<style>
-  #penrose-depth { width: 5rem; }
-
-  #penrose-depth-value {
-    min-width: 1.5rem;
-    color: var(--muted);
-    font-variant-numeric: tabular-nums;
-  }
-
-  .penrose-check { cursor: pointer; }
-
-  .penrose-help {
-    margin-left: auto;
-    color: var(--muted);
-    font-size: .78rem;
-  }
-
-  #penrose-readout {
-    display: flex;
-    justify-content: space-between;
-    gap: 1rem;
-    padding: .35rem var(--space);
-    border-bottom: 1px solid var(--line);
-    color: var(--muted);
-    font-size: .78rem;
-    font-variant-numeric: tabular-nums;
-  }
-
-  #penrose-count { color: var(--fg); }
-
-  #penrose-stage {
-    cursor: crosshair;
-    touch-action: none;
-  }
-
-  #penrose-canvas {
-    display: block;
-    width: 100%;
-    height: 100%;
-  }
-</style>
-
 <script>
   import '../scripts/penrose.ts';
 </script>

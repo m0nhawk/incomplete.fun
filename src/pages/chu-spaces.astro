@@ -113,22 +113,6 @@ import PageLayout from '../layouts/PageLayout.astro';
   </section>
 </PageLayout>
 
-<style>
-  .chu-hero { margin-bottom: calc(var(--space) * 1.2); }
-  .chu-hero h1 { max-width: none; }
-  .chu-hero p:not(.eyebrow), .chu-muted { color: var(--muted); }
-  .chu-hero p:not(.eyebrow) { max-width: 58rem; }
-  .chu-panel { display: grid; gap: 1rem; border: 1px solid var(--line); padding: 1rem; margin-bottom: 1.5rem; }
-  .chu-panel h2 { font-size: 1rem; margin-bottom: .6rem; }
-  .chu-table-wrap { overflow-x: auto; }
-  .chu-table { width: 100%; border-collapse: collapse; min-width: max-content; font-variant-numeric: tabular-nums; }
-  .chu-table th, .chu-table td { border: 1px solid var(--line); padding: .4rem .55rem; text-align: center; }
-  .chu-table th { color: var(--fg); font-weight: 600; }
-  .chu-list { display: grid; gap: .35rem; margin: 0; padding-left: 1.25rem; }
-  .chu-chip { display: inline-block; border: 1px solid var(--line); border-radius: 999px; padding: .05rem .45rem; margin: .1rem; white-space: nowrap; color: var(--fg); }
-  .chu-formula { color: var(--fg) !important; }
-</style>
-
 <script>
   import '../scripts/chu-spaces.ts';
 </script>

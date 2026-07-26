@@ -33,26 +33,6 @@ import CanvasLayout from '../layouts/CanvasLayout.astro';
   </div>
 </CanvasLayout>
 
-<style>
-  .symmetry-check { cursor: pointer; }
-
-  #symmetry-segments { width: 3rem; }
-  #symmetry-width { width: 5rem; }
-
-  #symmetry-width-value {
-    color: var(--muted);
-    min-width: 1.5rem;
-  }
-
-  #symmetry-canvas {
-    display: block;
-    width: 100%;
-    height: 100%;
-    cursor: crosshair;
-    touch-action: none;
-  }
-</style>
-
 <script>
   import '../scripts/symmetry.ts';
 </script>

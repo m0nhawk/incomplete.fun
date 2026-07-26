@@ -63,32 +63,6 @@ import PageLayout from '../layouts/PageLayout.astro';
   </section>
 </PageLayout>
 
-<style>
-  .cf-intro { color: var(--muted); }
-  .cf-rational-fields, .cf-quadratic-fields { display: grid; gap: .3rem; grid-template-columns: repeat(auto-fit, minmax(5rem, 1fr)); color: var(--muted); }
-  .cf-table-wrap { overflow-x: auto; }
-  .cf-explain { display: grid; gap: .6rem; color: var(--muted); }
-  .cf-explain p { margin: 0; }
-  .cf-expanded { font-size: 1.05rem; line-height: 2; }
-  .cf-nested { display: inline-block; white-space: nowrap; }
-  .cf-frac { display: inline-grid; grid-template-rows: auto auto; vertical-align: middle; text-align: center; margin: 0 .08rem; }
-  .cf-frac > span:first-child { border-bottom: 1px solid currentColor; padding: 0 .25rem; }
-  .cf-frac > span:last-child { padding: 0 .25rem; }
-  .cf-pill { display: inline-block; border: 1px solid var(--line); border-radius: 999px; padding: .05rem .45rem; margin: .1rem; }
-  #cf-table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
-  #cf-table th, #cf-table td { border-top: 1px solid var(--line); padding: .35rem .5rem; text-align: right; }
-  #cf-table th:first-child, #cf-table td:first-child { text-align: left; }
-  #cf-error-plot, #cf-intervals { width: 100%; height: auto; border: 1px solid var(--line); }
-</style>
-
-<style is:global>
-  .cf-axis, .cf-grid-line { stroke: var(--line); }
-  .cf-grid-line { opacity: .55; }
-  .cf-mark { fill: var(--fg); }
-  .cf-muted { fill: var(--muted); font-size: 12px; }
-  .cf-line { stroke: var(--fg); fill: none; stroke-width: 2; }
-</style>
-
 <script>
   import '../scripts/continued-fractions.ts';
 </script>

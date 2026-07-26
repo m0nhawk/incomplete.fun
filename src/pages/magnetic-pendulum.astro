@@ -12,12 +12,6 @@ import CanvasLayout from '../layouts/CanvasLayout.astro';
   <div class="canvas-stage"><canvas id="mag-canvas"></canvas></div>
 </CanvasLayout>
 
-<style>
-  #mag-damping, #mag-grid { width: 6rem; }
-  #mag-readout { margin-left: auto; color: var(--muted); font-size: .78rem; }
-  #mag-canvas { display: block; width: 100%; height: 100%; image-rendering: pixelated; background: #05050b; cursor: crosshair; }
-</style>
-
 <script>
   import '../scripts/magnetic-pendulum.ts';
 </script>

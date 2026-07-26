@@ -29,47 +29,6 @@ import { presetAtlas } from '../data/experiments';
   </div>
 </CanvasLayout>
 
-<style>
-  #fourier-harmonics,
-  #fourier-speed { width: 5rem; }
-
-  #fourier-harmonics-value {
-    min-width: 2rem;
-    color: var(--muted);
-    font-variant-numeric: tabular-nums;
-  }
-
-  .fourier-help {
-    margin-left: auto;
-    color: var(--muted);
-    font-size: .78rem;
-  }
-
-  #fourier-readout {
-    display: flex;
-    justify-content: space-between;
-    gap: 1rem;
-    padding: .35rem var(--space);
-    border-bottom: 1px solid var(--line);
-    color: var(--muted);
-    font-size: .78rem;
-    font-variant-numeric: tabular-nums;
-  }
-
-  #fourier-status { color: var(--fg); }
-
-  #fourier-stage {
-    cursor: crosshair;
-    touch-action: none;
-  }
-
-  #fourier-canvas {
-    display: block;
-    width: 100%;
-    height: 100%;
-  }
-</style>
-
 <script>
   import '../scripts/fourier.ts';
 </script>

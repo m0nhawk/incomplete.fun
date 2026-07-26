@@ -68,61 +68,6 @@ import PageLayout from '../layouts/PageLayout.astro';
   </section>
 </PageLayout>
 
-<style>
-  .group-intro {
-    color: var(--muted);
-  }
-
-  .group-panel {
-    display: grid;
-    gap: 1rem;
-  }
-
-  .group-table-wrap {
-    overflow: auto;
-  }
-
-  .group-table {
-    width: 100%;
-    min-width: max-content;
-    border-collapse: collapse;
-    font-size: 0.85rem;
-    font-variant-numeric: tabular-nums;
-  }
-
-  .group-table th,
-  .group-table td {
-    border: 1px solid var(--line);
-    padding: 0.25rem 0.45rem;
-    text-align: center;
-    white-space: nowrap;
-  }
-
-  .group-table th {
-    font-weight: 600;
-  }
-
-  .group-list {
-    display: grid;
-    gap: 0.35rem;
-    margin: 0;
-    padding-left: 1.25rem;
-  }
-
-  .group-muted {
-    color: var(--muted);
-  }
-
-  .group-chip {
-    display: inline-block;
-    border: 1px solid var(--line);
-    border-radius: 999px;
-    padding: 0.05rem 0.45rem;
-    margin: 0.1rem;
-    white-space: nowrap;
-  }
-</style>
-
 <script>
   import '../scripts/groups.ts';
 </script>

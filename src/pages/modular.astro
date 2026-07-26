@@ -37,49 +37,6 @@ import CanvasLayout from '../layouts/CanvasLayout.astro';
   </section>
 </CanvasLayout>
 
-<style>
-  #modular-n, #modular-a { width: 5rem; }
-  #modular-curve { width: 8rem; }
-  .modular-check { cursor: pointer; }
-
-  #modular-readout {
-    display: flex;
-    justify-content: space-between;
-    gap: 1rem;
-    padding: .35rem var(--space);
-    border-bottom: 1px solid var(--line);
-    color: var(--muted);
-    font-size: .78rem;
-  }
-
-  #modular-plot {
-    display: block;
-    width: 100%;
-    height: 100%;
-  }
-
-  .modular-orbits-card {
-    margin: 1rem var(--space);
-  }
-
-  .modular-orbits {
-    display: grid;
-    gap: .35rem;
-    font-variant-numeric: tabular-nums;
-    overflow-x: auto;
-  }
-</style>
-
-<style is:global>
-  .modular-axis { stroke: var(--line); }
-  .modular-chord { fill: none; stroke: var(--fg); }
-  .modular-node { fill: var(--bg); stroke: var(--fg); }
-  .modular-node.is-fixed { fill: var(--fg); }
-  .modular-label { fill: var(--muted); font: 11px ui-monospace, monospace; }
-  .modular-orbit-row { border-top: 1px solid var(--line); padding-top: .35rem; white-space: nowrap; }
-  .modular-orbit-row strong { color: var(--fg); }
-</style>
-
 <script>
   import '../scripts/modular.ts';
 </script>

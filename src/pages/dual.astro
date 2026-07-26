@@ -146,36 +146,6 @@ square(3 + 1ε) = 9 + 6ε
   </section>
 </PageLayout>
 
-<style>
-  .dual-hero { margin-bottom: calc(var(--space) * 1.2); }
-  .dual-hero h1 { max-width: none; }
-  .dual-hero p:not(.eyebrow) { max-width: 56rem; color: var(--muted); }
-  section + section { margin-top: 1.5rem; }
-  .tool-card label span { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; }
-  .dual-two { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; }
-  .dual-note { color: var(--muted); }
-  .tool-output { min-height: 4.5rem; font-variant-numeric: tabular-nums; }
-  .tool-output strong { color: var(--fg); }
-  #dual-graph { width: 100%; height: auto; border: 1px solid var(--line); background: var(--wash); }
-  .dual-table-wrap { overflow-x: auto; }
-  table { width: 100%; border-collapse: collapse; }
-  th, td { border-bottom: 1px solid var(--line); padding: .45rem .55rem; text-align: left; vertical-align: top; }
-  th { color: var(--fg); }
-  pre { overflow-x: auto; padding: 1rem; border: 1px solid var(--line); }
-  .dual-formula { color: var(--fg) !important; }
-  @media (max-width: 38rem) { .dual-two { grid-template-columns: 1fr; } }
-</style>
-
-<style is:global>
-  .dual-error { color: #c33; }
-  .dual-result-line { margin-bottom: .35rem; }
-  .dual-graph-axis { stroke: var(--line); stroke-width: 1; }
-  .dual-graph-curve { fill: none; stroke: var(--fg); stroke-width: 2; }
-  .dual-graph-tangent { fill: none; stroke: #c66; stroke-width: 2; stroke-dasharray: 7 5; }
-  .dual-graph-point { fill: var(--fg); }
-  .dual-graph-label { fill: var(--muted); font: 12px ui-monospace, monospace; }
-</style>
-
 <script>
   import '../scripts/dual.ts';
 </script>

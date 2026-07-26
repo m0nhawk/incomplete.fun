@@ -27,34 +27,6 @@ import CanvasLayout from '../layouts/CanvasLayout.astro';
   </div>
 </CanvasLayout>
 
-<style>
-  #morse-contours, #morse-flows { width: 5rem; }
-  .morse-check { cursor: pointer; }
-
-  #morse-readout {
-    padding: .35rem var(--space);
-    border-bottom: 1px solid var(--line);
-    color: var(--muted);
-    font-size: .78rem;
-  }
-
-  #morse-plot {
-    display: block;
-    width: 100%;
-    height: 100%;
-  }
-</style>
-
-<style is:global>
-  .morse-contour { fill: none; stroke: var(--fg); stroke-width: 1; }
-  .morse-flow { fill: none; stroke: var(--muted); stroke-width: 1.2; stroke-dasharray: 6 5; }
-  .morse-axis { stroke: var(--line); stroke-width: 1; }
-  .morse-critical-min { fill: var(--bg); stroke: var(--fg); stroke-width: 2; }
-  .morse-critical-max { fill: var(--fg); stroke: var(--fg); stroke-width: 2; }
-  .morse-critical-saddle { fill: var(--muted); stroke: var(--fg); stroke-width: 1.5; }
-  .morse-label { fill: var(--muted); font: 12px ui-monospace, monospace; }
-</style>
-
 <script>
   import '../scripts/morse.ts';
 </script>

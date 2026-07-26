@@ -34,54 +34,6 @@ import CanvasLayout from '../layouts/CanvasLayout.astro';
   </div>
 </CanvasLayout>
 
-<style>
-  #complex-c-real,
-  #complex-c-imag { width: 5.5rem; }
-
-  #complex-iterations { width: 6rem; }
-
-  #complex-iteration-value {
-    min-width: 2.25rem;
-    color: var(--muted);
-    font-variant-numeric: tabular-nums;
-  }
-
-  .complex-help {
-    margin-left: auto;
-    color: var(--muted);
-    font-size: .78rem;
-  }
-
-  #complex-readout {
-    display: flex;
-    justify-content: space-between;
-    gap: 1rem;
-    padding: .35rem var(--space);
-    border-bottom: 1px solid var(--line);
-    color: var(--muted);
-    font-size: .78rem;
-    font-variant-numeric: tabular-nums;
-  }
-
-  #complex-status { text-align: right; }
-
-  #complex-stage {
-    cursor: crosshair;
-    touch-action: none;
-  }
-
-  #complex-canvas,
-  #complex-orbit {
-    position: absolute;
-    inset: 0;
-    display: block;
-    width: 100%;
-    height: 100%;
-  }
-
-  #complex-orbit { pointer-events: none; }
-</style>
-
 <script>
   import '../scripts/complex.ts';
 </script>

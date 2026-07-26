@@ -12,12 +12,6 @@ import CanvasLayout from '../layouts/CanvasLayout.astro';
   <div class="canvas-stage"><canvas id="osc-canvas"></canvas></div>
 </CanvasLayout>
 
-<style>
-  #osc-coupling, #osc-spread { width: 6rem; }
-  #osc-readout { margin-left: auto; color: var(--muted); font-size: .78rem; font-variant-numeric: tabular-nums; }
-  #osc-canvas { display: block; width: 100%; height: 100%; background: #060713; }
-</style>
-
 <script>
   import '../scripts/coupled-oscillators.ts';
 </script>
