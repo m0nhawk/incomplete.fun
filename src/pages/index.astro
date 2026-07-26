@@ -1,45 +1,21 @@
 ---
 import PageLayout from '../layouts/PageLayout.astro';
 import { experiments } from '../data/experiments';
-
-const mapColumns = 8;
-const mapRows = Math.ceil(experiments.length / mapColumns);
-const mapHeight = 10 + Math.max(0, mapRows - 1) * 11;
 ---
 
 <PageLayout name="incomplete.fun" description="Small mathematical experiments, intentionally incomplete.">
-  <section class="home-hero">
-    <canvas class="landing-animation" data-landing-animation aria-hidden="true"></canvas>
+  <section class="home-intro">
     <p class="eyebrow">small experiments</p>
     <h1>mathematical toys, kept intentionally incomplete.</h1>
-    <p class="home-intro">A quiet collection of visual calculators and playgrounds. Pick a thread and pull.</p>
+    <p>A quiet collection of visual calculators and playgrounds. Pick a thread and pull.</p>
   </section>
 
-  <section class="constellation-map" aria-label="Experiment map">
-    <svg viewBox={`0 0 100 ${mapHeight}`} role="img">
-      <title>Constellation map of experiments</title>
-      {experiments.map((_, index) => {
-        const x = 8 + (index % mapColumns) * 12;
-        const y = 6 + Math.floor(index / mapColumns) * 11 + (index % 2) * 2;
-        const nx = 8 + ((index + 1) % mapColumns) * 12;
-        const ny = 6 + Math.floor((index + 1) / mapColumns) * 11 + ((index + 1) % 2) * 2;
-        return <><line x1={x} y1={y} x2={nx} y2={ny} /><circle cx={x} cy={y} r="1.2" /></>;
-      })}
-    </svg>
-  </section>
-
-  <nav class="home-links" aria-label="Experiments">
+  <nav class="experiment-list" aria-label="Experiments">
     {experiments.map((experiment) => (
-      <a class="home-link" href={experiment.href}>
-        <canvas class="home-preview" data-preview-canvas={experiment.href} aria-hidden="true"></canvas>
-        <span>{experiment.title}</span>
+      <a class="experiment-link" href={experiment.href}>
+        <strong>{experiment.title}</strong>
         <small>{experiment.summary}</small>
       </a>
     ))}
   </nav>
 </PageLayout>
-
-<script>
-  import '../scripts/gallery-previews.ts';
-  import '../scripts/landing-animation.ts';
-</script>
