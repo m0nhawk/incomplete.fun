@@ -161,30 +161,7 @@ code {
 
 .page-wide { --measure: 72rem; }
 
-.home-hero {
-  position: relative;
-  display: grid;
-  gap: 1rem;
-  margin-bottom: calc(var(--space) * 1.3);
-  padding: min(8vw, 4rem) 0;
-}
-
-.landing-animation {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
-  opacity: .55;
-}
-
-.home-hero > :not(.landing-animation) {
-  position: relative;
-  z-index: 1;
-}
-
-.eyebrow,
-.home-intro { color: var(--muted); }
+.eyebrow { color: var(--muted); }
 
 .eyebrow {
   margin: 0;
@@ -193,65 +170,32 @@ code {
   text-transform: uppercase;
 }
 
-.constellation-map {
-  margin-bottom: calc(var(--space) * 1.2);
-  border: 1px solid var(--line);
-  border-radius: 18px;
-  padding: .75rem;
-  background: var(--wash);
-}
-
-.constellation-map svg {
-  display: block;
-  width: 100%;
-  height: auto;
-  overflow: visible;
-}
-
-.constellation-map line {
-  stroke: var(--fg);
-  stroke-width: .15;
-  opacity: .2;
-  stroke-dasharray: 1 1.5;
-  animation: map-pulse 6s linear infinite;
-}
-
-.constellation-map circle {
-  fill: var(--fg);
-  opacity: .6;
-}
-
-@keyframes map-pulse { to { stroke-dashoffset: -10; } }
-
-.home-links {
+.home-intro {
   display: grid;
-  gap: .5rem;
-}
-
-.home-link {
-  display: grid;
-  grid-template-columns: 5rem minmax(0, 1fr) minmax(8rem, 14rem);
-  align-items: center;
   gap: 1rem;
-  padding: .8rem 0;
+  margin-bottom: calc(var(--space) * 1.3);
+}
+
+.home-intro p { color: var(--muted); }
+
+.experiment-list {
+  display: grid;
   border-top: 1px solid var(--line);
+}
+
+.experiment-link {
+  display: grid;
+  gap: .25rem;
+  padding: .8rem 0;
+  border-bottom: 1px solid var(--line);
   text-decoration: none;
 }
 
-.home-preview {
-  width: 5rem;
-  height: 3rem;
-  border: 1px solid var(--line);
-  border-radius: 9px;
-  background: var(--wash);
-}
+.experiment-link small { color: var(--muted); }
 
-.home-link:hover span { text-decoration: underline; text-underline-offset: .25em; }
-.home-link small { color: var(--muted); }
-
-@media (max-width: 34rem) {
-  .home-link { grid-template-columns: 5rem 1fr; gap: .15rem .75rem; }
-  .home-link small { grid-column: 2; }
+.experiment-link:hover strong {
+  text-decoration: underline;
+  text-underline-offset: .25em;
 }
 
 .math-notebook {
