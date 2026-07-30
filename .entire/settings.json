@@ -1,5 +1,11 @@
 {
   "enabled": true,
+  "absolute_git_hook_path": true,
   "telemetry": true,
-  "vercel": true
+  "vercel": true,
+  "checkpoints": {
+    "primary": {
+      "type": "git-refs"
+    }
+  }
 }
