@@ -11,8 +11,9 @@
     "build": "cross-env ASTRO_TELEMETRY_DISABLED=1 astro build",
     "preview": "cross-env ASTRO_TELEMETRY_DISABLED=1 astro preview",
     "check": "cross-env ASTRO_TELEMETRY_DISABLED=1 astro check",
-    "lint": "eslint src/scripts/**/*.ts",
-    "astro": "cross-env ASTRO_TELEMETRY_DISABLED=1 astro"
+    "lint": "eslint \"src/**/*.ts\"",
+    "astro": "cross-env ASTRO_TELEMETRY_DISABLED=1 astro",
+    "test": "node --experimental-strip-types --test tests/*.test.mjs"
   },
   "dependencies": {
     "@astrojs/vercel": "^11.0.0",

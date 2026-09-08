@@ -1,0 +1,17 @@
+---
+interface Props { name: string; }
+const { name } = Astro.props;
+const formulas = [name, '∑', '∫', 'π', 'φ', 'λ', '∞', '⊕', '∂', '≈'];
+---
+
+<div class="equation-wallpaper" aria-hidden="true">
+  {Array.from({ length: 28 }, (_, i) => (
+    <span style={{
+      left: `${(i * 37) % 101}%`,
+      top: `${(i * 53) % 101}%`,
+      animationDelay: `${-(i * 1.7)}s`,
+      animationDuration: `${18 + (i % 7) * 3}s`,
+      fontSize: `${0.8 + (i % 5) * 0.28}rem`,
+    }}>{formulas[i % formulas.length]}</span>
+  ))}
+</div>

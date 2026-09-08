@@ -1,6 +1,6 @@
 export {};
 
-import { escapeHtml } from "./utils/markup";
+import { escapeHtml } from "../shared/markup";
 
 const daysEl = document.querySelector<HTMLDivElement>("#surreal-days");
 const form = document.querySelector<HTMLFormElement>("#surreal-cut-form");

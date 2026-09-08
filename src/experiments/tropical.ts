@@ -1,6 +1,6 @@
 export {};
 
-import { escapeHtml, svg } from "./utils/markup";
+import { escapeHtml, svg } from "../shared/markup";
 
 const arithmeticForm = document.querySelector<HTMLFormElement>("#tropical-arithmetic-form");
 const aInput = document.querySelector<HTMLInputElement>("#tropical-a");

@@ -1,6 +1,6 @@
 export {};
 
-import { escapeHtml, svg } from "./utils/markup";
+import { escapeHtml, svg } from "../shared/markup";
 
 interface Elements {
   graphSelect: HTMLSelectElement;

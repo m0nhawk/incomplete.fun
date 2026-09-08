@@ -1,4 +1,4 @@
-export {};
+import { bindExperimentControls } from "../shared/experiment-controls";
 
 interface Point {
   x: number;
@@ -77,8 +77,8 @@ function init(elements: Elements) {
     phase: 0,
     harmonics: readInt(elements.harmonicsInput.value, 1, 80, 28),
     speed: readInt(elements.speedInput.value, 1, 120, 34),
-    speedScale: readFloat(document.querySelector<HTMLInputElement>('[data-control-speed]')?.value, 0, 2, 1),
-    paused: document.body.hasAttribute("data-paused"),
+    speedScale: 1,
+    paused: false,
     lastTime: performance.now(),
   };
   recompute(state);
@@ -100,7 +100,6 @@ function init(elements: Elements) {
 }
 
 function bindControls(elements: Elements, state: State) {
-  const sharedSpeedInput = document.querySelector<HTMLInputElement>('[data-control-speed]');
 
   elements.harmonicsInput.addEventListener("input", () => {
     state.harmonics = readInt(elements.harmonicsInput.value, 1, 80, 28);
@@ -119,33 +118,26 @@ function bindControls(elements: Elements, state: State) {
     clear(state);
   });
 
-  sharedSpeedInput?.addEventListener("input", () => {
-    state.speedScale = readFloat(sharedSpeedInput.value, 0, 2, 1);
+  bindExperimentControls(elements.canvas, {
+    pause: paused => { state.paused = paused; },
+    speed: speed => { state.speedScale = speed; },
+    reset: () => {
+      state.draft = [];
+      state.samples = examplePath();
+      state.phase = 0;
+      recompute(state);
+    },
+    randomize: () => {
+      state.draft = [];
+      state.samples = randomPath();
+      state.phase = 0;
+      recompute(state);
+    },
+    preset: value => {
+      const preset = normalizePreset(value);
+      if (preset) applyPreset(elements, state, preset);
+    },
   });
-
-  window.addEventListener("incomplete:pause", (event) => {
-    state.paused = Boolean((event as CustomEvent<{ paused?: boolean }>).detail?.paused);
-  });
-  window.addEventListener("incomplete:reset", () => {
-    state.draft = [];
-    state.samples = examplePath();
-    state.phase = 0;
-    recompute(state);
-  });
-  window.addEventListener("incomplete:randomize", () => {
-    state.draft = [];
-    state.samples = randomPath();
-    state.phase = 0;
-    recompute(state);
-  });
-  window.addEventListener("incomplete:preset", (event) => {
-    const preset = normalizePreset((event as CustomEvent<{ preset?: string }>).detail?.preset);
-    if (!preset) return;
-    applyPreset(elements, state, preset);
-  });
-
-  const initialPreset = normalizePreset(new URLSearchParams(window.location.search).get("preset") ?? undefined);
-  if (initialPreset) applyPreset(elements, state, initialPreset);
 }
 
 function applyPreset(elements: Elements, state: State, preset: FourierPreset) {
@@ -483,13 +475,6 @@ function lerpComplex(a: Complex, b: Complex, t: number): Complex {
 
 function readInt(value: string, min: number, max: number, fallback: number): number {
   const parsed = Number.parseInt(value, 10);
-  if (!Number.isFinite(parsed)) return fallback;
-  return Math.max(min, Math.min(max, parsed));
-}
-
-function readFloat(value: string | undefined, min: number, max: number, fallback: number): number {
-  if (value === undefined) return fallback;
-  const parsed = Number.parseFloat(value);
   if (!Number.isFinite(parsed)) return fallback;
   return Math.max(min, Math.min(max, parsed));
 }

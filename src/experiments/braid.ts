@@ -1,6 +1,6 @@
 export {};
 
-import { svg } from "./utils/markup";
+import { svg } from "../shared/markup";
 
 interface Crossing { index: number; sign: 1 | -1 }
 interface Elements {

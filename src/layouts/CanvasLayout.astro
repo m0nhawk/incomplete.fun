@@ -1,6 +1,8 @@
 ---
 import BaseLayout from './BaseLayout.astro';
 import TopBar from '../components/TopBar.astro';
+import ExperimentControls from '../components/ExperimentControls.astro';
+import EquationWallpaper from '../components/EquationWallpaper.astro';
 
 interface Props {
   name: string;
@@ -11,33 +13,18 @@ interface Props {
 
 const { name, description, appId, presets = [] } = Astro.props;
 const title = `${name} - incomplete.fun`;
-const wallpaperGlyphs = [name, '∑', '∫', 'π', 'φ', 'λ', '∞', '⊕', '∂', '≈'].join(',');
+
 ---
 
 <BaseLayout title={title} description={description}>
   <div class="canvas-app" id={appId}>
-    <div class="equation-wallpaper" data-equation-wallpaper data-formulas={wallpaperGlyphs} aria-hidden="true"></div>
+    <EquationWallpaper name={name} />
     <TopBar name={name} back>
       <slot name="toolbar" />
     </TopBar>
-    <section class="control-panel" data-control-panel aria-label="Shared experiment controls">
-      <button class="toolbar-button" type="button" data-control-action="pause">pause</button>
-      <button class="toolbar-button" type="button" data-control-action="reset">reset</button>
-      <button class="toolbar-button" type="button" data-control-action="randomize">randomize</button>
-      <button class="toolbar-button" type="button" data-export-png>save png</button>
-      <button class="toolbar-button" type="button" data-copy-url>copy url</button>
-      <button class="toolbar-button" type="button" data-darkroom>darkroom</button>
-      {presets.length > 0 && (
-        <label class="control-label">preset
-          <select data-preset-atlas>
-            <option value="">custom</option>
-            {presets.map((preset) => <option value={preset}>{preset}</option>)}
-          </select>
-        </label>
-      )}
-      <label class="control-label">speed <input type="range" min="0" max="2" value="1" step="0.01" data-control-speed /></label>
+    <ExperimentControls presets={presets}>
       <slot name="controls" />
-    </section>
+    </ExperimentControls>
     <aside class="math-notebook" aria-label="Math notebook">
       <strong>{name}</strong>
       <p>Definitions, examples, and nearby experiments live here as compact field notes while the canvas remains interactive.</p>
@@ -52,9 +39,5 @@ const wallpaperGlyphs = [name, '∑', '∫', 'π', 'φ', 'λ', '∞', '⊕', '�
 </BaseLayout>
 
 <script>
-  import '../scripts/equation-wallpaper.ts';
-  import '../scripts/unified-controls.ts';
-  import '../scripts/preset-atlas.ts';
-  import '../scripts/snapshot-export.ts';
-  import '../scripts/darkroom.ts';
+  import '../scripts/canvas-shell.ts';
 </script>

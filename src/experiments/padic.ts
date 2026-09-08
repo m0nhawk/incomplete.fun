@@ -1,6 +1,6 @@
 export {};
 
-import { escapeHtml } from "./utils/markup";
+import { escapeHtml } from "../shared/markup";
 
 interface Rational {
   num: bigint;
