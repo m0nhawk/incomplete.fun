@@ -3,19 +3,111 @@ import PageLayout from '../layouts/PageLayout.astro';
 import { experiments } from '../data/experiments';
 ---
 
-<PageLayout name="incomplete.fun" description="Small mathematical experiments, intentionally incomplete.">
-  <section class="home-intro">
-    <p class="eyebrow">small experiments</p>
-    <h1>mathematical toys, kept intentionally incomplete.</h1>
-    <p>A quiet collection of visual calculators and playgrounds. Pick a thread and pull.</p>
+<PageLayout name="incomplete.fun" wide description="An open collection of mathematical curiosities. Draw, explore, and discover the patterns hiding in simple rules.">
+  <section class="home-intro" aria-labelledby="home-title">
+    <div class="intro-copy">
+      <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span> An open collection of curiosities</p>
+      <h1 id="home-title">Simple rules.<br />Endless <em>possibilities.</em></h1>
+      <p class="intro-description">A place to play with mathematics. Draw a curve, change a number, follow a pattern. See where a little curiosity takes you.</p>
+      <a class="explore-link" href="#collection">Find your next experiment <span aria-hidden="true">↓</span></a>
+      <p class="intro-footnote">{experiments.length} experiments · No right place to start.</p>
+    </div>
+    <a class="featured-experiment" href="/modular" aria-label="Explore modular multiplication circles">
+      <div class="featured-heading"><span class="eyebrow">A pattern worth following</span><span class="featured-number">n × 5 mod 60</span></div>
+      <div class="featured-art" aria-hidden="true">
+        <canvas data-preview-canvas="modular"></canvas>
+        <span class="art-coordinate coordinate-top">0 ≡ 60</span>
+        <span class="art-coordinate coordinate-bottom">30</span>
+      </div>
+      <div class="featured-caption">
+        <div><h2>Order, in a circle.</h2><p>Watch multiplication turn into geometry.</p></div>
+        <span class="featured-arrow" aria-hidden="true">↗</span>
+      </div>
+    </a>
   </section>
 
-  <nav class="experiment-list" aria-label="Experiments">
-    {experiments.map((experiment) => (
-      <a class="experiment-link" href={experiment.href}>
-        <strong>{experiment.title}</strong>
-        <small>{experiment.summary}</small>
-      </a>
-    ))}
-  </nav>
+  <section class="collection" id="collection" aria-labelledby="collection-title">
+    <header class="collection-heading">
+      <div><p class="eyebrow">Pick a thread. Pull gently.</p><h2 id="collection-title">The collection<span class="collection-count">{experiments.length}</span></h2></div>
+      <p>Small worlds, waiting to be explored.</p>
+    </header>
+    <nav class="experiment-list" aria-label="Experiments">
+      {experiments.map((experiment, index) => (
+        <a class="experiment-link" href={experiment.href}>
+          <span class="experiment-number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+          <span class="experiment-copy"><strong>{experiment.title}</strong><small>{experiment.summary}</small></span>
+          <span class="experiment-arrow" aria-hidden="true">↗</span>
+        </a>
+      ))}
+    </nav>
+  </section>
+  <aside class="home-note"><span aria-hidden="true">∞</span><p>Intentionally incomplete.<br /><span>Because the interesting part is what you discover along the way.</span></p></aside>
 </PageLayout>
+
+<style>
+  .home-intro { display: grid; grid-template-columns: 1.15fr 1fr; align-items: center; gap: clamp(2rem, 6vw, 6rem); padding: .5rem 0 4.5rem; }
+  .intro-copy .eyebrow { display: flex; align-items: center; gap: .6rem; margin-bottom: 2rem; }
+  .status-dot { width: .4rem; height: .4rem; border-radius: 50%; background: var(--accent); }
+  .intro-copy h1 { margin-bottom: 1.5rem; font-size: clamp(3rem, 5.8vw, 5.1rem); line-height: 1.04; }
+  .intro-copy h1 em { color: var(--accent); font-weight: 400; }
+  .intro-description { max-width: 37ch; margin-bottom: 1.8rem; color: var(--muted); font-size: 1rem; line-height: 1.8; }
+  .explore-link { display: inline-flex; align-items: center; gap: 1.5rem; padding: .8rem 1.15rem; border: 1px solid var(--accent); border-radius: .4rem; background: var(--accent); color: var(--surface); font-size: .8rem; font-weight: 500; text-decoration: none; transition: background .2s; }
+  .explore-link:hover { background: var(--fg); }
+  .intro-footnote { margin: 1.2rem 0 0; color: var(--muted); font-family: var(--mono); font-size: .65rem; }
+  .featured-experiment { display: block; overflow: hidden; border: 1px solid #cfd8c7; border-radius: var(--radius); background: #eaf0e2; text-decoration: none; transition: border-color .2s; }
+  .featured-experiment:hover { border-color: var(--accent); }
+  .featured-heading { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: .5rem; padding: 1.1rem 1.3rem; }
+  .featured-heading .eyebrow { margin: 0; font-size: .59rem; letter-spacing: .09em; }
+  .featured-number { color: var(--muted); font-family: var(--mono); font-size: .6rem; }
+  .featured-art { position: relative; height: 19rem; background-image: radial-gradient(#bdcdb4 .65px, transparent .65px); background-size: 16px 16px; }
+  .featured-art canvas { display: block; width: 100%; height: 100%; }
+  .art-coordinate { position: absolute; left: 50%; transform: translateX(-50%); color: var(--accent); font-family: var(--mono); font-size: .57rem; }
+  .coordinate-top { top: .5rem; }
+  .coordinate-bottom { bottom: .4rem; }
+  .featured-caption { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.3rem; border-top: 1px solid #cfd8c7; background: #f1f4eb; }
+  .featured-caption h2 { margin: 0 0 .3rem; font-family: var(--serif); font-size: 1.7rem; font-weight: 400; letter-spacing: -.03em; }
+  .featured-caption p { margin: 0; color: var(--muted); font-size: .75rem; }
+  .featured-arrow { display: grid; place-items: center; flex: 0 0 2.5rem; height: 2.5rem; border: 1px solid #bccdb4; border-radius: 50%; transition: background .2s; }
+  .featured-experiment:hover .featured-arrow { background: var(--accent); color: var(--surface); border-color: var(--accent); }
+  .collection { border-top: 1px solid var(--line); padding-top: 2.4rem; }
+  .collection-heading { display: flex; justify-content: space-between; align-items: end; gap: 1rem; margin-bottom: 1.8rem; }
+  .collection-heading .eyebrow { margin-bottom: .6rem; }
+  .collection-heading h2 { display: flex; align-items: center; gap: .8rem; margin: 0; font-family: var(--serif); font-size: 2.4rem; font-weight: 400; letter-spacing: -.035em; }
+  .collection-count { display: grid; place-items: center; width: 1.9rem; height: 1.9rem; border: 1px solid var(--line); border-radius: 50%; color: var(--muted); font-family: var(--mono); font-size: .7rem; letter-spacing: 0; }
+  .collection-heading > p { margin: 0 0 .3rem; color: var(--muted); font-size: .8rem; }
+  .experiment-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 2rem; }
+  .experiment-link { display: flex; align-items: start; gap: .8rem; min-width: 0; padding: 1.3rem .2rem; border-top: 1px solid var(--line); text-decoration: none; transition: background .15s; }
+  .experiment-link:hover { background: var(--wash); }
+  .experiment-number { padding-top: .2rem; color: #7a8476; font-family: var(--mono); font-size: .65rem; }
+  .experiment-copy { flex: 1; min-width: 0; }
+  .experiment-copy strong { display: block; font-size: .9rem; line-height: 1.5; font-weight: 500; }
+  .experiment-copy small { display: block; margin-top: .35rem; color: var(--muted); font-size: .75rem; line-height: 1.65; }
+  .experiment-arrow { color: var(--muted); font-size: .9rem; transition: transform .15s; }
+  .experiment-link:hover .experiment-arrow { transform: translate(2px, -2px); color: var(--accent); }
+  .home-note { display: flex; align-items: center; justify-content: center; gap: 1.4rem; margin-top: 3rem; padding: 2.2rem 1rem 0; border-top: 1px solid var(--line); }
+  .home-note > span { color: var(--accent); font-family: var(--serif); font-size: 2.5rem; }
+  .home-note p { margin: 0; font-family: var(--serif); font-size: 1.2rem; line-height: 1.5; }
+  .home-note p span { color: var(--muted); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: .8rem; }
+  @media (max-width: 62rem) {
+    .home-intro { gap: 2rem; }
+    .intro-copy h1 { font-size: clamp(2.7rem, 5.5vw, 4rem); }
+    .featured-art { height: 16rem; }
+    .experiment-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 44rem) {
+    .home-intro { grid-template-columns: 1fr; gap: 2.5rem; padding-bottom: 2.5rem; }
+    .intro-copy .eyebrow { margin-bottom: 1.4rem; font-size: .6rem; }
+    .intro-copy h1 { font-size: clamp(2.65rem, 10vw, 4rem); }
+    .intro-description { max-width: 38ch; font-size: .95rem; }
+    .featured-art { height: 17rem; }
+    .collection-heading { align-items: start; flex-direction: column; gap: .65rem; }
+    .collection-heading h2 { font-size: 2rem; }
+    .experiment-list { grid-template-columns: 1fr; }
+    .experiment-link { padding-block: 1.1rem; }
+    .home-note { justify-content: start; gap: .9rem; padding-inline: 0; }
+  }
+</style>
+
+<script>
+  import '../scripts/gallery-previews.ts';
+</script>

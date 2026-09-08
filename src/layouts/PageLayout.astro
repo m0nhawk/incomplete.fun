@@ -7,17 +7,29 @@ interface Props {
   back?: boolean;
   wide?: boolean;
   description?: string;
+  heading?: boolean;
 }
 
-const { name, back = false, wide = false, description } = Astro.props;
+const { name, back = false, wide = false, description, heading = true } = Astro.props;
 const title = name === 'incomplete.fun' ? name : `${name} - incomplete.fun`;
 ---
 
 <BaseLayout title={title} description={description}>
+  <a class="skip-link" href="#main-content">Skip to content</a>
   <div class="app-shell">
     <TopBar name={name} back={back} />
-    <main class={wide ? 'page page-wide' : 'page'}>
+    <main id="main-content" class={wide ? 'page page-wide' : 'page'}>
+      {heading && name !== "incomplete.fun" && (
+        <header class="page-heading">
+          <p class="eyebrow">A mathematical playground</p>
+          <h1>{name}</h1>
+        </header>
+      )}
       <slot />
     </main>
+    <footer class="site-footer">
+      <p>incomplete.fun · A collection of mathematical curiosities.</p>
+      <span>Always a little more to discover.</span>
+    </footer>
   </div>
 </BaseLayout>

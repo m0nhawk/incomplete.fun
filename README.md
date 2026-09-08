@@ -22,12 +22,16 @@ bun run preview
 - `src/experiments/`: one browser entry point per experiment, owning its inputs, mathematical state, rendering, and animation.
 - `src/shared/`: reusable TypeScript helpers. `markup.ts` handles safe generated markup; `experiment-controls.ts` connects experiments to shared controls with typed callbacks.
 - `src/layouts/`: document and page composition. `BaseLayout` owns metadata and global CSS, `PageLayout` wraps regular pages, and `CanvasLayout` composes the canvas shell.
-- `src/components/`: reusable markup, including the toolbar, shared experiment controls, and statically rendered equation wallpaper.
+- `src/components/`: reusable markup for navigation and shared experiment controls.
 - `src/scripts/`: site UI behavior. `canvas-shell.ts` explicitly initializes snapshot export and darkroom for each canvas app. Landing and gallery animations remain available for pages that opt into them.
 - `src/data/experiments.ts`: the home page's experiment catalog and preset names.
 - `tests/`: focused tests for the shared controls boundary using Node's built-in test runner.
 
 Dependencies flow from routes and layouts into experiments and site UI, then into shared helpers. Experiments do not import one another. Keep mathematics specific to an experiment in its module until there is a concrete reuse case.
+
+## Visual design
+
+`src/styles/global.css` defines the shared paper-and-ink palette, typography, spacing, focus states, form controls, and tool cards. Keep experiment-specific visualization styles beside their pages. Page titles use a serif face; controls and numeric fields use compact interface and monospace typography. Canvas navigation, experiment settings, and shared actions occupy separate rows, with expandable experiment notes below the visualization. The home page's illustrative preview redraws on resize without a continuous animation loop.
 
 ## Adding an experiment
 

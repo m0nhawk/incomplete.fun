@@ -3,21 +3,25 @@ interface Props { presets?: string[]; }
 const { presets = [] } = Astro.props;
 ---
 
-    <section class="control-panel" data-control-panel aria-label="Shared experiment controls">
-      <button class="toolbar-button" type="button" disabled data-control-action="pause">pause</button>
-      <button class="toolbar-button" type="button" disabled data-control-action="reset">reset</button>
-      <button class="toolbar-button" type="button" disabled data-control-action="randomize">randomize</button>
-      <button class="toolbar-button" type="button" data-export-png>save png</button>
-      <button class="toolbar-button" type="button" data-copy-url>copy url</button>
-      <button class="toolbar-button" type="button" data-darkroom>darkroom</button>
-      {presets.length > 0 && (
-        <label class="control-label">preset
-          <select disabled data-preset-atlas>
-            <option value="">custom</option>
-            {presets.map((preset) => <option value={preset}>{preset}</option>)}
-          </select>
-        </label>
-      )}
-      <label class="control-label">speed <input type="range" min="0" max="2" value="1" step="0.01" disabled data-control-speed /></label>
-      <slot />
-    </section>
+<section class="control-panel" data-control-panel aria-label="Shared experiment controls">
+  <div class="control-group" role="group" aria-label="Simulation controls">
+    <button class="toolbar-button" type="button" disabled data-control-action="pause">pause</button>
+    <button class="toolbar-button" type="button" disabled data-control-action="reset">reset</button>
+    <button class="toolbar-button" type="button" disabled data-control-action="randomize">randomize</button>
+    {presets.length > 0 && (
+      <label class="control-label">preset
+        <select disabled data-preset-atlas>
+          <option value="">custom</option>
+          {presets.map((preset) => <option value={preset}>{preset}</option>)}
+        </select>
+      </label>
+    )}
+    <label class="control-label">speed <input type="range" min="0" max="2" value="1" step="0.01" disabled data-control-speed /></label>
+    <slot />
+  </div>
+  <div class="control-group" role="group" aria-label="Save and display">
+    <button class="toolbar-button" type="button" data-export-png>save png</button>
+    <button class="toolbar-button" type="button" data-copy-url>copy url</button>
+    <button class="toolbar-button" type="button" data-darkroom>darkroom</button>
+  </div>
+</section>

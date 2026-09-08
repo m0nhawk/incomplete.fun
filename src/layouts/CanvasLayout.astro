@@ -2,7 +2,7 @@
 import BaseLayout from './BaseLayout.astro';
 import TopBar from '../components/TopBar.astro';
 import ExperimentControls from '../components/ExperimentControls.astro';
-import EquationWallpaper from '../components/EquationWallpaper.astro';
+import { experiments } from '../data/experiments';
 
 interface Props {
   name: string;
@@ -13,28 +13,25 @@ interface Props {
 
 const { name, description, appId, presets = [] } = Astro.props;
 const title = `${name} - incomplete.fun`;
+const note = description ?? experiments.find(experiment => experiment.href === Astro.url.pathname.replace(/\/$/, ""))?.summary;
 
 ---
 
 <BaseLayout title={title} description={description}>
   <div class="canvas-app" id={appId}>
-    <EquationWallpaper name={name} />
-    <TopBar name={name} back>
+    <TopBar name={name} back canvas />
+    <section class="experiment-toolbar" aria-label="Experiment settings">
       <slot name="toolbar" />
-    </TopBar>
+    </section>
     <ExperimentControls presets={presets}>
       <slot name="controls" />
     </ExperimentControls>
-    <aside class="math-notebook" aria-label="Math notebook">
-      <strong>{name}</strong>
-      <p>Definitions, examples, and nearby experiments live here as compact field notes while the canvas remains interactive.</p>
-      <ul>
-        <li><code>state</code>: current parameters and seed</li>
-        <li><code>orbit</code>: repeated application of a rule</li>
-        <li><a href="/">browse related experiments</a></li>
-      </ul>
-    </aside>
     <slot />
+    <details class="math-notebook">
+      <summary>About this experiment</summary>
+      <p>{note ?? `Explore ${name} by adjusting the settings above.`}</p>
+      <a href="/#collection">Find another thread to follow <span aria-hidden="true">↗</span></a>
+    </details>
   </div>
 </BaseLayout>
 

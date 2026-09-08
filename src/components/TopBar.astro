@@ -2,14 +2,19 @@
 interface Props {
   name: string;
   back?: boolean;
+  canvas?: boolean;
 }
-
-const { name, back = false } = Astro.props;
+const { name, back = false, canvas = false } = Astro.props;
 ---
 
 <header class="topbar">
-  {back && <a class="back-link" href="/" aria-label="Back to home">←</a>}
-  <a class="brand" href="/" aria-label="incomplete.fun home">incomplete.fun</a>
-  {name !== 'incomplete.fun' && <span class="topbar-title">/ {name}</span>}
-  <slot />
+  {back && <a class="back-link" href="/" aria-label="Back to collection">←</a>}
+  <a class="brand" href="/" aria-label="incomplete.fun home">
+    <span class="brand-mark" aria-hidden="true">∴</span>
+    incomplete.fun
+  </a>
+  {name !== 'incomplete.fun' && (canvas
+    ? <h1 class="topbar-title">{name}</h1>
+    : <span class="topbar-title">{name}</span>)}
+  <a class="topbar-link" href="/#collection">{back ? 'All experiments' : 'Explore the collection'} <span aria-hidden="true">↗</span></a>
 </header>

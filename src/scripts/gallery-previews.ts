@@ -102,7 +102,7 @@ function drawPreview(canvas: HTMLCanvasElement, t: number): void {
     branch(ctx, cx, h * 0.88, -Math.PI / 2, r * 0.62, 5);
   } else if (key.includes('modular')) {
     ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2); ctx.stroke();
-    for (let i = 0; i < 16; i++) { const a = i / 16 * Math.PI * 2; const b = ((i * 5) % 16) / 16 * Math.PI * 2; ctx.beginPath(); ctx.moveTo(cx + Math.cos(a) * r, cy + Math.sin(a) * r); ctx.lineTo(cx + Math.cos(b) * r, cy + Math.sin(b) * r); ctx.stroke(); }
+    for (let i = 0; i < 60; i++) { const a = i / 60 * Math.PI * 2 - Math.PI / 2; const b = ((i * 5) % 60) / 60 * Math.PI * 2 - Math.PI / 2; ctx.beginPath(); ctx.moveTo(cx + Math.cos(a) * r, cy + Math.sin(a) * r); ctx.lineTo(cx + Math.cos(b) * r, cy + Math.sin(b) * r); ctx.stroke(); }
   } else if (key.includes('morse')) {
     for (let y = 0; y < h; y += h / 7) {
       ctx.beginPath();
@@ -176,9 +176,13 @@ function isPrime(value: number): boolean {
   return value > 1;
 }
 
-function frame(t: number): void {
-  for (const canvas of canvases) drawPreview(canvas, t);
-  requestAnimationFrame(frame);
+// Gallery previews are illustrations: redraw on resize without running a perpetual loop.
+if (canvases.length) {
+  const observer = new ResizeObserver(entries => {
+    for (const entry of entries) drawPreview(entry.target as HTMLCanvasElement, 0);
+  });
+  for (const canvas of canvases) {
+    drawPreview(canvas, 0);
+    observer.observe(canvas);
+  }
 }
-
-if (canvases.length) requestAnimationFrame(frame);
